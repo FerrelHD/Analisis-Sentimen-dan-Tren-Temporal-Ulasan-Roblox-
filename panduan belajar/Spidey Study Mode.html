@@ -1,0 +1,2924 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕷️ Panduan Belajar Skripsi — Spider-Man Theme</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #12141c;
+            --bg-surface: #1a2036;
+            --bg-surface-hover: #232b4a;
+            --bg-card: #2e323d;
+            --bg-card-hover: #383c48;
+
+            --border-color: rgba(230, 36, 41, 0.35);
+            --border-highlight: rgba(255, 42, 75, 0.8);
+
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --text-dim: #94a3b8;
+
+            --spidey-red: #ff2a4b;
+            --spidey-red-dark: #b91c1c;
+            --spidey-red-glow: rgba(255, 42, 75, 0.3);
+
+            --spidey-blue: #0084ff;
+            --spidey-blue-glow: rgba(0, 132, 255, 0.3);
+
+            --web-white: #f8fafc;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #ff4d4d;
+            --info: #38bdf8;
+
+            --radius-sm: 16px;
+            --radius-md: 26px;
+            --radius-lg: 36px;
+
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --sidebar-width: 290px;
+
+            /* Claymorphism shadow recipes: outer dual-light + inner dual-light for a puffy, sculpted feel */
+            --clay-navy: 9px 9px 18px rgba(0, 0, 0, 0.55),
+                        -7px -7px 16px rgba(70, 90, 140, 0.06),
+                        inset 1px 1px 2px rgba(255, 255, 255, 0.06),
+                        inset -4px -4px 10px rgba(0, 0, 0, 0.4);
+            --clay-grey: 8px 8px 18px rgba(0, 0, 0, 0.4),
+                        -6px -6px 14px rgba(255, 255, 255, 0.03),
+                        inset 1px 1px 2px rgba(255, 255, 255, 0.05),
+                        inset -3px -3px 9px rgba(0, 0, 0, 0.35);
+            --clay-grey-sm: 5px 5px 11px rgba(0, 0, 0, 0.4),
+                        -4px -4px 10px rgba(255, 255, 255, 0.03),
+                        inset 1px 1px 2px rgba(255, 255, 255, 0.05),
+                        inset -2px -2px 6px rgba(0, 0, 0, 0.3);
+            --clay-red: 7px 7px 15px rgba(110, 8, 20, 0.55),
+                        -5px -5px 12px rgba(255, 130, 150, 0.18),
+                        inset 2px 2px 3px rgba(255, 190, 200, 0.35),
+                        inset -3px -3px 7px rgba(90, 0, 10, 0.45);
+            --clay-red-sm: 4px 4px 9px rgba(110, 8, 20, 0.5),
+                        -3px -3px 8px rgba(255, 130, 150, 0.15),
+                        inset 1px 1px 2px rgba(255, 190, 200, 0.3),
+                        inset -2px -2px 5px rgba(90, 0, 10, 0.4);
+            --clay-blue: 7px 7px 15px rgba(0, 40, 90, 0.5),
+                        -5px -5px 12px rgba(120, 190, 255, 0.15),
+                        inset 2px 2px 3px rgba(190, 225, 255, 0.3),
+                        inset -3px -3px 7px rgba(0, 30, 70, 0.45);
+            --clay-pressed: inset 5px 5px 10px rgba(0, 0, 0, 0.55),
+                        inset -3px -3px 8px rgba(255, 255, 255, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.65;
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Background Overlay: Spider-Man photo with a dark scrim so foreground text stays readable */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 90vw 70vh at 50% 15%, rgba(230, 36, 41, 0.12), rgba(0, 0, 0, 0) 70%),
+                linear-gradient(160deg, rgba(15, 17, 25, 0.85) 0%, rgba(10, 11, 16, 0.92) 100%),
+                url('spiderman_bg.jpg');
+            background-size: auto, auto, cover;
+            background-position: center, center, center 35%;
+            background-repeat: no-repeat;
+            z-index: -1;
+            transform: translateZ(0);
+        }
+
+        /* Web Overlay Canvas for Click Animation */
+        #webCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99999;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-body);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--spidey-red);
+            border-radius: 4px;
+        }
+
+        /* Sidebar Navigation — dark navy clay block */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--bg-surface);
+            border-right: none;
+            box-shadow: var(--clay-navy);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            margin: 12px 0 12px 12px;
+            height: calc(100vh - 24px);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            margin: 14px;
+            padding: 20px 18px;
+            border-bottom: none;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, rgba(255, 42, 75, 0.18), rgba(0, 132, 255, 0.18));
+            box-shadow: var(--clay-grey-sm);
+        }
+
+        .sidebar-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--spidey-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .progress-container {
+            margin-top: 14px;
+            background: rgba(10, 15, 29, 0.4);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: none;
+            box-shadow: var(--clay-pressed);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
+        .progress-bar-bg {
+            position: relative;
+            height: 9px;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border-radius: 999px;
+            overflow: visible;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--spidey-blue), var(--spidey-red));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            overflow: hidden;
+        }
+
+        .progress-spider {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            transform: translate(-50%, -50%);
+            font-size: 13px;
+            line-height: 1;
+            transition: left 0.3s ease;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.7));
+            pointer-events: none;
+        }
+
+        .nav-links {
+            padding: 14px 10px;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-surface-hover);
+            color: var(--text-main);
+        }
+
+        .nav-item.active {
+            background: var(--spidey-red);
+            box-shadow: var(--clay-red-sm);
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        .nav-checkbox {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: var(--clay-pressed);
+        }
+
+        .nav-checkbox:checked {
+            background: var(--spidey-red);
+            box-shadow: var(--clay-red-sm);
+        }
+
+        .nav-checkbox:checked::after {
+            content: "🕷️";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: calc(var(--sidebar-width) + 24px);
+            flex: 1;
+            padding: 40px;
+            max-width: 1120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Top Controls Header */
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px 14px 46px;
+            background: var(--bg-surface);
+            border: none;
+            border-radius: var(--radius-md);
+            box-shadow: var(--clay-navy);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .search-input:focus {
+            box-shadow: var(--clay-pressed);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--spidey-red);
+            font-size: 1.1rem;
+        }
+
+        /* Hero Banner — puffed grey clay with a soft red glow */
+        .hero {
+            background: linear-gradient(135deg, rgba(230, 36, 41, 0.18), rgba(0, 132, 255, 0.18)), var(--bg-card);
+            border: none;
+            box-shadow: var(--clay-grey);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--spidey-red);
+            border: none;
+            box-shadow: var(--clay-red-sm);
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .hero-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 14px;
+            background: linear-gradient(90deg, #ffffff, var(--spidey-red), var(--spidey-blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 850px;
+            font-weight: 500;
+        }
+
+        /* Section Cards — puffed-up grey clay containers */
+        .section-block {
+            background: var(--bg-card);
+            border: none;
+            box-shadow: var(--clay-grey);
+            border-radius: var(--radius-lg);
+            padding: 34px;
+            margin-bottom: 36px;
+            scroll-margin-top: 30px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .section-block:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: none;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span.sec-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--spidey-red);
+            color: #ffffff;
+            box-shadow: var(--clay-red-sm);
+            padding: 4px 11px;
+            border-radius: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+        }
+
+        .section-badge {
+            background: var(--bg-card-hover);
+            border: none;
+            box-shadow: var(--clay-grey-sm);
+            color: var(--spidey-red);
+            padding: 5px 14px;
+            border-radius: 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Key Stats Grid (Section 7) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card-hover);
+            border: none;
+            box-shadow: var(--clay-grey-sm);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            position: relative;
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--spidey-blue);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-value.highlight {
+            color: var(--spidey-red);
+        }
+
+        .stat-note {
+            font-size: 0.76rem;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+
+        /* Workflow Steps (Section 2) */
+        .workflow-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 18px;
+            background: var(--bg-card-hover);
+            border: none;
+            box-shadow: var(--clay-grey-sm);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-2px);
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            background: var(--spidey-red);
+            box-shadow: var(--clay-red-sm);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .step-desc {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        /* Tables — rendered as sculpted, interlocking clay tiles */
+        .custom-table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: none;
+            margin-top: 16px;
+            padding: 10px;
+            background: var(--bg-card-hover);
+            box-shadow: var(--clay-grey-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 6px;
+            font-size: 0.92rem;
+            text-align: left;
+        }
+
+        th {
+            background: var(--spidey-red);
+            box-shadow: var(--clay-red-sm);
+            color: #ffffff;
+            padding: 14px 18px;
+            font-weight: 800;
+            border-radius: var(--radius-sm);
+            border-bottom: none;
+        }
+
+        td {
+            background: var(--bg-card);
+            padding: 14px 18px;
+            border-bottom: none;
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            transition: box-shadow 0.15s ease;
+        }
+
+        tr:hover td {
+            box-shadow: var(--clay-grey-sm);
+        }
+
+        /* Tech Terms Grid (Section 5) */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        /* Fixed 2-column "versus" layout (Section 3) — collapses to 1 column on mobile below */
+        .terms-grid-versus {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .term-card {
+            background: var(--bg-card-hover);
+            border: none;
+            box-shadow: var(--clay-grey-sm);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
+        }
+
+        .term-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .term-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: var(--spidey-red);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 6px;
+        }
+
+        .term-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Callout / Alert Box — recessed clay well (inset shadow reads as pressed into the surface) */
+        .alert-box {
+            background: rgba(255, 42, 75, 0.08);
+            border: none;
+            box-shadow: var(--clay-pressed);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            margin-top: 16px;
+            color: var(--text-main);
+            font-size: 0.92rem;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .alert-icon {
+            font-size: 1.4rem;
+            color: var(--spidey-red);
+            flex-shrink: 0;
+        }
+
+        .alert-danger {
+            background: rgba(255, 77, 77, 0.1);
+        }
+
+        .alert-info {
+            background: rgba(0, 132, 255, 0.1);
+        }
+
+        .alert-info .alert-icon {
+            color: var(--spidey-blue);
+        }
+
+        /* Interactive Flashcards / Q&A Accordion (Section 10) */
+        .qa-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .qa-card {
+            background: var(--bg-card-hover);
+            border: none;
+            box-shadow: var(--clay-grey-sm);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .qa-card:hover {
+            box-shadow: var(--clay-grey);
+        }
+
+        .qa-header {
+            padding: 18px 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+        }
+
+        .qa-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .qa-toggle-icon {
+            font-size: 1.1rem;
+            color: var(--spidey-red);
+            transition: transform 0.2s ease;
+        }
+
+        .qa-card.open .qa-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .qa-body {
+            padding: 0 22px 22px 22px;
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            display: none;
+            margin-top: 10px;
+            padding-top: 16px;
+        }
+
+        .qa-card.open .qa-body {
+            display: block;
+        }
+
+        /* Highlight mark */
+        mark {
+            background: rgba(255, 42, 75, 0.25);
+            color: #ffffff;
+            border: 1px solid var(--spidey-red);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* Search result highlight (distinct from content mark above) */
+        mark.search-hl {
+            background: rgba(251, 191, 36, 0.35);
+            color: #ffffff;
+            border: 1px solid var(--warning);
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* No search results message */
+        .no-results-msg {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            background: var(--bg-card);
+            border: none;
+            box-shadow: var(--clay-pressed);
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+        }
+
+        .no-results-msg.visible {
+            display: block;
+        }
+
+        /* Back to top floating button */
+        /* Floating action button — a perfectly round, vibrant red clay sphere */
+        .back-to-top {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #ff5470, var(--spidey-red) 70%);
+            color: #ffffff;
+            border: none;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--clay-red);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.15s ease;
+            z-index: 500;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            box-shadow: var(--clay-pressed);
+        }
+
+        @media (max-width: 900px) {
+            .back-to-top {
+                right: 16px;
+                bottom: 16px;
+                width: 46px;
+                height: 46px;
+            }
+        }
+
+        /* Spidey Buddy — dangling mascot in the top-right corner */
+        .spidey-buddy {
+            position: fixed;
+            top: 0;
+            right: 48px;
+            z-index: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .spidey-thread {
+            width: 2px;
+            height: 72px;
+            background: linear-gradient(to bottom, rgba(248, 250, 252, 0), rgba(248, 250, 252, 0.5));
+        }
+
+        .spidey-char {
+            font-size: 1.9rem;
+            line-height: 1;
+            cursor: pointer;
+            pointer-events: auto;
+            transform-origin: top center;
+            animation: spidey-dangle 4.5s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+            user-select: none;
+        }
+
+        .spidey-char:hover {
+            animation-play-state: paused;
+            transform: scale(1.2);
+        }
+
+        .spidey-buddy.swinging .spidey-char {
+            animation: spidey-swing 0.8s ease-in-out;
+        }
+
+        @keyframes spidey-dangle {
+
+            0%,
+            100% {
+                transform: rotate(-7deg);
+            }
+
+            50% {
+                transform: rotate(7deg);
+            }
+        }
+
+        @keyframes spidey-swing {
+
+            0%,
+            100% {
+                transform: rotate(-7deg);
+            }
+
+            25% {
+                transform: rotate(22deg);
+            }
+
+            75% {
+                transform: rotate(-22deg);
+            }
+        }
+
+        .spidey-bubble {
+            position: absolute;
+            top: 88px;
+            right: 0;
+            width: max-content;
+            max-width: 210px;
+            background: var(--bg-surface);
+            color: var(--text-main);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--clay-navy);
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.4;
+            opacity: 0;
+            transform: translateY(-6px) scale(0.92);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+        }
+
+        .spidey-bubble.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        @media (max-width: 900px) {
+            .spidey-buddy {
+                top: 56px;
+                right: 12px;
+            }
+
+            .spidey-thread {
+                height: 40px;
+            }
+
+            .spidey-bubble {
+                top: 56px;
+            }
+        }
+
+        /* Spidey Crawler — easter-egg spider that occasionally scurries across the screen */
+        .spidey-crawler {
+            position: fixed;
+            font-size: 1.3rem;
+            z-index: 550;
+            pointer-events: none;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+        }
+
+        /* Expand/Collapse All button (Q&A section) — small clay pill */
+        .qa-toggle-all-btn {
+            background: var(--bg-card-hover);
+            border: none;
+            box-shadow: var(--clay-blue);
+            color: var(--spidey-blue);
+            padding: 6px 16px;
+            border-radius: 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .qa-toggle-all-btn:hover {
+            box-shadow: var(--clay-pressed);
+        }
+
+        .section-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Badges — tiny clay pills */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: var(--clay-grey-sm);
+        }
+
+        .badge-success {
+            background: rgba(52, 211, 153, 0.16);
+            color: var(--success);
+            border: none;
+        }
+
+        .badge-warning {
+            background: rgba(251, 191, 36, 0.16);
+            color: var(--warning);
+            border: none;
+        }
+
+        .badge-info {
+            background: rgba(0, 132, 255, 0.16);
+            color: var(--spidey-blue);
+            border: none;
+        }
+
+        /* Floating THWIP Popup text */
+        .thwip-text {
+            position: fixed;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            font-size: 1.3rem;
+            color: var(--spidey-red);
+            text-shadow: 0 0 8px var(--spidey-red);
+            pointer-events: none;
+            z-index: 100000;
+            animation: thwipFloat 0.6s ease-out forwards;
+        }
+
+        @keyframes thwipFloat {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.7) rotate(-8deg);
+            }
+
+            50% {
+                transform: translate(-50%, -80%) scale(1.2) rotate(4deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -110%) scale(1) rotate(0deg);
+            }
+        }
+
+        .mobile-header {
+            display: none;
+        }
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 56px;
+                background: var(--bg-surface);
+                box-shadow: var(--clay-navy);
+                border-bottom: none;
+                padding: 0 16px;
+                z-index: 999;
+            }
+
+            .mobile-logo {
+                font-weight: 800;
+                font-size: 1rem;
+                color: var(--spidey-red);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .mobile-nav-toggle {
+                background: var(--spidey-red);
+                border: none;
+                box-shadow: var(--clay-red-sm);
+                color: #ffffff;
+                font-size: 1.2rem;
+                width: 38px;
+                height: 38px;
+                border-radius: var(--radius-sm);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: box-shadow 0.2s ease;
+            }
+
+            .mobile-nav-toggle:active {
+                box-shadow: var(--clay-pressed);
+            }
+
+            aside {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+                z-index: 1002;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: var(--clay-navy), 10px 0 30px rgba(0, 0, 0, 0.45);
+            }
+
+            aside.open {
+                left: 0;
+            }
+
+            .sidebar-overlay {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.65);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                z-index: 1001;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+
+            .sidebar-overlay.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            main {
+                margin-left: 0;
+                padding: 72px 14px 30px 14px;
+                width: 100%;
+            }
+
+            .hero {
+                padding: 22px 18px;
+                margin-bottom: 24px;
+            }
+
+            .hero-title {
+                font-size: 1.55rem;
+            }
+
+            .hero-desc {
+                font-size: 0.92rem;
+            }
+
+            .section-block {
+                padding: 20px 14px;
+                margin-bottom: 24px;
+                scroll-margin-top: 66px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .top-controls {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .workflow-step {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .stat-value {
+                font-size: 1.4rem;
+            }
+
+            .alert-box {
+                padding: 14px 16px;
+                font-size: 0.88rem;
+            }
+
+            .terms-grid-versus {
+                grid-template-columns: 1fr;
+            }
+
+            /* Let wide comparison tables scroll horizontally instead of
+               squeezing every column into a single-word-per-line tower */
+            .custom-table-wrapper table {
+                width: max-content;
+                min-width: 100%;
+            }
+
+            th,
+            td {
+                min-width: 160px;
+                padding: 12px 14px;
+                font-size: 0.86rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spider Web Canvas overlay for click animation -->
+    <canvas id="webCanvas"></canvas>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTopBtn" onclick="scrollToTop()" aria-label="Kembali ke atas">↑</button>
+
+    <!-- Spidey Buddy: dangling mascot, klik buat quote semangat -->
+    <div class="spidey-buddy" id="spideyBuddy">
+        <div class="spidey-thread"></div>
+        <div class="spidey-char" id="spideyChar" onclick="showSpideyQuote()" role="button"
+            aria-label="Semangat dari Spidey" title="Klik buat semangat!">🕷️</div>
+        <div class="spidey-bubble" id="spideyBubble"></div>
+    </div>
+
+    <!-- Mobile Top Navigation Header & Overlay -->
+    <header class="mobile-header">
+        <div class="mobile-logo"><span>🕷️</span> Spider-Study</div>
+        <button class="mobile-nav-toggle" id="navToggleBtn" onclick="toggleMobileNav()" aria-label="Toggle Menu">
+            <span id="navToggleIcon">☰</span>
+        </button>
+    </header>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileNav(false)"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="sidebar-header">
+            <div class="sidebar-title">
+                <span>🕷️</span> Spider-Study Mode
+            </div>
+            <div class="sidebar-subtitle">Roblox Sentiment Analysis</div>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Web Progress</span>
+                    <span id="progressText">0/13 (0%)</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                    <span class="progress-spider" id="progressSpider">🕷️</span>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item" onclick="scrollToSection('sec-1')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-1"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>1. Inti Penelitian</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-2')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-2"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>2. Alur 8 Langkah</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-3')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-3"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>3. Kenapa 2 Model?</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-4')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-4"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>4. Split Data</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-5')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-5"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>5. Pembersihan Teks</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-6')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-6"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>6. Istilah Teknis</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-7')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-7"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>7. Metrik Evaluasi</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-8')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-8"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>8. Angka WAJIB Hafal</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-9')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-9"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>9. Tren Sentimen</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-10')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-10"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>10. Keterbatasan</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-11')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-11"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>11. Tanya Jawab Sidang</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-12')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-12"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>12. Cara Cepat Ngulang</span>
+            </li>
+            <li class="nav-item" onclick="scrollToSection('sec-13')">
+                <input type="checkbox" class="nav-checkbox" id="chk-sec-13"
+                    onclick="event.stopPropagation(); updateProgress()">
+                <span>13. Presentasi Dashboard</span>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <div class="search-box">
+                <span class="search-icon">🕷️</span>
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Cari topik (misal: Cochran, IndoBERT, Kappa, F1)..." onkeyup="filterContent()">
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results-msg" id="noResultsMsg">
+            🕸️ Gak ketemu nih, coba kata kunci lain (misal: Cochran, IndoBERT, Kappa, F1)...
+        </div>
+
+        <!-- Hero Banner -->
+        <div class="hero">
+            <div class="hero-tag">🕷️ THWIP! Persiapan Sidang Skripsi</div>
+            <h1 class="hero-title">Analisis Sentimen & Tren Temporal Roblox</h1>
+            <p class="hero-desc">
+                Model <strong>SVM vs IndoBERT</strong> — Rangkuman super ringkas dalam bahasa sehari-hari dengan
+                <em>Spider-Sense</em> biar kamu bisa menguasai sidang skripsi tanpa pusing.
+            </p>
+        </div>
+
+        <!-- SECTION 1 -->
+        <section id="sec-1" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">01.</span> Intinya penelitian ini ngapain sih?</h2>
+                <span class="section-badge">Gambaran Umum</span>
+            </div>
+            <p style="margin-bottom: 16px;">
+                Orang-orang nulis ulasan tentang game Roblox di Google Play Store. Kamu mau tahu:
+                <strong style="color: var(--spidey-red);">apakah opini orang tentang Roblox makin positif atau makin
+                    negatif dari waktu ke waktu, dan kenapa?</strong>
+            </p>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">🕸️</div>
+                <div>
+                    <strong>Masalah Utama:</strong> Rating bintang (1-5) itu <mark>gak selalu jujur</mark>. Orang bisa
+                    kasih bintang 5 tapi isi ulasannya ngomel, atau kasih bintang 1 padahal isinya biasa aja. Jadi kamu
+                    gak bisa cuma ngandelin bintang — kamu harus baca <strong>teksnya</strong>.
+                </div>
+            </div>
+
+            <p style="margin-top: 16px;">
+                Karena ulasannya puluhan ribu (49.484 ulasan bersih), gak mungkin dibaca manual satu-satu. Makanya kamu
+                pakai AI (model bahasa) buat baca dan mengklasifikasikan teksnya otomatis: <strong>positif, netral, atau
+                    negatif</strong> — murni dari isi tulisan.
+            </p>
+
+            <div class="alert-box">
+                <div class="alert-icon">📚</div>
+                <div>
+                    <strong>Alasan Metodologis:</strong> Ini bukan pendapat pribadi — penelitian terdahulu (Aljrees
+                    et al., 2024) membuktikan rating bintang punya "kelemahan mendasar": tidak semua ulasan rating
+                    tinggi mengandung sentimen positif, dan sebaliknya. Sementara analisis sentimen berbasis NLP
+                    terbukti mampu mengolah teks skala besar dengan akurasi kompetitif dibanding anotasi manual
+                    (Mandal, 2025). Jadi pendekatan berbasis teks bukan cuma "lebih praktis", tapi memang lebih
+                    <em>valid</em> secara ilmiah dibanding cuma ngandelin rating.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-2" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">02.</span> Alur Penelitian (8 Langkah)</h2>
+                <span class="section-badge">Metodologi</span>
+            </div>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">
+                Bayangin ini kayak proses racik formula Spider-Man: <em>bahan mentah → dibersihin → dikasih label rasa →
+                    dimasak dua cara berbeda → dibandingin mana yang enak → disajiin.</em>
+            </p>
+
+            <div class="workflow-list">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Ambil Data (Scraping)</div>
+                        <div class="step-desc">Sedot 50.000 ulasan Roblox dari Play Store pakai
+                            <code>google-play-scraper</code>. Hasil bersih: <strong>49.484 ulasan</strong> (25 Feb – 22
+                            Apr 2026).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Cleaning Minimal</div>
+                        <div class="step-desc">Cuma buang emoji, tag HTML, spasi berlebih. Sengaja dibiarin natural
+                            (kapital & tanda baca) karena model Transformer (IndoBERT/RoBERTa) butuh konteks utuh.</div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Dua Jalur Pelabelan Berbarengan</div>
+                        <div class="step-desc">
+                            • <strong>3a. Sampling Manual:</strong> Ambil 382 sampel pakai <mark>Rumus Cochran</mark>,
+                            terus dilabelin manual secara buta (blind).<br>
+                            • <strong>3b. Auto-Labeling:</strong> Sisa datanya dilabelin otomatis pakai model
+                            <strong>RoBERTa</strong> (sebagai <em>teacher</em>).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Gabung Label (label_final)</div>
+                        <div class="step-desc">382 label manual <mark>menang/menimpa</mark> label auto-teacher di baris
+                            yang sama. Hasil gabungan ini dinamakan <code>label_final</code> (kunci jawaban utama).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">Latih 2 Model Secara Paralel</div>
+                        <div class="step-desc">
+                            • <strong>5a. SVM (Baseline):</strong> Teks diproses penuh (lowercase, stopword, stemming) +
+                            TF-IDF → latih SVM.<br>
+                            • <strong>5b. IndoBERT (Model Utama):</strong> Teks natural → fine-tuning IndoBERT.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-title">Evaluasi & Perbandingan</div>
+                        <div class="step-desc">Dites di data uji yang sama persis (<strong>9.897 data / 20%</strong>)
+                            dengan <code>random_state=42</code> biar adil.</div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <div class="step-title">Analisis Tren Waktu</div>
+                        <div class="step-desc">Pakai hasil prediksi IndoBERT buat lihat pergerakan sentimen harian &
+                            dicocokkan sama isu/update resmi Roblox (triangulasi data).</div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">8</div>
+                    <div class="step-content">
+                        <div class="step-title">Dashboard Streamlit</div>
+                        <div class="step-desc">Hasil visualisasi ditampilin di web interaktif Streamlit
+                            (<code>app.py</code>) biar mudah dieksplorasi.</div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin: 20px 0 12px;">
+                <strong>Kenapa pakai pendekatan teacher-student (Langkah 3), bukan cara lain?</strong> Ada 3
+                alternatif yang ditolak, dan masing-masing ada alasannya:
+            </p>
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alternatif</th>
+                            <th>Kenapa Ditolak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Label dari rating bintang</strong></td>
+                            <td>Rating & isi teks cuma 66,91% selaras (Agreement Rate) — 33,09% sisanya bikin label
+                                gak akurat kalau dipaksa pakai rating.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Label manual 100% (49.484 data)</strong></td>
+                            <td>Gak realistis dari segi waktu/tenaga untuk 1 orang. Cuma representatif kalau
+                                minimal 382 sampel (Rumus Cochran) — sisanya harus otomatis.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lexicon/kamus sentimen statis</strong></td>
+                            <td>Ulasan Google Play berbahasa Indonesia sangat informal (banyak singkatan/slang), gak
+                                tertangani baik oleh kamus sentimen yang kaku (Hankar et al., 2025).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 12px; font-size: 0.88rem; color: var(--text-muted);">
+                📌 Makanya dipilih jalan tengah: <strong>hybrid</strong> — mayoritas data dilabeli otomatis oleh
+                model teacher (RoBERTa) yang sudah paham bahasa Indonesia, sebagian kecil (382 sampel representatif
+                secara statistik) tetap divalidasi manusia sebagai kontrol kualitas.
+            </p>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-3" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">03.</span> Kenapa Harus 2 Model, Bukan 1 Aja?</h2>
+                <span class="section-badge">Model Comparison</span>
+            </div>
+            <p style="margin-bottom: 16px;">
+                Penelitian yang baik butuh <mark>pembanding (baseline)</mark> untuk membuktikan bahwa metode yang
+                diusulkan beneran lebih jago.
+            </p>
+
+            <div class="terms-grid terms-grid-versus" style="margin-bottom: 16px;">
+                <div class="term-card">
+                    <div class="term-title">SVM (Baseline / Pembanding)</div>
+                    <div class="term-desc">
+                        Model klasik/simpel yang menghitung frekuensi kata (TF-IDF). Dipakai sebagai patokan: <em>"kalau
+                            pakai cara konvensional biasa, hasilnya segini"</em>.
+                    </div>
+                </div>
+
+                <div class="term-card" style="box-shadow: var(--clay-red-sm);">
+                    <div class="term-title" style="color: var(--spidey-red);">IndoBERT (Model Utama)</div>
+                    <div class="term-desc">
+                        Model AI Transformer canggih yang sudah mengerti konteks & tata bahasa Indonesia, lalu
+                        di-fine-tune khusus untuk ulasan Roblox.
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin: 16px 0;">
+                <strong>Tapi kenapa spesifik SVM vs IndoBERT, dan kenapa perbandingan ini penting secara
+                    metodologis</strong> — bukan cuma "iseng bandingin dua model AI"? Ini alasannya:
+            </p>
+
+            <div class="workflow-list" style="margin-bottom: 16px;">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">SVM Bukan Sembarang Pembanding</div>
+                        <div class="step-desc">Penelitian terdahulu soal analisis sentimen ulasan aplikasi
+                            berbahasa Indonesia — termasuk yang spesifik soal Roblox (Dewi et al., 2025) — berkali-
+                            kali nunjukin SVM+TF-IDF konsisten unggul/kompetitif dibanding algoritma klasik lain
+                            (Naive Bayes, Random Forest). Jadi SVM itu representasi "state of the art versi
+                            klasik" yang emang pantas jadi baseline, bukan lawan yang gampang dikalahin.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Hasilnya Nentuin Model yang Dipakai buat Tujuan Utama Skripsi</div>
+                        <div class="step-desc">Bukan cuma buat pamer angka akurasi — model yang menang di
+                            perbandingan ini prediksinya yang dipakai buat analisis tren temporal sentimen
+                            (tujuan utama penelitian, lihat Bagian 1). Kalau perbandingannya gak fair, seluruh
+                            analisis tren di belakangnya jadi diragukan validitasnya.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Langsung Menjawab Rumusan Masalah Skripsi</div>
+                        <div class="step-desc">Ini bukan section opsional — di Bab 1 skripsimu ada rumusan
+                            masalah eksplisit: <em>"Model manakah, antara Support Vector Machine baru dan IndoBERT
+                                fine-tuned, yang menghasilkan performa klasifikasi sentimen terbaik secara
+                                apple-to-apple?"</em> Subbab Perbandingan Model (Bab 3 & 4) ini jawabannya.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Ngisi Celah dari Penelitian Terdahulu</div>
+                        <div class="step-desc">Kebanyakan riset sejenis (termasuk yang soal Roblox) cuma pakai
+                            satu metode aja — SVM doang atau IndoBERT doang — gak pernah dibandingin apple-to-apple
+                            dalam satu penelitian yang sama buat tujuan analisis tren. Ini salah satu kebaruan
+                            skripsimu.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">⚖️</div>
+                <div>
+                    <strong>Agar Perbandingan Adil (Apple-to-Apple):</strong><br>
+                    1. Sama-sama menggunakan <code>label_final</code> yang sama.<br>
+                    2. Data uji sama persis (9.897 data, random_state=42).<br>
+                    3. Sama-sama menangani imbalance kelas (<code>class_weight='balanced'</code> di SVM, weighted loss
+                    di IndoBERT).
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-4" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">04.</span> Split Data — Kenapa 72% / 8% / 20%?</h2>
+                <span class="section-badge">Data Splitting</span>
+            </div>
+            <p style="margin-bottom: 16px;">
+                Poin (2) di Bagian 3 ("data uji sama persis, <code>random_state=42</code>") ini yang sering ditanya
+                lebih dalam: <strong>gimana caranya bisa sama persis?</strong>
+            </p>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">🕸️</div>
+                <div>
+                    <strong>Analogi:</strong> Bayangin kayak bagi kue ujian — potongan buat ujian
+                    (<em>test set</em>) disegel duluan sama-sama antara SVM dan IndoBERT, baru sisa kuenya dibagi
+                    lagi. IndoBERT ambil sedikit buat "latihan soal" (<em>validation</em>) sebelum ujian beneran,
+                    SVM enggak.
+                </div>
+            </div>
+
+            <div class="workflow-list" style="margin-top: 16px; margin-bottom: 16px;">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Potongan Test — Sama Buat SVM & IndoBERT</div>
+                        <div class="step-desc">Kedua script (<code>train_svm.py</code> &
+                            <code>train_indobert.py</code>) manggil
+                            <code>train_test_split(test_size=0.20, random_state=42, stratify=labels)</code> dengan
+                            <mark>random_state yang sama persis</mark>. Baris yang jatuh ke test set jadi kembar —
+                            9.897 ulasan identik di kedua model.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Potongan Validation — Cuma IndoBERT</div>
+                        <div class="step-desc">Dari 80% sisa (train-pool), IndoBERT motong lagi 10%-nya buat
+                            validation (<code>VAL_SIZE_IN_TRAIN = 0.1</code>) — dipakai mantau tiap epoch training.
+                            SVM gak butuh ini, jadi 80% train-pool-nya langsung semua dipakai buat fit TF-IDF +
+                            training.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subset</th>
+                            <th>Proporsi</th>
+                            <th>Jumlah</th>
+                            <th>Dipakai Model Apa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Train</strong></td>
+                            <td>72%</td>
+                            <td>35.628</td>
+                            <td>SVM & IndoBERT</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Validation</strong></td>
+                            <td>8%</td>
+                            <td>3.959</td>
+                            <td><span class="badge badge-info">IndoBERT saja</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Test</strong></td>
+                            <td>20%</td>
+                            <td>9.897</td>
+                            <td><span class="badge badge-warning">SVM & IndoBERT, identik persis</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p style="margin: 16px 0;">
+                <strong>Tapi kenapa rasio & caranya kayak gini, bukan yang lain?</strong> Ini alasan metodologisnya:
+            </p>
+
+            <div class="workflow-list" style="margin-bottom: 16px;">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Kenapa <code>stratify=labels</code>, Bukan Random Split Polos</div>
+                        <div class="step-desc">Kelas netral cuma ~6% dari data. Kalau split-nya bener-bener acak
+                            tanpa stratifikasi, ada risiko test set kebetulan dapat proporsi netral yang jomplang
+                            dari populasi aslinya (kelewat banyak atau kelewat dikit), bikin metrik evaluasi
+                            (terutama buat kelas netral) jadi gak representatif. <code>stratify=labels</code>
+                            memaksa proporsi 3 kelas di train/val/test tetap sama kayak proporsi keseluruhan
+                            data.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Kenapa IndoBERT Butuh Validation Set, SVM Enggak</div>
+                        <div class="step-desc">Ini bukan keputusan asal — buktinya kepakai beneran: waktu training
+                            IndoBERT, val_loss sempat <mark>naik dari 0,3704 (epoch 3) jadi 0,4713 (epoch 4)</mark>
+                            — tanda mulai overfitting. Berkat ada validation set, kamu bisa ketahuan itu dan tetap
+                            pilih model dari epoch dengan val_acc terbaik (epoch 5, 86,89%), bukan asal ambil model
+                            dari epoch terakhir. SVM gak butuh ini karena dia dilatih sekali jalan (single fit),
+                            gak ada proses per-epoch yang perlu dipantau buat cegah overfitting kayak IndoBERT.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Kenapa Rasio 80/20 (Bukan 90/10 atau 70/30)</div>
+                        <div class="step-desc">80/20 itu konvensi umum yang menyeimbangkan dua kebutuhan: data
+                            latih yang cukup banyak buat model belajar, sekaligus data uji yang cukup besar buat
+                            hasil evaluasinya stabil secara statistik. Karena total datanya gede (49.484), 20%
+                            test set tetap dapat 9.897 sampel — jumlah yang jauh dari kata kecil buat ukuran
+                            evaluasi model.</div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; font-size: 0.88rem; color: var(--text-muted);">
+                📌 <strong>Kenapa penting:</strong> kalau random_state-nya beda dikit aja antara dua script, baris
+                yang masuk test set bakal beda, jadi perbandingan SVM vs IndoBERT gak lagi apple-to-apple.
+            </p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-5" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">05.</span> Kenapa Ada 2 Macam "Pembersihan Teks"?</h2>
+                <span class="section-badge">Preprocessing</span>
+            </div>
+            <p style="margin-bottom: 16px;">Ini adalah pertanyaan yang <strong>hampir pasti ditanya penguji</strong>,
+                jadi wajib paham bedanya:</p>
+
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fitur</th>
+                            <th>Cleaning Minimal (Tahap 2)</th>
+                            <th>Praproses Penuh (Tahap 5a)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dipakai Untuk</strong></td>
+                            <td><span class="badge badge-info">RoBERTa & IndoBERT</span></td>
+                            <td><span class="badge badge-warning">SVM Saja</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Yang Dihapus</strong></td>
+                            <td>Emoji, tag HTML, spasi ganda</td>
+                            <td>+ Huruf kecil semua, tanda baca, stopword, kata dasar (stemming), handling negasi</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alasan Metodologis</strong></td>
+                            <td>Model Transformer butuh kalimat <strong>utuh</strong> agar mekanisme <em>attention</em>
+                                bisa memahami hubungan antar kata.</td>
+                            <td>SVM berbasis kata/TF-IDF, sehingga teks perlu disederhanakan agar tidak membuat ruang
+                                fitur terlalu besar & berantakan.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p style="margin-top: 16px; font-size: 0.88rem; color: var(--text-muted);">
+                📌 <strong>Sumber alasan ini bukan asumsi sendiri:</strong> mekanisme self-attention pada BERT
+                (termasuk RoBERTa & IndoBERT) memang dirancang buat "connect the dots" antar kata dalam kalimat
+                utuh (Devlin et al., 2019) — makanya kalimat gak boleh dipotong-potong duluan pakai stemming/stopword
+                removal kayak di jalur SVM.
+            </p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-6" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">06.</span> Istilah Teknis (Dijelasin Simpel)</h2>
+                <span class="section-badge">Glosarium</span>
+            </div>
+
+            <div class="terms-grid">
+                <div class="term-card">
+                    <div class="term-title">Case Folding</div>
+                    <div class="term-desc">Semua huruf diubah jadi kecil. "BAGUS" dan "bagus" dianggap sama.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Tokenisasi</div>
+                    <div class="term-desc">Kalimat dipotong-potong menjadi kata-kata terpisah (token).</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Negation Handling</div>
+                    <div class="term-desc">"tidak bagus" digabung jadi <code>bagus_NEG</code> agar maknanya tidak
+                        berbalik menjadi positif saat stopword dihapus.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Stopword Removal</div>
+                    <div class="term-desc">Menghapus kata hubung/umum yang tidak punya rasa sentimen (seperti "yang",
+                        "di", "dan").</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Stemming</div>
+                    <div class="term-desc">Mengubah kata berimbuhan ke kata dasar ("bermain", "dimainkan" → "main").
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">TF-IDF</div>
+                    <div class="term-desc">Skor pentingnya suatu kata. Kata yang sering muncul di satu ulasan tapi
+                        jarang di ulasan lain dapat skor tinggi.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Pseudo-Label</div>
+                    <div class="term-desc">Label tebakan dari AI (bukan manusia) yang dipakai seolah-olah jawaban benar
+                        untuk melatih model lain.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Teacher-Student</div>
+                    <div class="term-desc">Model "guru" (RoBERTa) ngasih label otomatis, lalu model "murid" (IndoBERT)
+                        belajar dari label tersebut.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Rumus Cochran</div>
+                    <div class="term-desc">Rumus statistik untuk menghitung jumlah sampel minimal dari populasi 49rb
+                        agar valid meyakinkan (hasil: 382 data). <strong>Kenapa Cochran:</strong> ini formula standar
+                        buat estimasi ukuran sampel dari populasi besar dengan tingkat kepercayaan & margin error
+                        tertentu (95% & 5% di penelitian ini) — bukan angka 382 yang dikarang asal.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Cohen's Kappa (κ = 0,9268)</div>
+                    <div class="term-desc">Uji konsistensi pelabelan manual ulang setelah jeda. Skor 0,9268 = kategori
+                        <strong>Almost Perfect</strong>. <strong>Kenapa Kappa, bukan persentase kecocokan biasa:</strong>
+                        Kappa memperhitungkan kemungkinan cocok karena kebetulan (<em>expected by chance</em>) —
+                        lebih ketat & lebih dipercaya daripada sekadar hitung persen cocok mentah.
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Class Weight / Balanced</div>
+                    <div class="term-desc">Memberi hukuman lebih berat jika model salah menebak kelas minoritas (netral
+                        ~6%) agar model tidak malas. <strong>Kenapa ini, bukan oversampling:</strong> class weight
+                        gak mengubah data asli (gak duplikasi/generate data palsu), cukup ubah cara model dihukum
+                        saat training — lebih sederhana & tetap fair dipakai konsisten di SVM & IndoBERT.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-7" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">07.</span> Metrik Evaluasi — Konsep Dasar</h2>
+                <span class="section-badge">Performance Metrics</span>
+            </div>
+
+            <div class="terms-grid">
+                <div class="term-card">
+                    <div class="term-title">Accuracy</div>
+                    <div class="term-desc">Persentase total tebakan benar. Simpel, tapi bisa menipu kalau jumlah data
+                        antar kelas tidak seimbang.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Precision</div>
+                    <div class="term-desc">Dari semua yang ditebak "positif" oleh model, berapa yang beneran positif?
+                        (Mengukur ketepatan/tidak nembak asal).</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">Recall</div>
+                    <div class="term-desc">Dari semua data yang aslinya positif, berapa yang berhasil tertangkap oleh
+                        model? (Mengukur sensitivitas).</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">F1-Score (Macro)</div>
+                    <div class="term-desc">Rata-rata seimbang antara Precision & Recall. Macro average memperlakukan
+                        kelas netral yang kecil sama pentingnya dengan kelas lain.</div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-title">AUC-ROC</div>
+                    <div class="term-desc">Kemampuan model membedakan antar kelas secara keseluruhan (1.0 = sempurna,
+                        0.5 = acak/lempar koin).</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-icon">📚</div>
+                <div>
+                    <strong>Kenapa 5 metrik ini, bukan accuracy doang?</strong> Karena kelas netral cuma ~6% dari
+                    data, accuracy sendirian bisa "menipu" — model yang asal nebak kelas mayoritas terus aja bisa
+                    dapat accuracy tinggi meski jelek di kelas minoritas. Makanya dipakai macro average (biar kelas
+                    netral tetap dihitung setara) plus AUC-ROC (ngukur kemampuan pisah-pisah kelas secara
+                    keseluruhan, gak tergantung satu ambang batas tertentu) — kombinasi ini yang bikin evaluasi
+                    model jujur, gak cuma keliatan bagus di permukaan.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-8" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">08.</span> Angka-angka WAJIB Hafal Buat Sidang</h2>
+                <span class="section-badge">Key Results</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Data Bersih</div>
+                    <div class="stat-value">49.484</div>
+                    <div class="stat-note">Dari target awal scraping 50.000 (516 dibuang)</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Sampel Manual (Cochran)</div>
+                    <div class="stat-value">382</div>
+                    <div class="stat-note">180 positif, 178 negatif, 24 netral</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Data Uji (Test Set 20%)</div>
+                    <div class="stat-value">9.897</div>
+                    <div class="stat-note">Sama persis untuk pengujian SVM & IndoBERT</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Akurasi SVM (Baseline)</div>
+                    <div class="stat-value">74,30%</div>
+                    <div class="stat-note">Macro F1: 65,16% | AUC-ROC: 90,61%</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Akurasi IndoBERT (Utama)</div>
+                    <div class="stat-value highlight">87,61%</div>
+                    <div class="stat-note">Macro F1: 80,33% | AUC-ROC: 96,09%</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Kenaikan IndoBERT vs SVM</div>
+                    <div class="stat-value highlight">+13,31%</div>
+                    <div class="stat-note">Peningkatan F1-score: +15,17 poin</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Agreement Rate (Rating vs Teks)</div>
+                    <div class="stat-value">66,91%</div>
+                    <div class="stat-note"><mark>33,09% data</mark> isi teksnya tidak selaras dengan bintang!</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-label">Reliabilitas Kappa (κ)</div>
+                    <div class="stat-value highlight">0,9268</div>
+                    <div class="stat-note">Percentage Agreement: 96,00% (Almost Perfect)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-9" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">09.</span> Kenapa Sentimen Makin Positif (Feb-Apr 2026)?
+                </h2>
+                <span class="section-badge">Temporal Analysis</span>
+            </div>
+
+            <p style="margin-bottom: 16px;">
+                Hasil tren menunjukkan ulasan <strong style="color: var(--danger);">negatif turun (49,87% →
+                    43,57%)</strong> dan ulasan <strong style="color: var(--success);">positif naik (40,84% →
+                    49,27%)</strong>. Berikut adalah kronologi penyebabnya:
+            </p>
+
+            <div class="workflow-list">
+                <div class="workflow-step">
+                    <div class="step-number"
+                        style="background: var(--danger); box-shadow: 4px 4px 9px rgba(120,10,10,0.5), -3px -3px 8px rgba(255,150,150,0.2), inset 1px 1px 2px rgba(255,200,200,0.35), inset -2px -2px 5px rgba(90,0,0,0.4);">
+                        1</div>
+                    <div class="step-content">
+                        <div class="step-title">Awal Maret 2026 — Gelombang Protes Wajah 3D</div>
+                        <div class="step-desc">Roblox menghapus wajah klasik (2D) & mewajibkan verifikasi usia pakai
+                            scan wajah. Komunitas protes keras dengan tagar <code>#RobloxBlackout2026</code> → ulasan
+                            negatif melonjak.</div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number"
+                        style="background: var(--warning); box-shadow: 4px 4px 9px rgba(120,80,0,0.5), -3px -3px 8px rgba(255,220,130,0.2), inset 1px 1px 2px rgba(255,235,180,0.35), inset -2px -2px 5px rgba(90,60,0,0.4);">
+                        2</div>
+                    <div class="step-content">
+                        <div class="step-title">9 April 2026 (Puncak Ulasan: 1.800 Ulasan)</div>
+                        <div class="step-desc">Keluhan berlanjut seputar pembatasan fitur chat untuk akun non-verifikasi
+                            umur.</div>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number"
+                        style="background: var(--success); box-shadow: 4px 4px 9px rgba(10,90,60,0.5), -3px -3px 8px rgba(130,255,190,0.18), inset 1px 1px 2px rgba(190,255,220,0.3), inset -2px -2px 5px rgba(0,70,45,0.4);">
+                        3</div>
+                    <div class="step-content">
+                        <div class="step-title">21 April 2026 (1.779 Ulasan) & Pemulihan</div>
+                        <div class="step-desc">Keluhan bergeser ke bug update aplikasi umum. Seiring berjalannya waktu,
+                            pengguna mulai terbiasa & ulasan positif kembali mendominasi.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">🕸️</div>
+                <div>
+                    <strong>Kenapa gak langsung nebak-nebak penyebabnya?</strong> Karena "kelihatannya begitu"
+                    bukan bukti ilmiah. Makanya dipakai <strong>mixed-methods triangulation</strong> (Creswell &
+                    Creswell, 2023) — gabungan analisis kuantitatif skala besar dengan verifikasi kualitatif data
+                    eksternal, 4 tahap berurutan:
+                </div>
+            </div>
+
+            <div class="workflow-list" style="margin-top: 16px;">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Deteksi Anomali Volumetrik</div>
+                        <div class="step-desc">49.484 ulasan dikelompokkan per tanggal buat nemuin hari-hari dengan
+                            lonjakan volume ulasan tidak wajar (Assi et al., 2021) — bukan pilih tanggal sesuka
+                            hati, tapi hasil deteksi otomatis dari data (lihat Tabel 4.12).</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Ekstraksi Fitur Semantik</div>
+                        <div class="step-desc">Di hari-hari puncak itu, ulasan bersentimen negatif disaring, terus
+                            diambil kata/frasa yang paling sering muncul (term frequency & bigram) — karena kelas
+                            negatif paling relevan buat identifikasi masalah nyata (Araujo et al., 2022).</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Interpretasi Tematik Kualitatif</div>
+                        <div class="step-desc">Kata-kata kunci itu dikelompokkan jadi tema keluhan yang koheren
+                            (misal: "chat", "verifikasi umur" → tema pembatasan fitur chat) (Nakamura et al.,
+                            2022) — bukan tebak-tebak sendiri, tapi pola yang muncul dari data.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Triangulasi Eksternal</div>
+                        <div class="step-desc">Tema keluhan itu baru dianggap valid kalau cocok sama sumber
+                            independen di luar dataset ulasan sendiri — status resmi Roblox, forum developer, atau
+                            berita (Tizard et al., 2022). Inilah bukti bahwa temuan pola sentimen bukan kebetulan,
+                            tapi beneran terkait peristiwa nyata.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-10" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">10.</span> Keterbatasan Penelitian (Akuai di Sidang)
+                </h2>
+                <span class="section-badge">Limitations</span>
+            </div>
+            <p style="margin-bottom: 16px;">Penguji sangat mengapresiasi jika kamu secara jujur menyampaikan
+                keterbatasan metodologi:</p>
+
+            <div class="qa-list">
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">1</div>
+                    <div><strong>Perlakuan Teks Beda:</strong> SVM dan IndoBERT menerima input teks berbeda (praproses
+                        penuh vs minimal) — jadi ini perbandingan pipeline keseluruhan, bukan arsitektur murni.</div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">2</div>
+                    <div><strong>Tanpa Hyperparameter Tuning:</strong> Parameter model menggunakan nilai default/standar
+                        yang wajar, belum di-tuning secara komprehensif.</div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">3</div>
+                    <div><strong>Annotator Tunggal:</strong> Pelabelan manual 382 data dilakukan oleh 1 orang (dirimu).
+                        Meski uji reliabilitas intra-annotator tinggi (Kappa 0,9268), potensi bias pribadi tetap ada.
+                    </div>
+                </div>
+
+                <div class="alert-box alert-warning">
+                    <div class="alert-icon">4</div>
+                    <div><strong>Efek Class Weight:</strong> Penggunaan <code>class_weight='balanced'</code> pada SVM
+                        menaikkan recall netral tetapi menurunkan precision netral dari 55,84% menjadi 25,98%.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-11" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">11.</span> Pertanyaan Sidang & Jawaban Singkat</h2>
+                <div class="section-header-actions">
+                    <button class="qa-toggle-all-btn" id="qaToggleAllBtn" onclick="toggleAllQA()">Buka Semua</button>
+                    <span class="section-badge">Q&A Flashcards</span>
+                </div>
+            </div>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Klik pada pertanyaan untuk melihat atau
+                menyembunyikan jawaban:</p>
+
+            <div class="qa-list">
+                <div class="qa-card" onclick="toggleQA(this)">
+                    <div class="qa-header">
+                        <span>Q: Kenapa gak pakai rating bintang aja buat label, kan lebih gampang?</span>
+                        <span class="qa-toggle-icon">▼</span>
+                    </div>
+                    <div class="qa-body">
+                        <strong>Jawaban:</strong> Karena rating bintang dan isi teks hanya <strong>66,91%
+                            selaras</strong>. Artinya ada 33,09% data yang ratingnya tidak mencerminkan isi pesannya
+                        (misal bintang 5 tapi isinya ngomel bug). Teks memberikan sentimen asli yang lebih jujur.
+                    </div>
+                </div>
+
+                <div class="qa-card" onclick="toggleQA(this)">
+                    <div class="qa-header">
+                        <span>Q: Kenapa gak dilabelin manual semua 49.000 data biar akurat?</span>
+                        <span class="qa-toggle-icon">▼</span>
+                    </div>
+                    <div class="qa-body">
+                        <strong>Jawaban:</strong> Karena jumlahnya 49.484 ulasan, secara praktis tidak memungkinkan
+                        dilabeli manual. Oleh karena itu digunakan pendekatan <strong>hybrid</strong>: pelabelan
+                        otomatis memakai model RoBERTa (teacher) dan validasi manual pada 382 sampel terhitung (Rumus
+                        Cochran) sebagai kontrol kualitas.
+                    </div>
+                </div>
+
+                <div class="qa-card" onclick="toggleQA(this)">
+                    <div class="qa-header">
+                        <span>Q: Yakin gak bias, wong yang labelin manual cuma kamu sendiri?</span>
+                        <span class="qa-toggle-icon">▼</span>
+                    </div>
+                    <div class="qa-body">
+                        <strong>Jawaban:</strong> Untuk menjamin reliabilitas, dilakukan uji <em>intra-annotator</em>
+                        pada 50 sampel secara buta setelah jeda 48 jam. Hasilnya menunjukkan Cohen's Kappa <strong>κ =
+                            0,9268</strong> (Almost Perfect). Namun keterbatasan ini tetap diakui di Bab 5 untuk
+                        dikembangkan dengan multiple annotators pada penelitian selanjutnya.
+                    </div>
+                </div>
+
+                <div class="qa-card" onclick="toggleQA(this)">
+                    <div class="qa-header">
+                        <span>Q: Kenapa IndoBERT lebih unggul, apa cuma karena penanganan imbalance?</span>
+                        <span class="qa-toggle-icon">▼</span>
+                    </div>
+                    <div class="qa-body">
+                        <strong>Jawaban:</strong> Tidak. Setelah SVM diberikan <code>class_weight='balanced'</code> yang
+                        setara, IndoBERT tetap unggul di seluruh metrik (Akurasi 87,61% vs 74,30%, Macro F1 80,33% vs
+                        65,16%). Keunggulan ini membuktikan efektivitas mekanisme <em>self-attention</em> IndoBERT dalam
+                        memahami konteks kalimat bahasa Indonesia.
+                    </div>
+                </div>
+
+                <div class="qa-card" onclick="toggleQA(this)">
+                    <div class="qa-header">
+                        <span>Q: Kenapa preprocessing SVM dan IndoBERT beda, apa tidak curang?</span>
+                        <span class="qa-toggle-icon">▼</span>
+                    </div>
+                    <div class="qa-body">
+                        <strong>Jawaban:</strong> Ini bukan kecurangan, melainkan penyesuaian terhadap karakteristik
+                        arsitektur masing-masing. SVM (TF-IDF) membutuhkan penyederhanaan kata agar fitur tidak meledak,
+                        sedangkan IndoBERT (Transformer) justru kehilangan konteks berharga jika teks dipotong-potong.
+                        Ini diakui secara terbuka sebagai perbandingan <em>end-to-end pipeline</em>.
+                    </div>
+                </div>
+
+                <div class="qa-card" onclick="toggleQA(this)">
+                    <div class="qa-header">
+                        <span>Q: Kalau saya minta kamu tambahin fitur baru di dashboard sekarang, kamu tau harus
+                            ubah bagian mana?</span>
+                        <span class="qa-toggle-icon">▼</span>
+                    </div>
+                    <div class="qa-body">
+                        <strong>Jawaban:</strong> Tau. <code>app.py</code> itu 1 file aja (gak dipecah jadi banyak
+                        file/fungsi per halaman), navigasinya lewat blok <code>if page == "...":</code> /
+                        <code>elif page == "...":</code> berturut-turut buat 5 halaman: Ringkasan Eksekutif,
+                        Analisis Sentimen Teks, Tren Temporal, Model & Evaluasi, dan Pipeline Praproses. Jadi kalau
+                        diminta nambah/ubah sesuatu di halaman tertentu, tinggal cari blok
+                        <code>elif page == "..."</code> yang namanya cocok (misal
+                        <code>elif page == "📉 Tren Temporal":</code> buat urusan grafik tren), terus nambah
+                        widget/chart baru di situ ngikutin pola Plotly yang udah dipakai di halaman itu — bukan
+                        bikin file atau fungsi terpisah baru.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-12" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">12.</span> Checklist Cara Cepat Ngulang Sebelum Sidang
+                </h2>
+                <span class="section-badge">Action Plan</span>
+            </div>
+
+            <div class="workflow-list">
+                <label class="workflow-step" style="cursor: pointer;">
+                    <input type="checkbox" class="nav-checkbox" style="margin-top: 2px;">
+                    <div class="step-content">
+                        <div class="step-title">1. Baca Ulang Bab 1 (Rumusan Masalah)</div>
+                        <div class="step-desc">Pahami 4 pertanyaan penelitian dan tujuannya.</div>
+                    </div>
+                </label>
+
+                <label class="workflow-step" style="cursor: pointer;">
+                    <input type="checkbox" class="nav-checkbox" style="margin-top: 2px;">
+                    <div class="step-content">
+                        <div class="step-title">2. Latihan Gambar Diagram Alur 8 Tahap</div>
+                        <div class="step-desc">Praktekkan menggambar alur penelitian di kertas tanpa melihat catatan.
+                        </div>
+                    </div>
+                </label>
+
+                <label class="workflow-step" style="cursor: pointer;">
+                    <input type="checkbox" class="nav-checkbox" style="margin-top: 2px;">
+                    <div class="step-content">
+                        <div class="step-title">3. Hafal Tabel Angka Utama (Bagian 8)</div>
+                        <div class="step-desc">Akurasi, F1-score, Agreement Rate (66,91%), Kappa (0,9268), dan Total
+                            Data (49.484).</div>
+                    </div>
+                </label>
+
+                <label class="workflow-step" style="cursor: pointer;">
+                    <input type="checkbox" class="nav-checkbox" style="margin-top: 2px;">
+                    <div class="step-content">
+                        <div class="step-title">4. Simulasi Tanya Jawab Suara Keras</div>
+                        <div class="step-desc">Ucapkan jawaban pertanyaan sidang (Bagian 11) dengan suara keras
+                            secara lancar.</div>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-13" class="section-block">
+            <div class="section-header">
+                <h2 class="section-title"><span class="sec-num">13.</span> Cara Presentasi Dashboard Live</h2>
+                <span class="section-badge">Demo Sidang</span>
+            </div>
+            <p style="margin-bottom: 16px;">
+                Dashboard-mu (<code>app.py</code>) punya <strong>5 halaman</strong>. Bagian ini nunjukin urutan demo
+                yang disarankan plus kalimat siap-ucap buat tiap grafik, biar pas sidang kamu gak "loading" nyari
+                kata-kata di depan penguji.
+            </p>
+
+            <div class="alert-box alert-info">
+                <div class="alert-icon">🕸️</div>
+                <div>
+                    <strong>Persiapan Teknis (5-10 menit sebelum sidang mulai):</strong> buka Terminal, jalankan
+                    <code>source .venv/bin/activate</code> lalu <code>streamlit run app.py</code> di folder project.
+                    Klik ke semua 5 halaman sekali dulu sebelum penguji datang — biar cache Streamlit sudah
+                    "panas" (load pertama kali biasanya paling lambat) dan kamu gak nemu error mengejutkan pas
+                    live. Siapkan juga screenshot tiap halaman sebagai cadangan kalau wifi/laptop bermasalah.
+                </div>
+            </div>
+
+            <p style="margin: 20px 0 12px;">
+                <strong>Urutan demo yang disarankan</strong> — beda dari urutan menu sidebar (Ringkasan → Analisis
+                Sentimen → Tren Temporal → Model & Evaluasi → Pipeline), sengaja disusun ulang biar alurnya naratif:
+                mulai dari gambaran besar, baru metodologi, baru bukti performa model, baru bedah isi teks, dan
+                ditutup dengan temuan utama:
+            </p>
+
+            <div class="workflow-list" style="margin-bottom: 20px;">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">📈 Ringkasan Eksekutif — buka pertama</div>
+                        <div class="step-desc">Kasih gambaran besar dulu ke penguji sebelum masuk detail, kayak
+                            "elevator pitch". ~1-2 menit.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">⚙️ Pipeline Praproses — jelasin metodologi</div>
+                        <div class="step-desc">Tunjukin alur 8 tahap penelitian dalam bentuk diagram hidup, biar
+                            penguji paham dari mana angka-angka nanti berasal. ~2-3 menit.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">🔬 Model & Evaluasi — buktikan klaim performa</div>
+                        <div class="step-desc">Jawab rumusan masalah "model mana yang terbaik" pakai angka
+                            konkret, bukan cuma klaim. ~3-4 menit, bagian paling sering dikejar pertanyaan.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">📊 Analisis Sentimen Teks — bedah isi teks</div>
+                        <div class="step-desc">Tunjukin model gak cuma keluarin angka, tapi beneran "paham" kata
+                            apa yang bikin suatu ulasan diklasifikasikan positif/negatif. ~1-2 menit.</div>
+                    </div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">📉 Tren Temporal — tutup dengan temuan utama</div>
+                        <div class="step-desc">Ini klimaksnya — jawaban langsung dari tujuan utama penelitian
+                            (analisis tren temporal). Alokasikan waktu paling banyak di sini, ~4-5 menit.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--spidey-red); margin: 28px 0 12px;">
+                📈 Halaman 1 — Ringkasan Eksekutif</h3>
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elemen di Layar</th>
+                            <th>Cara Menjelaskannya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>6 kartu KPI</strong> (Total Ulasan, Rating Rata-rata, Agreement Rate,
+                                Sentimen Positif/Negatif, Accuracy IndoBERT)</td>
+                            <td>"Ini snapshot dari seluruh 49.484 ulasan yang dianalisis. Angka Agreement Rate di
+                                sini yang jadi motivasi utama penelitian — sepertiga data rating bintangnya gak
+                                nyambung sama isi teksnya, makanya penelitian ini gak bisa cuma ngandelin bintang."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Donut chart</strong> Distribusi Sentimen</td>
+                            <td>"Ini distribusi akhir hasil prediksi IndoBERT — model utama — pada seluruh data.
+                                Positif dan negatif hampir seimbang, sementara netral memang kelas minoritas,
+                                makanya perlu <code>class_weight</code> waktu training."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ringkasan Eksekutif Temuan Penelitian</strong> (5 poin teks)</td>
+                            <td>Poin-poin ini di-generate otomatis dari data yang sedang tampil di layar (bukan
+                                teks statis) — aman dipakai buat "baca cepat" kalau penguji minta kesimpulan garis
+                                besar, angkanya dijamin sinkron dengan yang lagi ditampilkan.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--spidey-red); margin: 28px 0 12px;">
+                ⚙️ Halaman 2 — Pipeline Praproses</h3>
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elemen di Layar</th>
+                            <th>Cara Menjelaskannya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Flowchart 8 tahap</strong> (digraph)</td>
+                            <td>"Ini diagram alur penelitian, sama persis dengan Bab 3. Bedanya, diagram ini
+                                di-generate langsung dari kode program, jadi selalu sinkron dengan pipeline yang
+                                beneran jalan — bukan gambar statis yang bisa ketinggalan zaman."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3 metric card</strong> (Total Review, Periode, Sumber Data)</td>
+                            <td>Sebutin cepat: total data, rentang tanggal 25 Feb–22 Apr 2026, dan konfirmasi
+                                sumber data dari Google Play Store.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bar chart</strong> Distribusi Rating Bintang</td>
+                            <td>"Rating 1 dan 5 paling dominan, rating 2-4 jauh lebih sedikit — pola khas ulasan
+                                aplikasi yang polarized. Ini salah satu bukti visual kenapa rating numerik kurang
+                                informatif buat sentimen granular; orang cenderung ekstrem pas kasih bintang."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tabel</strong> Sebelum vs Sesudah Preprocessing (5 sampel)</td>
+                            <td>"Ini bukti konkret bedanya cleaning minimal vs praproses penuh. Kolom kanan itu
+                                hasil stemming/stopword removal yang khusus dipakai buat SVM — IndoBERT gak
+                                menyentuh versi ini, dia belajar dari teks natural."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--spidey-red); margin: 28px 0 12px;">
+                🔬 Halaman 3 — Model & Evaluasi</h3>
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elemen di Layar</th>
+                            <th>Cara Menjelaskannya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2 kartu spesifikasi</strong> SVM vs IndoBERT</td>
+                            <td>Jelasin singkat bedanya: SVM = machine learning klasik berbasis frekuensi kata
+                                (TF-IDF), IndoBERT = Transformer yang paham konteks kalimat (lihat Bagian 3).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metric card</strong> Accuracy/Precision/Recall/F1 (2 kolom
+                                berdampingan)</td>
+                            <td>"Angka ini diambil langsung dari file metrics hasil evaluasi resmi
+                                (<code>metrics_svm_teacher.json</code> / <code>metrics_indobert.json</code>), bukan
+                                diketik manual — kalau modelnya dilatih ulang, angka di dashboard ini otomatis
+                                ikut update." IndoBERT unggul di keempat metrik sekaligus, sebut selisihnya
+                                (+13,31 poin accuracy).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2 heatmap Confusion Matrix</strong> (SVM biru, IndoBERT hijau)</td>
+                            <td>"Garis diagonal dari kiri-atas ke kanan-bawah itu prediksi yang benar — makin
+                                gelap makin banyak. Perhatikan sel netral di SVM warnanya lebih terang, artinya
+                                SVM sering salah tebak kelas netral — ini bukti visual dari precision netral yang
+                                cuma 25,98% di tabel angka."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2 metric card</strong> Agreement Rate & Mismatch Rate</td>
+                            <td>"Angka yang sama seperti di halaman Ringkasan, dihitung ulang di sini dari kolom
+                                <code>sentiment_rating</code> vs <code>sentiment_indobert</code> biar konsisten."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bar chart</strong> Pemetaan Jenis Ketidaksesuaian (4 kategori)</td>
+                            <td>"Ini breakdown dari 33,09% data yang gak selaras tadi — kalau ditanya 'mismatch-nya
+                                paling banyak tipe yang mana', jawabannya ada di bar paling panjang di grafik
+                                ini."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--spidey-red); margin: 28px 0 12px;">
+                📊 Halaman 4 — Analisis Sentimen Teks</h3>
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elemen di Layar</th>
+                            <th>Cara Menjelaskannya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pie chart</strong> Proporsi Polaritas Sentimen</td>
+                            <td>Isinya sama seperti donut di halaman Ringkasan — cukup sebut cepat "sama seperti
+                                sebelumnya" biar gak keliatan ngulang-ulang penjelasan yang sama.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2 bar chart</strong> Top 10 Kata Kunci Positif & Negatif</td>
+                            <td>"Kata-kata ini bukan tebakan — diekstrak otomatis dari teks ulasan yang SUDAH
+                                diklasifikasikan model sebagai positif/negatif. Jadi grafik ini semacam 'bukti
+                                pendukung' kenapa model memutuskan suatu ulasan itu positif atau negatif."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Word Cloud</strong> (Positif hijau, Negatif merah)</td>
+                            <td>"Versi visual dari bar chart tadi — makin besar tulisannya, makin sering kata itu
+                                muncul. Cocok dipakai sebagai 'gambar penutup' pas closing statement halaman
+                                ini."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--spidey-red); margin: 28px 0 12px;">
+                📉 Halaman 5 — Tren Temporal (paling penting, jelasin paling detail)</h3>
+            <div class="custom-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Elemen di Layar</th>
+                            <th>Cara Menjelaskannya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A. Line chart</strong> Tren Sentimen Harian (3 garis warna)</td>
+                            <td>"Ini jantungnya penelitian — jawaban langsung dari tujuan utama. Tiga garis ini
+                                pergerakan polaritas dari hari ke hari. Ada beberapa lonjakan tajam, itu yang saya
+                                bedah lebih detail di bagian bawah halaman ini."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B. Tabel</strong> Top 10 Hari Volume Tertinggi</td>
+                            <td>"Ini hasil deteksi anomali otomatis — bukan saya pilih tanggal sesuka hati,
+                                murni hasil sortir volume ulasan per hari dari data."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3 kartu Metodologi</strong> (Deteksi Anomali, Ekstraksi Kata Kunci &
+                                Bigram, Triangulasi Peristiwa Riil)</td>
+                            <td>Ini bagian paling sering dikejar pertanyaan karena metodologinya spesifik.
+                                Jelasin 3 tahap ini (sama seperti Bagian 9 di study guide ini): deteksi anomali
+                                volumetrik → ekstraksi fitur semantik → triangulasi ke sumber eksternal.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C. Pie chart</strong> sentimen per tanggal puncak + narasi otomatis</td>
+                            <td>"Untuk 3 hari puncak ini saya breakdown sentimennya masing-masing, lalu saya
+                                cocokkan kata kunci dominannya dengan kejadian nyata di ekosistem Roblox —
+                                misalnya kontroversi verifikasi umur pada fitur chat di 9 April 2026."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D. Sampel Ulasan Representatif</strong></td>
+                            <td>"Ini kutipan asli dari pengguna di hari puncak — bagus buat membumikan angka
+                                statistik jadi suara pengguna asli kalau penguji minta contoh konkret."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E. Bar chart</strong> Klasifikasi Kata Kunci Dominan (hari puncak)</td>
+                            <td>Serupa dengan bar chart di halaman Analisis Sentimen, tapi khusus hari-hari
+                                puncak — memperkuat argumen tematik kenapa lonjakan itu terjadi.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F. Kesimpulan Analisis Tren Temporal</strong> (teks)</td>
+                            <td>Baca/parafrasekan ini sebagai kalimat penutup demo dashboard secara
+                                keseluruhan.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert-box" style="margin-top: 20px;">
+                <div class="alert-icon">📚</div>
+                <div>
+                    <strong>Do's & Don'ts pas live demo:</strong><br>
+                    ✅ Latihan klik-klik alurnya minimal sekali sampai lancar tanpa nyasar antar halaman.<br>
+                    ✅ Tiap pindah halaman, kaitkan balik ke rumusan masalah — biar keliatan terarah, bukan
+                    sekadar "coba-coba klik".<br>
+                    ❌ Jangan refresh browser di tengah sidang (loading ulang bisa lambat & bikin canggung).<br>
+                    ❌ Jangan buka semua widget/filter yang gak relevan — fokus ke elemen yang sudah kamu
+                    siapkan penjelasannya di atas.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- SPIDER WEB CANVAS CLICK ANIMATION (OPTIMIZED) ---
+        const canvas = document.getElementById('webCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const activeWebs = [];
+        let isAnimating = false;
+
+        class SpiderWebBurst {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.maxRadius = Math.random() * 60 + 80;
+                this.radius = 5;
+                this.spokes = Math.floor(Math.random() * 3) + 7;
+                this.rings = 4;
+                this.alpha = 1;
+                this.color = Math.random() > 0.3 ? '#ff2a4b' : '#0084ff';
+                this.speed = Math.random() * 4 + 7;
+                this.rotation = Math.random() * Math.PI;
+            }
+
+            update() {
+                if (this.radius < this.maxRadius) {
+                    this.radius += this.speed;
+                } else {
+                    this.alpha -= 0.05;
+                }
+            }
+
+            draw(ctx) {
+                if (this.alpha <= 0) return;
+
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 2;
+
+                const angleStep = (Math.PI * 2) / this.spokes;
+
+                for (let i = 0; i < this.spokes; i++) {
+                    const angle = i * angleStep + this.rotation;
+                    const endX = this.x + Math.cos(angle) * this.radius;
+                    const endY = this.y + Math.sin(angle) * this.radius;
+
+                    ctx.beginPath();
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+                }
+
+                for (let r = 1; r <= this.rings; r++) {
+                    const ringRadius = (this.radius / this.rings) * r;
+                    ctx.beginPath();
+                    for (let i = 0; i <= this.spokes; i++) {
+                        const angle = i * angleStep + this.rotation;
+                        const px = this.x + Math.cos(angle) * ringRadius;
+                        const py = this.y + Math.sin(angle) * ringRadius;
+
+                        if (i === 0) {
+                            ctx.moveTo(px, py);
+                        } else {
+                            ctx.lineTo(px, py);
+                        }
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        function animateWebs() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = activeWebs.length - 1; i >= 0; i--) {
+                const web = activeWebs[i];
+                web.update();
+                web.draw(ctx);
+                if (web.alpha <= 0) {
+                    activeWebs.splice(i, 1);
+                }
+            }
+
+            if (activeWebs.length > 0) {
+                requestAnimationFrame(animateWebs);
+            } else {
+                isAnimating = false;
+                ctx.clearRect(0, 0, width, height);
+            }
+        }
+
+        window.addEventListener('click', (e) => {
+            activeWebs.push(new SpiderWebBurst(e.clientX, e.clientY));
+
+            if (!isAnimating) {
+                isAnimating = true;
+                requestAnimationFrame(animateWebs);
+            }
+
+            createThwipText(e.clientX, e.clientY);
+        });
+
+        function createThwipText(x, y) {
+            const texts = ['THWIP!', '🕸️', 'THWIP!!'];
+            const chosen = texts[Math.floor(Math.random() * texts.length)];
+
+            const el = document.createElement('div');
+            el.className = 'thwip-text';
+            el.innerText = chosen;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+
+            document.body.appendChild(el);
+            setTimeout(() => {
+                el.remove();
+            }, 600);
+        }
+
+        // --- NAVIGATION & DOM LOGIC ---
+        function toggleMobileNav(forceState) {
+            const aside = document.querySelector('aside');
+            const overlay = document.getElementById('sidebarOverlay');
+            const icon = document.getElementById('navToggleIcon');
+
+            const isOpen = forceState !== undefined ? forceState : !aside.classList.contains('open');
+
+            if (isOpen) {
+                aside.classList.add('open');
+                overlay.classList.add('active');
+                if (icon) icon.innerText = '✕';
+            } else {
+                aside.classList.remove('open');
+                overlay.classList.remove('active');
+                if (icon) icon.innerText = '☰';
+            }
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (window.innerWidth <= 900) {
+                toggleMobileNav(false);
+            }
+        }
+
+        function toggleQA(card) {
+            card.classList.toggle('open');
+        }
+
+        let allQAOpen = false;
+        function toggleAllQA() {
+            const cards = document.querySelectorAll('#sec-11 .qa-card');
+            allQAOpen = !allQAOpen;
+            cards.forEach(c => c.classList.toggle('open', allQAOpen));
+            const btn = document.getElementById('qaToggleAllBtn');
+            btn.innerText = allQAOpen ? 'Tutup Semua' : 'Buka Semua';
+        }
+
+        const TOTAL_SECTIONS = 13;
+
+        function updateProgress() {
+            let checkedCount = 0;
+            for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+                const chk = document.getElementById(`chk-sec-${i}`);
+                if (chk && chk.checked) {
+                    checkedCount++;
+                    localStorage.setItem(`skripsi_sec_${i}`, '1');
+                } else {
+                    localStorage.setItem(`skripsi_sec_${i}`, '0');
+                }
+            }
+
+            const pct = Math.round((checkedCount / TOTAL_SECTIONS) * 100);
+            document.getElementById('progressBar').style.width = `${pct}%`;
+            document.getElementById('progressText').innerText = `${checkedCount}/${TOTAL_SECTIONS} (${pct}%)`;
+            const progressSpider = document.getElementById('progressSpider');
+            if (progressSpider) progressSpider.style.left = `${pct}%`;
+        }
+
+        function loadProgress() {
+            for (let i = 1; i <= TOTAL_SECTIONS; i++) {
+                const saved = localStorage.getItem(`skripsi_sec_${i}`);
+                const chk = document.getElementById(`chk-sec-${i}`);
+                if (chk && saved === '1') {
+                    chk.checked = true;
+                }
+            }
+            updateProgress();
+        }
+
+        const originalSectionHTML = new Map();
+
+        function highlightMatches(root, query) {
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                if (node.nodeValue.toLowerCase().includes(query)) {
+                    textNodes.push(node);
+                }
+            }
+
+            textNodes.forEach(textNode => {
+                const value = textNode.nodeValue;
+                const lower = value.toLowerCase();
+                const frag = document.createDocumentFragment();
+                let lastIndex = 0;
+                let idx;
+                while ((idx = lower.indexOf(query, lastIndex)) !== -1) {
+                    if (idx > lastIndex) {
+                        frag.appendChild(document.createTextNode(value.slice(lastIndex, idx)));
+                    }
+                    const mark = document.createElement('mark');
+                    mark.className = 'search-hl';
+                    mark.textContent = value.slice(idx, idx + query.length);
+                    frag.appendChild(mark);
+                    lastIndex = idx + query.length;
+                }
+                if (lastIndex < value.length) {
+                    frag.appendChild(document.createTextNode(value.slice(lastIndex)));
+                }
+                textNode.parentNode.replaceChild(frag, textNode);
+            });
+        }
+
+        function filterContent() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const sections = document.querySelectorAll('.section-block');
+            const noResultsMsg = document.getElementById('noResultsMsg');
+            let anyVisible = false;
+
+            sections.forEach(sec => {
+                if (!originalSectionHTML.has(sec.id)) {
+                    originalSectionHTML.set(sec.id, sec.innerHTML);
+                }
+                sec.innerHTML = originalSectionHTML.get(sec.id);
+
+                if (!query) {
+                    sec.style.display = 'block';
+                    anyVisible = true;
+                    return;
+                }
+
+                const text = sec.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    sec.style.display = 'block';
+                    anyVisible = true;
+                    highlightMatches(sec, query);
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+
+            noResultsMsg.classList.toggle('visible', query.length > 0 && !anyVisible);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section-block');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            let current = '';
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 100;
+                if (window.scrollY >= top) {
+                    current = sec.getAttribute('id');
+                }
+            });
+
+            navItems.forEach((item, idx) => {
+                item.classList.remove('active');
+                if (current === `sec-${idx + 1}`) {
+                    item.classList.add('active');
+                }
+            });
+
+            if (current) {
+                localStorage.setItem('skripsi_last_section', current);
+            }
+
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+
+            triggerSpideySwing();
+        });
+
+        let spideySwingTimeout = null;
+        function triggerSpideySwing() {
+            const buddy = document.getElementById('spideyBuddy');
+            if (!buddy || spideySwingTimeout) return;
+            buddy.classList.add('swinging');
+            spideySwingTimeout = setTimeout(() => {
+                buddy.classList.remove('swinging');
+                spideySwingTimeout = null;
+            }, 800);
+        }
+
+        const SPIDEY_QUOTES = [
+            'THWIP! Lo pasti bisa nyelesain bab ini 💪',
+            'With great data comes great responsibility.',
+            'Spider-sense bilang: lanjut baca, jangan rebahan dulu!',
+            'Sedikit lagi menuju sidang. Tetap di jaring, jangan kabur ya.',
+            'Bug di kode itu kayak villain — hadapin, jangan dihindarin.',
+            'Istirahat boleh, nyerah jangan.',
+            'Tiap section yang lo ceklis itu satu langkah lebih deket ke toga.',
+            'Inget, Peter Parker juga gagal berkali-kali sebelum jadi jagoan.',
+            'Jaring laba-laba aja butuh waktu dianyam. Skripsi juga gitu, santai tapi jalan terus.',
+            'Kamu udah sejauh ini. Jangan berhenti sekarang, THWIP!'
+        ];
+
+        let spideyBubbleTimeout = null;
+        function showSpideyQuote() {
+            const bubble = document.getElementById('spideyBubble');
+            const char = document.getElementById('spideyChar');
+            if (!bubble || !char) return;
+
+            const quote = SPIDEY_QUOTES[Math.floor(Math.random() * SPIDEY_QUOTES.length)];
+            bubble.innerText = quote;
+            bubble.classList.add('visible');
+            char.style.animation = 'none';
+            char.offsetHeight;
+            char.style.animation = '';
+
+            clearTimeout(spideyBubbleTimeout);
+            spideyBubbleTimeout = setTimeout(() => bubble.classList.remove('visible'), 3500);
+        }
+
+        function spawnSpideyCrawler() {
+            if (window.innerWidth < 900) return;
+            const spider = document.createElement('div');
+            spider.className = 'spidey-crawler';
+            spider.textContent = '🕷️';
+            const goingRight = Math.random() > 0.5;
+            const duration = 6 + Math.random() * 4;
+            const fromX = goingRight ? -40 : window.innerWidth + 40;
+            const toX = goingRight ? window.innerWidth + 40 : -40;
+
+            spider.style.bottom = `${10 + Math.random() * 70}px`;
+            spider.style.left = `${fromX}px`;
+            spider.style.transform = goingRight ? 'scaleX(1)' : 'scaleX(-1)';
+            document.body.appendChild(spider);
+
+            requestAnimationFrame(() => {
+                spider.style.transition = `left ${duration}s linear`;
+                spider.style.left = `${toX}px`;
+            });
+
+            setTimeout(() => spider.remove(), duration * 1000 + 200);
+        }
+
+        function scheduleSpideyCrawler() {
+            const delay = 25000 + Math.random() * 25000;
+            setTimeout(() => {
+                spawnSpideyCrawler();
+                scheduleSpideyCrawler();
+            }, delay);
+        }
+
+        function resumeLastSection() {
+            const lastSection = localStorage.getItem('skripsi_last_section');
+            if (!lastSection) return;
+            const el = document.getElementById(lastSection);
+            if (!el) return;
+            setTimeout(() => {
+                el.scrollIntoView({ behavior: 'auto', block: 'start' });
+            }, 50);
+        }
+
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadProgress();
+            resumeLastSection();
+            scheduleSpideyCrawler();
+        });
+    </script>
+</body>
+
+</html>

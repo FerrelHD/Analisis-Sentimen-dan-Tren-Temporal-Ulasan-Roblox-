@@ -1,0 +1,94 @@
+<svg viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="900" fill="white"/>
+
+  <!-- 1 Scraping -->
+  <rect x="340" y="15" width="220" height="55" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="450" y="38" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">1. Scraping Review</text>
+  <text x="450" y="55" text-anchor="middle" font-size="10" fill="#4338CA">Google Play Store</text>
+
+  <path d="M450,70 L450,95" stroke="#334155" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- 2 Cleaning Minimal (diperluas dengan detail operasi) -->
+  <rect x="310" y="95" width="280" height="75" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="450" y="118" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">2. Cleaning Minimal</text>
+  <text x="450" y="134" text-anchor="middle" font-size="9.5" font-style="italic" fill="#4338CA">bukan praproses penuh</text>
+  <text x="450" y="150" text-anchor="middle" font-size="9.5" fill="#4338CA">hapus emoji &#183; URL &#183; tag HTML &#183; rapikan spasi</text>
+  <text x="450" y="163" text-anchor="middle" font-size="9" fill="#64748B">(kapital/imbuhan/tanda baca tetap dipertahankan)</text>
+
+  <path d="M450,170 L450,190 L235,190 L235,210" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M450,170 L450,190 L665,190 L665,210" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- 3a / 3b -->
+  <rect x="115" y="210" width="240" height="60" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="235" y="233" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">3a. Sampling Manual</text>
+  <text x="235" y="249" text-anchor="middle" font-size="10" fill="#4338CA">Cochran n=382 + Label Manual</text>
+  <text x="235" y="263" text-anchor="middle" font-size="10" fill="#4338CA">(blind, dilabel peneliti)</text>
+
+  <rect x="545" y="210" width="240" height="60" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="665" y="233" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">3b. Auto-Labeling</text>
+  <text x="665" y="249" text-anchor="middle" font-size="10" fill="#4338CA">Teacher: RoBERTa</text>
+  <text x="665" y="263" text-anchor="middle" font-size="10" fill="#4338CA">(teks natural)</text>
+
+  <path d="M235,270 L235,290 L450,290 L450,310" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M665,270 L665,290 L450,290 L450,310" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- 4 Merge -->
+  <rect x="330" y="310" width="240" height="55" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="450" y="333" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">4. Merge Label Final</text>
+  <text x="450" y="350" text-anchor="middle" font-size="10" fill="#4338CA">RoBERTa (99,2%) + Manual (0,8%)</text>
+
+  <path d="M450,365 L450,385 L235,385 L235,405" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M450,365 L450,385 L665,385 L665,405" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- 5a / 5b -->
+  <rect x="115" y="405" width="240" height="60" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.3"/>
+  <text x="235" y="428" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">5a. SVM + TF-IDF</text>
+  <text x="235" y="444" text-anchor="middle" font-size="10" fill="#047857">praproses penuh di sini</text>
+  <text x="235" y="458" text-anchor="middle" font-size="10" fill="#047857">(Baseline)</text>
+
+  <rect x="545" y="405" width="240" height="60" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.3"/>
+  <text x="665" y="428" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">5b. Fine-tuning IndoBERT</text>
+  <text x="665" y="444" text-anchor="middle" font-size="10" fill="#047857">teks natural</text>
+  <text x="665" y="458" text-anchor="middle" font-size="10" fill="#047857">(Model Utama)</text>
+
+  <path d="M235,465 L235,485 L235,500" fill="none" stroke="#334155" stroke-width="1.3"/>
+  <path d="M665,465 L665,485 L665,500" fill="none" stroke="#334155" stroke-width="1.3"/>
+
+  <!-- 6a / 6b -->
+  <rect x="115" y="500" width="240" height="55" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.3"/>
+  <text x="235" y="523" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">6a. Evaluasi SVM</text>
+  <text x="235" y="540" text-anchor="middle" font-size="10" fill="#047857">Accuracy, F1, AUC-ROC, CM</text>
+
+  <rect x="545" y="500" width="240" height="55" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.3"/>
+  <text x="665" y="523" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">6b. Evaluasi IndoBERT</text>
+  <text x="665" y="540" text-anchor="middle" font-size="10" fill="#047857">Accuracy, F1, AUC-ROC, CM</text>
+
+  <path d="M235,555 L235,575 L450,575 L450,595" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M665,555 L665,575 L450,575 L450,595" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- 6c Perbandingan -->
+  <rect x="330" y="595" width="240" height="55" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.3"/>
+  <text x="450" y="618" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">6c. Perbandingan Model</text>
+  <text x="450" y="635" text-anchor="middle" font-size="10" fill="#047857">Apple-to-Apple</text>
+
+  <path d="M450,650 L450,675" stroke="#334155" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- 7 Tren Temporal -->
+  <rect x="340" y="675" width="220" height="55" rx="8" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.3"/>
+  <text x="450" y="698" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">7. Analisis Tren Temporal</text>
+  <text x="450" y="715" text-anchor="middle" font-size="10" fill="#B45309">model terpilih</text>
+
+  <path d="M450,730 L450,755" stroke="#334155" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- 8 Dashboard -->
+  <rect x="340" y="755" width="220" height="55" rx="8" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.3"/>
+  <text x="450" y="778" text-anchor="middle" font-size="13" font-weight="700" fill="#1E293B">8. Dashboard Visualisasi</text>
+  <text x="450" y="795" text-anchor="middle" font-size="10" fill="#B45309">Streamlit</text>
+
+  <text x="450" y="870" text-anchor="middle" font-size="11" fill="#64748B">Gambar 3.1 Tahapan Penelitian (revisi)</text>
+</svg>

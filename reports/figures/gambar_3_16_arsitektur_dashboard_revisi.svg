@@ -1,0 +1,106 @@
+<svg viewBox="0 0 900 745" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="745" fill="white"/>
+
+  <!-- ===== Layer 1: Data Layer ===== -->
+  <rect x="15" y="15" width="870" height="155" rx="6" fill="#EEF2FF" stroke="#6366F1" stroke-dasharray="4 3"/>
+  <text x="450" y="32" text-anchor="middle" font-size="12" font-weight="700" fill="#4338CA" letter-spacing="1">DATA LAYER</text>
+
+  <rect x="35" y="55" width="255" height="95" rx="8" fill="white" stroke="#6366F1" stroke-width="1.3"/>
+  <text x="162" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#1E293B">data/processed/</text>
+  <text x="162" y="98" text-anchor="middle" font-size="12" font-weight="700" fill="#1E293B">roblox_sentiment.csv</text>
+  <text x="162" y="119" text-anchor="middle" font-size="10" fill="#64748B">Data ulasan + label hasil</text>
+  <text x="162" y="133" text-anchor="middle" font-size="10" fill="#64748B">klasifikasi IndoBERT</text>
+
+  <rect x="322" y="55" width="255" height="95" rx="8" fill="white" stroke="#6366F1" stroke-width="1.3"/>
+  <text x="449" y="82" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1E293B">metrics_svm_teacher.json</text>
+  <text x="449" y="98" text-anchor="middle" font-size="10" fill="#64748B">models/svm_teacher/</text>
+  <text x="449" y="119" text-anchor="middle" font-size="10" fill="#64748B">Metrik evaluasi SVM</text>
+  <text x="449" y="133" text-anchor="middle" font-size="10" fill="#64748B">(baseline)</text>
+
+  <rect x="609" y="55" width="256" height="95" rx="8" fill="white" stroke="#6366F1" stroke-width="1.3"/>
+  <text x="737" y="76" text-anchor="middle" font-size="11" font-weight="700" fill="#1E293B">metrics_indobert_on_</text>
+  <text x="737" y="91" text-anchor="middle" font-size="11" font-weight="700" fill="#1E293B">teacher_testset.json</text>
+  <text x="737" y="112" text-anchor="middle" font-size="10" fill="#64748B">models/svm_teacher/</text>
+  <text x="737" y="126" text-anchor="middle" font-size="10" fill="#64748B">Metrik evaluasi IndoBERT</text>
+
+  <!-- ===== Layer 2: Streamlit Backend ===== -->
+  <rect x="15" y="185" width="870" height="300" rx="6" fill="#FFF7ED" stroke="#EA580C" stroke-dasharray="4 3"/>
+  <text x="450" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#C2410C" letter-spacing="1">STREAMLIT BACKEND (app.py)</text>
+
+  <rect x="150" y="260" width="230" height="64" rx="8" fill="#FFEDD5" stroke="#EA580C" stroke-width="1.3"/>
+  <text x="265" y="287" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Load Data</text>
+  <text x="265" y="303" text-anchor="middle" font-size="10" fill="#7C2D12">@st.cache_data load_dataset()</text>
+
+  <rect x="150" y="355" width="230" height="64" rx="8" fill="#FFEDD5" stroke="#EA580C" stroke-width="1.3"/>
+  <text x="265" y="382" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Routing Navigasi</text>
+  <text x="265" y="398" text-anchor="middle" font-size="10" fill="#7C2D12">st.sidebar + st.radio (5 halaman)</text>
+
+  <rect x="560" y="280" width="270" height="130" rx="8" fill="#FFEDD5" stroke="#EA580C" stroke-width="1.3"/>
+  <text x="695" y="307" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Plotly &amp; Matplotlib</text>
+  <text x="695" y="323" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Visualizations</text>
+  <text x="695" y="345" text-anchor="middle" font-size="10" fill="#7C2D12">Bar · Pie · Line · Heatmap · Scatter</text>
+  <text x="695" y="360" text-anchor="middle" font-size="10" fill="#7C2D12">Wordcloud · Confusion Matrix</text>
+  <text x="695" y="375" text-anchor="middle" font-size="10" fill="#7C2D12">(plotly.express + matplotlib.pyplot)</text>
+
+  <!-- ===== Layer 3: Frontend Pages ===== -->
+  <rect x="15" y="495" width="870" height="235" rx="6" fill="#ECFDF5" stroke="#059669" stroke-dasharray="4 3"/>
+  <text x="450" y="513" text-anchor="middle" font-size="12" font-weight="700" fill="#047857" letter-spacing="1">FRONTEND PAGES</text>
+
+  <g font-size="11.5">
+    <rect x="35" y="525" width="155" height="150" rx="8" fill="white" stroke="#059669" stroke-width="1.3"/>
+    <text x="112" y="552" text-anchor="middle" font-weight="700" fill="#1E293B">Overview</text>
+    <text x="112" y="568" text-anchor="middle" font-size="10" fill="#065F46">Ringkasan</text>
+    <text x="112" y="582" text-anchor="middle" font-size="10" fill="#065F46">Eksekutif</text>
+
+    <rect x="205" y="525" width="155" height="150" rx="8" fill="white" stroke="#059669" stroke-width="1.3"/>
+    <text x="282" y="552" text-anchor="middle" font-weight="700" fill="#1E293B">Analisis</text>
+    <text x="282" y="567" text-anchor="middle" font-weight="700" fill="#1E293B">Sentimen</text>
+    <text x="282" y="585" text-anchor="middle" font-size="10" fill="#065F46">Distribusi &amp; kata kunci</text>
+
+    <rect x="375" y="525" width="155" height="150" rx="8" fill="white" stroke="#059669" stroke-width="1.3"/>
+    <text x="452" y="552" text-anchor="middle" font-weight="700" fill="#1E293B">Tren</text>
+    <text x="452" y="567" text-anchor="middle" font-weight="700" fill="#1E293B">Temporal</text>
+    <text x="452" y="585" text-anchor="middle" font-size="10" fill="#065F46">Perubahan sentimen</text>
+    <text x="452" y="598" text-anchor="middle" font-size="10" fill="#065F46">per waktu</text>
+
+    <rect x="545" y="525" width="155" height="150" rx="8" fill="white" stroke="#059669" stroke-width="1.3"/>
+    <text x="622" y="552" text-anchor="middle" font-weight="700" fill="#1E293B">Model &amp;</text>
+    <text x="622" y="567" text-anchor="middle" font-weight="700" fill="#1E293B">Evaluasi</text>
+    <text x="622" y="585" text-anchor="middle" font-size="10" fill="#065F46">SVM vs IndoBERT</text>
+
+    <rect x="715" y="525" width="155" height="150" rx="8" fill="white" stroke="#059669" stroke-width="1.3"/>
+    <text x="792" y="552" text-anchor="middle" font-weight="700" fill="#1E293B">Scraping &amp;</text>
+    <text x="792" y="567" text-anchor="middle" font-weight="700" fill="#1E293B">Preprocessing</text>
+    <text x="792" y="585" text-anchor="middle" font-size="10" fill="#065F46">Pipeline pengumpulan</text>
+    <text x="792" y="598" text-anchor="middle" font-size="10" fill="#065F46">&amp; praproses data</text>
+  </g>
+
+  <!-- ===== Arrows: Data Layer -> Load Data (staggered elbow, no crossing) ===== -->
+  <path d="M162,150 L162,222 L230,222 L230,260" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M449,150 L449,232 L265,232 L265,260" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M737,150 L737,242 L300,242 L300,260" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- Load Data -> Routing Navigasi -->
+  <path d="M265,324 L265,355" fill="none" stroke="#334155" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- Load Data -> Visualizations (data feeds charts) -->
+  <path d="M380,300 L560,300" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- Routing Navigasi -> Visualizations (page logic renders charts) -->
+  <path d="M380,387 L560,387" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- Routing Navigasi -> 5 pages (trunk + bus + branches) -->
+  <path d="M265,419 L265,445" fill="none" stroke="#334155" stroke-width="1.4"/>
+  <path d="M112,445 L792,445" fill="none" stroke="#334155" stroke-width="1.4"/>
+  <path d="M112,445 L112,525" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M282,445 L282,525" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M452,445 L452,525" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M622,445 L622,525" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M792,445 L792,525" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+</svg>

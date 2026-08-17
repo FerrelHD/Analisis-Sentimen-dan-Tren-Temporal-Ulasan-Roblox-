@@ -1,0 +1,54 @@
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="480" fill="white"/>
+  <text x="450" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1E293B">Gambar 3.9 Arsitektur Auto-Labeling &amp; Validasi Manual (revisi — hybrid)</text>
+
+  <rect x="330" y="50" width="240" height="50" rx="8" fill="white" stroke="#94A3B8" stroke-width="1.3"/>
+  <text x="450" y="72" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Dataset content_raw_clean</text>
+  <text x="450" y="88" text-anchor="middle" font-size="9.5" fill="#64748B">(teks natural, Tahap 2)</text>
+
+  <path d="M450,100 L450,120 L235,120 L235,140" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M450,100 L450,120 L665,120 L665,140" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <!-- 3a branch -->
+  <rect x="105" y="140" width="260" height="60" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="235" y="163" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Sampling Manual (3a)</text>
+  <text x="235" y="179" text-anchor="middle" font-size="10" fill="#4338CA">Cochran, n=382, stratifikasi</text>
+  <text x="235" y="193" text-anchor="middle" font-size="10" fill="#4338CA">dari pseudo_label_roberta</text>
+
+  <path d="M235,200 L235,220" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <rect x="105" y="220" width="260" height="55" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="235" y="243" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Label Manual (Blind)</text>
+  <text x="235" y="259" text-anchor="middle" font-size="10" fill="#4338CA">peneliti, tanpa lihat rating/RoBERTa</text>
+
+  <!-- 3b branch -->
+  <rect x="535" y="140" width="260" height="60" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="665" y="163" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Auto-Labeling (3b)</text>
+  <text x="665" y="179" text-anchor="middle" font-size="10" fill="#4338CA">Teacher: w11wo/indonesian-</text>
+  <text x="665" y="193" text-anchor="middle" font-size="10" fill="#4338CA">roberta-base-sentiment-classifier</text>
+
+  <path d="M665,200 L665,220" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <rect x="535" y="220" width="260" height="55" rx="8" fill="#EEF2FF" stroke="#818CF8" stroke-width="1.3"/>
+  <text x="665" y="243" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">pseudo_label_roberta</text>
+  <text x="665" y="259" text-anchor="middle" font-size="10" fill="#4338CA">seluruh 49.484 baris</text>
+
+  <path d="M235,275 L235,295 L450,295 L450,315" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M665,275 L665,295 L450,295 L450,315" fill="none" stroke="#334155" stroke-width="1.3" marker-end="url(#arrow)"/>
+
+  <rect x="330" y="315" width="240" height="60" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.3"/>
+  <text x="450" y="338" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Merge label_final</text>
+  <text x="450" y="354" text-anchor="middle" font-size="10" fill="#047857">manual menimpa RoBERTa</text>
+  <text x="450" y="368" text-anchor="middle" font-size="10" fill="#047857">di 382 baris sampel</text>
+
+  <path d="M450,375 L450,400" stroke="#334155" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <rect x="330" y="400" width="240" height="55" rx="8" fill="#FFFBEB" stroke="#FBBF24" stroke-width="1.3"/>
+  <text x="450" y="423" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1E293B">Dataset Berlabel Final</text>
+  <text x="450" y="439" text-anchor="middle" font-size="9.5" fill="#B45309">-&gt; training SVM (5a) &amp; IndoBERT (5b)</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg viewBox="0 0 900 210" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="210" fill="white"/>
+  <text x="450" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#1E293B">Gambar 3.10 Pipeline Fine-Tuning IndoBERT (revisi — input teks natural)</text>
+
+  <g font-size="10.5">
+    <rect x="15" y="55" width="140" height="70" rx="6" fill="#ECFDF5" stroke="#34D399"/>
+    <text x="85" y="80" text-anchor="middle" font-weight="700">content_raw_clean</text>
+    <text x="85" y="97" text-anchor="middle" font-size="9" fill="#047857">teks natural</text>
+    <text x="85" y="110" text-anchor="middle" font-size="9" fill="#047857">(bukan hasil stem)</text>
+
+    <rect x="175" y="55" width="140" height="70" rx="6" fill="white" stroke="#94A3B8"/>
+    <text x="245" y="85" text-anchor="middle" font-weight="700">Tokenizer</text>
+    <text x="245" y="100" text-anchor="middle" font-size="9" fill="#64748B">WordPiece</text>
+
+    <rect x="335" y="55" width="150" height="70" rx="6" fill="white" stroke="#94A3B8"/>
+    <text x="410" y="80" text-anchor="middle" font-weight="700">Input IDs +</text>
+    <text x="410" y="95" text-anchor="middle" font-weight="700">Attention Mask</text>
+    <text x="410" y="110" text-anchor="middle" font-size="9" fill="#64748B">max_length=128</text>
+
+    <rect x="505" y="55" width="150" height="70" rx="6" fill="white" stroke="#94A3B8"/>
+    <text x="580" y="85" text-anchor="middle" font-weight="700">Encoder</text>
+    <text x="580" y="100" text-anchor="middle" font-size="9" fill="#64748B">IndoBERT Transformer</text>
+
+    <rect x="675" y="55" width="105" height="70" rx="6" fill="white" stroke="#94A3B8"/>
+    <text x="727" y="85" text-anchor="middle" font-weight="700">[CLS]</text>
+    <text x="727" y="100" text-anchor="middle" font-size="9" fill="#64748B">representasi</text>
+    <text x="727" y="112" text-anchor="middle" font-size="9" fill="#64748B">kontekstual</text>
+  </g>
+
+  <path d="M155,90 L175,90" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M315,90 L335,90" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M485,90 L505,90" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M655,90 L675,90" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M727,125 L727,145 L450,145 L450,160" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="330" y="160" width="240" height="40" rx="6" fill="#FFFBEB" stroke="#FBBF24"/>
+  <text x="450" y="176" text-anchor="middle" font-size="10.5" font-weight="700">Classification Head</text>
+  <text x="450" y="190" text-anchor="middle" font-size="9" fill="#B45309">Dropout -&gt; Linear -&gt; Softmax -&gt; 3 kelas</text>
+</svg>

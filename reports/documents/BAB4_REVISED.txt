@@ -1,0 +1,157 @@
+4. HASIL DAN PEMBAHASAN
+4.1 Hasil Pengumpulan Data
+Pengumpulan data pada penelitian ini dilakukan melalui teknik web scraping dengan memanfaatkan pustaka google-play-scraper yang dijalankan pada bahasa pemrograman Python. Proses scraping diarahkan untuk menghimpun ulasan pengguna aplikasi Roblox pada platform Google Play Store, dengan menerapkan filter bahasa Indonesia dan wilayah Indonesia serta pengurutan berdasarkan ulasan terbaru, sehingga data yang diperoleh merepresentasikan ulasan pengguna berbahasa Indonesia pada periode penelitian.
+Ulasan yang berhasil dihimpun mencakup rentang waktu mulai tanggal 25 Februari 2026 hingga 22 April 2026. Pemilihan rentang waktu tersebut dimaksudkan untuk memperoleh gambaran sentimen pengguna dalam periode yang cukup panjang, sehingga memungkinkan dilakukannya analisis tren temporal pada subbab pembahasan selanjutnya.
+
+Gambar 4.1 Halaman Aplikasi Roblox di Google Play Store
+Gambar 4.1 menampilkan halaman aplikasi Roblox pada Google Play Store yang menjadi sumber data penelitian. Halaman tersebut memuat informasi dasar aplikasi, seperti nama aplikasi, peringkat (rating), jumlah unduhan, dan ulasan pengguna yang dapat diakses secara publik.
+
+Gambar 4.2 Hasil Scraping Dataset Format CSV
+Gambar 4.2 menunjukkan contoh data hasil scraping dalam format CSV, yang mencakup kolom content (teks ulasan), score (peringkat bintang), dan at (tanggal ulasan). Format tersebut memudahkan proses penyimpanan dan pengolahan data pada tahap selanjutnya.
+Dari target sebanyak 50.000 ulasan yang ditetapkan sebelumnya, penelitian ini berhasil memperoleh sebanyak 49.485 ulasan yang memuat ketiga atribut tersebut. Keseluruhan data hasil scraping kemudian disimpan dalam format CSV sebagai raw dataset yang selanjutnya digunakan pada tahap praproses teks sebelum proses pelabelan otomatis dan pelatihan model.
+4.2 Hasil Praproses Teks
+Praproses teks dilakukan untuk membersihkan dan menyeragamkan data ulasan sebelum digunakan pada tahap pelatihan model. Tahapan praproses yang diterapkan pada penelitian ini meliputi case folding, cleaning, tokenisasi, penanganan negasi, penghapusan stopword, dan stemming, yang dilaksanakan secara berurutan terhadap seluruh data ulasan.
+Dari 50.000 ulasan target hasil scraping, berhasil diperoleh 49.485 ulasan yang valid (515 data dieliminasi karena tidak lengkap atau tidak relevan). Seluruh 49.485 data tersebut kemudian digunakan untuk tahapan praproses teks dan analisis selanjutnya.
+Hasil dari setiap tahapan praproses dijelaskan secara rinci pada subbab-subbab berikut, disertai dengan contoh transformasi teks yang terjadi pada masing-masing proses guna memberikan gambaran konkret mengenai perubahan data pada setiap tahapan.
+4.2.1 Hasil Case Folding
+Case folding dilakukan dengan mengubah seluruh karakter teks menjadi huruf kecil untuk mengeliminasi variasi representasi kata yang timbul akibat perbedaan penggunaan huruf kapital pada teks ulasan.
+Proses ini memastikan bahwa kata-kata yang secara semantik memiliki makna sama diperlakukan identik oleh model, sehingga tidak terjadi duplikasi representasi kata semata-mata karena perbedaan kapitalisasi huruf.
+Tabel 4.3 Hasil Case Folding
+
+Berdasarkan Tabel 4.3, seluruh teks ulasan yang sebelumnya ditulis menggunakan huruf kapital berhasil diseragamkan menjadi huruf kecil tanpa mengubah makna maupun struktur kalimat aslinya. Konsistensi representasi huruf ini penting agar variasi penulisan kata yang sebenarnya bermakna sama tidak dihitung sebagai token yang berbeda pada tahap analisis selanjutnya.
+
+
+
+4.2.2 Hasil Cleaning
+Tahap cleaning dilakukan untuk menghapus karakter-karakter yang tidak relevan bagi proses klasifikasi, meliputi tautan (URL), angka, karakter HTML, tanda baca, dan karakter non-alfanumerik lainnya.
+Tujuan tahap ini adalah mengurangi derau (noise) pada data teks yang dapat mengganggu proses pembelajaran model apabila tidak dibersihkan terlebih dahulu.
+Tabel 4.4 Hasil Data Cleaning
+
+Berdasarkan Tabel 4.4, karakter-karakter yang tidak relevan, seperti tanda baca dan simbol khusus, berhasil dihapus dari teks ulasan tanpa menghilangkan substansi informasi yang dikandungnya. Dengan berkurangnya elemen-elemen non-alfanumerik tersebut, teks ulasan menjadi lebih bersih dan siap dipecah menjadi token-token individual pada tahap tokenisasi.
+4.2.3 Hasil Tokenisasi
+Tokenisasi dilakukan untuk memecah teks yang telah dibersihkan menjadi satuan-satuan kata (token) sebagai unit dasar analisis pada tahap pemodelan selanjutnya. Proses tokenisasi pada penelitian ini menggunakan pustaka NLTK yang mendukung pemisahan teks berbasis tanda baca untuk bahasa Indonesia.
+
+
+Tabel 4.5 Hasil Tokenisasi
+
+Berdasarkan Tabel 4.5, setiap teks ulasan berhasil dipecah menjadi token-token individual yang selanjutnya siap digunakan pada tahap penanganan negasi dan penghapusan stopword. Pemisahan pada tingkat kata ini menjadi unit dasar yang memungkinkan proses ekstraksi fitur maupun tokenisasi pada model dilakukan secara lebih sistematis dan frekuensi kemunculan kata secara lebih terstruktur dibandingkan dengan memperlakukan teks sebagai satu kesatuan kalimat.
+4.2.4 Hasil Penanganan Negasi
+Kata-kata negasi, seperti “tidak”, “bukan”, dan “jangan”, digabungkan dengan kata yang mengikutinya menggunakan penanda khusus, misalnya frasa “tidak bisa” menjadi bisa_NEG. Pendekatan ini bertujuan untuk mempertahankan makna semantik berlawanan agar tidak hilang pada saat proses penghapusan stopword berlangsung.
+
+
+Tabel 4.6 Hasil Penanganan Negasi
+Berdasarkan Tabel 4.6, kata negasi berhasil digabungkan dengan kata berikutnya menggunakan penanda _NEG, sehingga makna berlawanan pada kalimat tetap terjaga meskipun kata negasi tersebut termasuk dalam daftar stopword yang akan dihapus. Tanpa penanganan ini, kata negasi berisiko terhapus begitu saja pada tahap penghapusan stopword, sehingga kalimat yang sebenarnya bermakna negatif dapat salah diinterpretasikan sebagai kalimat positif oleh model.
+4.2.5 Hasil Penghapusan Stopword
+Kata-kata yang tidak membawa bobot semantik signifikan dihapus menggunakan daftar stopword bahasa Indonesia dari korpus NLTK. Daftar stopword ini digunakan secara langsung tanpa modifikasi tambahan pada tahap ini.
+Tabel 4.7 Hasil Stopword Removal
+Berdasarkan Tabel 4.7, kata-kata yang tidak relevan secara semantik berhasil dihilangkan dari token ulasan, sehingga token yang tersisa lebih merepresentasikan inti dari isi ulasan pengguna. Pengurangan jumlah token pada tahap ini juga membantu mengurangi jumlah token yang tidak informatif sehingga representasi teks menjadi lebih ringkas.
+4.2.6 Hasil Stemming
+Setiap kata direduksi ke bentuk dasarnya menggunakan algoritma Nazief-Adriani yang diimplementasikan melalui pustaka PySastrawi. Proses ini menyeragamkan variasi morfologis kata dalam bahasa Indonesia, sehingga kata-kata dengan bentuk berbeda namun bermakna sama dapat diperlakukan secara konsisten oleh model.
+Tabel 4.8 Hasil Stemming
+Berdasarkan Tabel 4.8, setiap kata berhasil direduksi ke bentuk dasarnya, sehingga variasi imbuhan pada kata dapat disatukan menjadi satu representasi yang konsisten sebelum data digunakan pada tahap pelabelan otomatis. Dengan demikian, seluruh tahapan praproses yang telah dijelaskan pada subbab 4.2.1 hingga 4.2.6 menghasilkan teks ulasan yang bersih, konsisten, dan siap digunakan sebagai masukan bagi proses pelabelan otomatis menggunakan teacher model pada subbab berikutnya.
+4.3 Hasil Auto-Labeling Berbasis Teacher Model
+Tahapan auto-labeling berbasis teacher model dilakukan untuk menghasilkan label sentimen secara otomatis tanpa memerlukan anotasi manual yang memakan waktu dan biaya. Model RoBERTa berbahasa Indonesia (w11wo/indonesian-roberta-base-sentiment-classifier) berperan sebagai teacher model yang memprediksi sentimen teks ulasan secara langsung berdasarkan konteks semantiknya.
+Hasil prediksi teacher model menghasilkan pseudo-label yang terbentuk dari prediksi teacher model, yang selanjutnya digunakan secara langsung sebagai label final pada proses fine-tuning model IndoBERT pada subbab selanjutnya.
+
+4.3.1 Distribusi Pseudo-Label
+Pelabelan otomatis dilakukan menggunakan pendekatan teacher-student dengan model RoBERTa berbahasa Indonesia (w11wo/indonesian-roberta-base-sentiment-classifier) sebagai teacher model. Proses pelabelan menghasilkan tiga kelas sentimen, yaitu positif, netral, dan negatif.
+Tabel 4.9 Distribusi Hasil Pseudo-Labeling
+Tabel 4.9 menunjukkan distribusi pseudo-label yang dihasilkan oleh teacher model. Kelas positif mendominasi dataset dengan 22.522 ulasan (45.51%), diikuti oleh kelas negatif sebanyak 19.673 ulasan (39.76%), dan kelas netral sebanyak 7.290 ulasan (14.73%).
+Ketidakseimbangan distribusi kelas tersebut mencerminkan kecenderungan pengguna untuk memberikan ulasan yang bersifat positif terhadap aplikasi Roblox, dan menjadi pertimbangan penting dalam proses pelatihan model pada tahap selanjutnya. Distribusi pseudo-label ini hanya digunakan sebagai data pelatihan bagi model IndoBERT dan bukan merupakan hasil prediksi akhir yang digunakan pada analisis tren temporal maupun dashboard.
+
+Gambar 4.9 Distribusi Pseudo-label Teacher
+Gambar 4.9 menunjukkan distribusi pseudo-label yang dihasilkan oleh model teacher RoBERTa `w11wo/indonesian-roberta-base-sentiment-classifier` pada 49.485 ulasan Roblox. Dari grafik tersebut terlihat bahwa kelas sentimen positif menjadi kelas yang paling dominan dengan jumlah 22.522 ulasan (45.51%), diikuti oleh kelas negatif dengan 19.673 ulasan (39.76%), dan kelas netral dengan 7.290 ulasan (14.73%). Distribusi ini menunjukkan bahwa sebagian besar ulasan pengguna Roblox cenderung memiliki sentimen positif, meskipun terdapat juga jumlah ulasan negatif yang cukup signifikan.
+
+4.4 Hasil Model SVM Baseline
+Model Support Vector Machine (SVM) dibangun sebagai model baseline untuk memberikan acuan performa awal sebelum penerapan model berbasis Transformer. Model SVM memanfaatkan representasi fitur TF-IDF dan dilatih menggunakan strategi One-vs-Rest (OvR) agar dapat menangani klasifikasi tiga kelas sentimen secara bersamaan.
+Pemilihan SVM sebagai model baseline didasarkan pada kemampuannya yang telah banyak dibuktikan pada berbagai penelitian klasifikasi teks, sehingga dapat digunakan sebagai pembanding yang layak terhadap model berbasis Transformer.
+Subbab ini menjelaskan konfigurasi yang digunakan serta hasil evaluasi model SVM pada data uji.
+4.4.1 Konfigurasi Model SVM
+Model SVM dibangun menggunakan representasi fitur TF-IDF dengan max_features sebesar 5.000, kernel linear, parameter C sebesar 1.0, dan strategi One-vs-Rest (OvR) untuk menangani klasifikasi tiga kelas.
+Pembagian data menggunakan rasio 80% data latih dan 20% data uji dengan random_state sebesar 42 untuk memastikan reproduktibilitas eksperimen.
+Konfigurasi tersebut dipilih berdasarkan praktik umum yang lazim digunakan pada penelitian klasifikasi sentimen berbasis machine learning konvensional.
+4.4.2 Hasil Evaluasi SVM
+Hasil evaluasi model SVM pada data uji ditunjukkan pada Tabel 4.10.
+Tabel 4.10 Classification Report Model SVM Baseline
+Berdasarkan Tabel 4.10, model SVM baseline memperoleh akurasi keseluruhan sebesar 82.94%. Model menunjukkan performa yang baik pada kelas positif dengan F1-score 89.66% dan kelas negatif dengan F1-score 76.87%.
+Namun, model mengalami kesulitan yang signifikan pada kelas netral, dengan nilai recall yang hanya mencapai 0.15% sehingga F1-score juga bernilai 0.30%. Temuan ini mengindikasikan bahwa model SVM hampir tidak mampu mengidentifikasi ulasan bersentimen netral dan cenderung mengklasifikasikan sebagian besar sampel ke dalam kelas positif atau negatif.
+Kesulitan tersebut sangat dipengaruhi oleh ketidakseimbangan data, di mana kelas netral hanya memiliki 654 sampel dibandingkan dengan 6.445 sampel positif dan 2.798 sampel negatif. Keterbatasan representasi fitur TF-IDF turut berperan, karena metode tersebut tidak mampu menangkap konteks semantik yang membedakan ulasan netral dari kelas lainnya. Nilai macro average F1-score yang hanya sebesar 55.61% mencerminkan ketimpangan performa antarkelas yang cukup besar pada model SVM.
+
+Gambar 4.10 Confusion Matrix Model SVM Baseline
+Gambar 4.10 menampilkan confusion matrix dari model SVM baseline yang dilatih menggunakan fitur TF-IDF dan label berbasis rating. Dari matriks tersebut terlihat bahwa model SVM memiliki performa yang baik dalam mengklasifikasikan kelas negatif dan positif, dengan jumlah true positive masing-masing sebesar 2.228 dan 5.981. Namun, model SVM mengalami kesulitan dalam mengklasifikasikan kelas netral, dimana hanya 1 ulasan netral yang berhasil diklasifikasikan dengan benar dari total 654 ulasan netral. Hal ini menunjukkan bahwa model SVM baseline memiliki keterbatasan dalam menangani kelas dengan distribusi yang tidak seimbang.
+
+4.5 Hasil Fine-Tuning IndoBERT
+Tahap fine-tuning IndoBERT merupakan salah satu tahap metodologis penting dalam penelitian ini, di mana model bahasa pra-latih indobenchmark/indobert-base-p1 disesuaikan menggunakan dataset berlabel hasil auto-labeling berbasis teacher model untuk tugas klasifikasi sentimen tiga kelas. Proses ini terdiri atas tiga bagian utama, yaitu konfigurasi parameter fine-tuning, pemantauan proses pelatihan per epoch, dan evaluasi performa model pada data uji. Keseluruhan proses pelatihan dijalankan menggunakan GPU NVIDIA RTX 2060 dengan akselerasi CUDA untuk mempercepat komputasi selama proses fine-tuning berlangsung. Hasil evaluasi model ini selanjutnya dibandingkan dengan SVM baseline pada subbab 4.6 untuk menentukan model yang digunakan pada analisis tren temporal.
+4.5.1 Konfigurasi Fine-Tuning
+Proses fine-tuning dilakukan terhadap model pra-latih indobenchmark/indobert-base-p1 menggunakan dataset berlabel hasil auto-labeling berbasis teacher model. Konfigurasi yang digunakan meliputi panjang sekuens maksimum 128 token, batch size 32, jumlah epoch sebanyak 5, learning rate sebesar 2×10⁻⁵, optimizer AdamW, dan fungsi loss CrossEntropyLoss. Pembagian dataset menggunakan proporsi 72% data latih, 8% data validasi, dan 20% data uji, guna memastikan model dievaluasi pada data yang belum pernah dilihat selama proses pelatihan.
+Perlu dicatat bahwa proses pembagian data uji untuk model SVM dan IndoBERT dilakukan secara independen menggunakan skrip yang berbeda, sehingga komposisi jumlah sampel per kelas pada kedua test set tidak sepenuhnya identik meskipun jumlah total data uji sama, yaitu 9.897 ulasan (20% dari keseluruhan 49.485 data). Perbedaan ini tidak memengaruhi validitas evaluasi masing-masing model secara individual, namun perlu menjadi catatan dalam menginterpretasikan perbandingan performa antarmodel pada subbab 4.6.
+4.5.2 Pemantauan Proses Pelatihan
+Proses pelatihan IndoBERT dilakukan selama 5 epoch dengan memantau nilai loss dan akurasi pada data latih dan validasi. Pada setiap epoch, model dievaluasi pada data validasi, dan model dengan performa terbaik disimpan sebagai best_model_annotated/. Proses pelatihan menunjukkan penurunan loss yang konsisten dan peningkatan akurasi yang stabil, menunjukkan bahwa model berhasil belajar dengan baik tanpa terjadi overfitting atau underfitting.
+
+Gambar 4.11 Training & Validation Loss per Epoch
+Gambar 4.11 menunjukkan grafik training dan validation loss selama proses fine-tuning model IndoBERT selama 5 epoch. Terlihat bahwa nilai loss mengalami penurunan yang konsisten seiring bertambahnya epoch, baik pada training set maupun validation set. Training loss turun dari 0.85 pada epoch pertama menjadi 0.21 pada epoch kelima, sedangkan validation loss turun dari 0.88 menjadi 0.32. Penurunan loss yang stabil menunjukkan bahwa model IndoBERT belajar dengan baik dan tidak mengalami overfitting yang signifikan.
+
+Gambar 4.12 Training & Validation Akurasi per Epoch
+Gambar 4.12 menunjukkan grafik training dan validation accuracy selama proses fine-tuning model IndoBERT. Terlihat bahwa akurasi mengalami peningkatan yang signifikan dari epoch pertama sampai epoch kelima. Training accuracy meningkat dari 0.65 menjadi 0.91, sedangkan validation accuracy meningkat dari 0.62 menjadi 0.87. Peningkatan akurasi yang konsisten menunjukkan bahwa model IndoBERT berhasil mempelajari pola dalam data dan memiliki kemampuan generalisasi yang baik.
+
+4.5.3 Hasil Evaluasi IndoBERT
+Hasil evaluasi model IndoBERT pada data uji ditunjukkan pada Tabel 4.11.
+Tabel 4.11 Classification Report Model IndoBERT
+Berdasarkan Tabel 4.11, model IndoBERT memperoleh akurasi sebesar 87.22% dengan macro average F1-score sebesar 82.50%. Berbeda dengan SVM, IndoBERT berhasil mengklasifikasikan ketiga kelas sentimen dengan performa yang jauh lebih seimbang. Kelas positif memperoleh F1-score tertinggi sebesar 92.00%, diikuti oleh kelas negatif dengan 84.00%, dan kelas netral dengan 71.00%. Peningkatan yang paling signifikan terlihat pada kelas netral, di mana IndoBERT berhasil mencapai F1-score 71.00% dibandingkan dengan SVM yang hanya mencapai 0.30%.
+Kemampuan tersebut bersumber dari arsitektur transformer IndoBERT yang mampu memahami konteks semantik teks secara bidireksional, sehingga dapat membedakan nuansa sentimen yang ambigu pada kelas netral dengan jauh lebih baik dibandingkan representasi TF-IDF pada model SVM.
+
+Gambar 4.13 Confusion Matrix Model IndoBERT
+Gambar 4.13 menampilkan confusion matrix dari model IndoBERT yang telah di-fine-tuning. Dari matriks tersebut terlihat bahwa model IndoBERT memiliki performa yang jauh lebih baik dibandingkan dengan SVM baseline, terutama dalam mengklasifikasikan kelas netral. Sebanyak 450 ulasan netral berhasil diklasifikasikan dengan benar, sedangkan model SVM hanya berhasil mengklasifikasikan 1 ulasan netral. Model IndoBERT juga memiliki performa yang sangat baik dalam mengklasifikasikan kelas negatif dan positif, dengan jumlah true positive masing-masing sebesar 5.780 dan 2.528.
+
+4.6 Perbandingan Model SVM dan IndoBERT
+Perbandingan performa kedua model secara keseluruhan ditunjukkan pada Tabel 4.12. Perbandingan ini bertujuan untuk menentukan model klasifikasi terbaik yang akan digunakan sebagai dasar pelabelan data pada analisis tren temporal di subbab 4.7. Sebagaimana disebutkan pada subbab 4.5.1, perbandingan berikut perlu dibaca dengan mempertimbangkan bahwa komposisi test set kedua model tidak sepenuhnya identik.
+Tabel 4.12 Perbandingan Performa SVM Baseline dan IndoBERT
+Berdasarkan Tabel 4.12, IndoBERT unggul pada seluruh metrik evaluasi dibandingkan dengan SVM baseline. Peningkatan terbesar terjadi pada macro average F1-score, yaitu sebesar 26.89 poin persentase, yang mencerminkan perbaikan performa yang cukup substansial, terutama pada kelas minoritas, yaitu kelas netral. Peningkatan macro precision sebesar 19.66% dan macro recall sebesar 23.63% turut mengindikasikan bahwa IndoBERT jauh lebih mampu mengenali sampel dari ketiga kelas secara merata dibandingkan dengan SVM yang hampir gagal total pada kelas netral. Berdasarkan hasil perbandingan ini, IndoBERT dipilih sebagai model klasifikasi yang hasil prediksinya digunakan untuk menghasilkan label sentimen pada analisis tren temporal di subbab 4.7.
+
+Gambar 4.14 Perbandingan Performa SVM vs IndoBERT
+Gambar 4.14 membandingkan performa model SVM baseline dan IndoBERT berdasarkan empat metrik evaluasi utama: akurasi, macro precision, macro recall, dan macro F1-score. Terlihat bahwa model IndoBERT unggul dalam semua metrik evaluasi dibandingkan dengan SVM baseline. Akurasi model IndoBERT mencapai 87.22%, lebih tinggi 4.28% dibandingkan dengan SVM baseline yang memiliki akurasi 82.94%. Peningkatan performa yang paling signifikan terlihat pada macro recall (peningkatan 23.63%) dan macro F1-score (peningkatan 26.89%), yang menunjukkan bahwa model IndoBERT jauh lebih baik dalam menangani semua kelas sentimen, terutama kelas netral.
+
+4.7 Analisis Tren Temporal Sentimen
+Subbab ini merupakan inti pembahasan penelitian ini, karena menyajikan capaian atas tujuan utama, yaitu menganalisis tren perubahan sentimen pengguna Roblox secara temporal selama periode 25 Februari 2026 hingga 22 April 2026. Label sentimen yang digunakan pada analisis ini merupakan hasil prediksi model IndoBERT yang telah dipilih pada subbab 4.6 sebagai model dengan performa klasifikasi terbaik. Analisis tren temporal penting untuk mengidentifikasi bagaimana sentimen pengguna berubah dari waktu ke waktu, serta faktor-faktor yang mungkin memengaruhinya. Hasil analisis pada subbab ini disajikan dalam tiga bagian, yaitu tren jumlah ulasan harian, tren sentimen per bulan, dan analisis faktor dominan pada hari-hari dengan volume ulasan tertinggi.
+4.7.1 Tren Jumlah Review Harian
+Volume ulasan harian menunjukkan fluktuasi yang cukup signifikan selama periode penelitian. Sepuluh hari dengan jumlah ulasan terbanyak ditunjukkan pada Tabel 4.13.
+Tabel 4.13 Top 10 Hari dengan Jumlah Review Terbanyak
+Tabel 4.13 menunjukkan sepuluh hari dengan jumlah ulasan terbanyak selama periode penelitian. Volume ulasan tertinggi terjadi pada tanggal 9 April 2026 dengan 1.800 ulasan, diikuti oleh tanggal 21 April 2026 dengan 1.779 ulasan.
+
+Gambar 4.15 Tren Jumlah Review Harian
+Gambar 4.15 menunjukkan tren jumlah ulasan harian Roblox selama periode Februari hingga April 2026. Terlihat bahwa jumlah ulasan mengalami fluktuasi setiap hari, dengan beberapa hari memiliki jumlah ulasan yang sangat tinggi (peak days). Peak days ini kemungkinan besar berkaitan dengan event khusus di game Roblox, rilis fitur baru, atau faktor lain yang menarik perhatian pengguna untuk memberikan ulasan. Data tren ini memberikan gambaran mengenai pola aktivitas pengguna Roblox dari waktu ke waktu.
+
+4.7.2 Tren Sentimen Per Bulan
+Distribusi sentimen per bulan selama periode Februari hingga April 2026 ditunjukkan pada Tabel 4.14.
+
+Tabel 4.14 Distribusi Sentimen Per Bulan
+Tabel 4.14 menunjukkan distribusi sentimen per bulan selama periode penelitian berdasarkan hasil prediksi model IndoBERT. Proporsi sentimen positif tampak dominan pada seluruh periode, dengan fluktuasi yang tidak terlalu signifikan antarbulan. Proporsi sentimen negatif cenderung stabil sekitar 35-36% setiap bulannya, sedangkan sentimen netral tetap menjadi kelas minoritas dengan proporsi sekitar 7-10% pada setiap bulannya.
+
+Gambar 4.16 Tren Sentimen Per Bulan
+Gambar 4.16 menunjukkan distribusi sentimen per bulan selama periode Februari sampai April 2026 berdasarkan hasil prediksi model IndoBERT. Terlihat bahwa proporsi sentimen positif selalu menjadi yang tertinggi di setiap bulan, diikuti oleh sentimen negatif, dan sentimen netral. Pada bulan Februari 2026, terdapat 2.514 ulasan positif (53.31%), 1.711 ulasan negatif (36.28%), dan 491 ulasan netral (10.41%). Pada bulan Maret 2026, jumlah ulasan meningkat drastis dengan 15.611 ulasan positif (55.99%), 9.912 ulasan negatif (35.55%), dan 2.360 ulasan netral (8.46%). Pada bulan April 2026, terdapat 9.753 ulasan positif (57.76%), 5.946 ulasan negatif (35.21%), dan 1.187 ulasan netral (7.03%). Tren ini menunjukkan bahwa sentimen positif pengguna Roblox cenderung stabil dan bahkan sedikit meningkat dari waktu ke waktu.
+
+4.7.3 Analisis Faktor Dominan pada Hari Puncak
+Pada hari-hari dengan volume ulasan tinggi (hari puncak), topik yang paling sering dibahas oleh pengguna berkaitan dengan lima hal, yaitu: (1) bug dan masalah teknis; (2) fitur chat; (3) pengalaman bermain; (4) variasi permainan dan map; serta (5) pembaruan (update) aplikasi. Ulasan positif secara umum banyak membahas pengalaman bermain yang menyenangkan serta beragamnya pilihan permainan yang tersedia, sedangkan ulasan negatif banyak membahas isu teknis, seperti lag, bug, dan perubahan fitur tertentu yang dianggap mengganggu pengalaman bermain.
+Analisis tren temporal ini menunjukkan bahwa fluktuasi volume dan sentimen ulasan sering berkaitan dengan perubahan pada aplikasi Roblox, khususnya pembaruan yang dirilis oleh pengembang. Temuan ini dapat menjadi acuan bagi pengembang untuk memahami respons pengguna terhadap setiap perubahan yang dilakukan pada aplikasi.
+
+
+4.8 Implementasi Dashboard Streamlit
+Sebagai luaran akhir penelitian, dibangun sebuah dashboard interaktif berbasis Streamlit yang memungkinkan pengguna melakukan analisis sentimen dan visualisasi tren ulasan secara real-time.
+Dashboard ini mengintegrasikan model IndoBERT yang telah dilatih ke dalam antarmuka web yang dapat diakses secara lokal melalui perintah streamlit run app.py.
+Dashboard terdiri atas lima halaman utama yang saling melengkapi, yaitu halaman Overview, Analisis Sentimen, Tren Temporal, Model dan Evaluasi, serta Scraping dan Preprocessing.
+
+Gambar 4.8 Tampilan Halaman Overview Dashboard
+Gambar 4.8 menampilkan halaman Overview dashboard yang menyajikan ringkasan eksekutif dari hasil analisis sentimen secara keseluruhan, meliputi metrik ringkasan seperti total ulasan yang dianalisis, proporsi distribusi sentimen positif, netral, dan negatif, serta rata-rata rating aplikasi. Halaman ini dirancang agar pengguna dashboard dapat memperoleh gambaran umum kondisi sentimen aplikasi Roblox secara cepat sebelum menelusuri detail pada halaman-halaman berikutnya.
+
+Gambar 4.9 Tampilan Halaman Analisis Sentimen Dashboard
+Gambar 4.9 menampilkan halaman Analisis Sentimen yang menyajikan distribusi sentimen beserta analisis detail per kategori. Halaman ini memungkinkan pengguna untuk menelusuri contoh ulasan pada masing-masing kelas sentimen dan membandingkan proporsi antarkelas secara lebih mendalam dibandingkan dengan ringkasan yang ditampilkan pada halaman Overview.
+
+Gambar 4.10 Tampilan Halaman Tren Temporal Dashboard
+Gambar 4.10 menampilkan halaman Tren Temporal yang memvisualisasikan perubahan sentimen pengguna dari waktu ke waktu. Halaman ini menyajikan grafik tren volume dan proporsi sentimen secara interaktif, sehingga pengembang dapat mengidentifikasi periode-periode tertentu yang mengalami lonjakan ulasan negatif maupun positif secara lebih mudah dibandingkan dengan analisis statis pada laporan tertulis.
+
+Gambar 4.11 Tampilan Halaman Model & Evaluasi Dashboard
+Gambar 4.11 menampilkan halaman Model dan Evaluasi yang menyajikan perbandingan performa kedua model yang telah dibangun. Halaman ini menampilkan metrik evaluasi seperti akurasi, precision, recall, dan F1-score dari model SVM Baseline dan IndoBERT secara berdampingan, sehingga memudahkan pengguna untuk memahami keunggulan model IndoBERT tanpa perlu membaca tabel classification report secara terpisah.
+
+Gambar 4.12 Tampilan Halaman Scraping & Preprocessing Dashboard
+Gambar 4.12 menampilkan halaman Scraping dan Preprocessing yang menampilkan alur pengumpulan dan pembersihan data secara ringkas. Halaman ini menyajikan statistik jumlah data pada setiap tahapan praproses, termasuk jumlah data yang tereliminasi, sehingga transparansi proses pengolahan data dari tahap awal hingga akhir dapat dipantau langsung melalui dashboard.
+Seluruh komponen visualisasi pada dashboard dibangun menggunakan pustaka Plotly dan Matplotlib yang terintegrasi dalam ekosistem Streamlit, sehingga menghasilkan tampilan yang interaktif dan responsif bagi pengguna.

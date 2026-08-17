@@ -1,0 +1,12 @@
+<svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" font-family="Cambria, Georgia, 'Times New Roman', serif">
+  <rect x="0" y="0" width="700" height="220" fill="white"/>
+  <text x="350" y="28" text-anchor="middle" font-size="13" font-weight="700" font-family="Helvetica, Arial, sans-serif" fill="#1E293B">Persamaan Ukuran Sampel Cochran</text>
+
+  <text x="350" y="80" text-anchor="middle" font-size="22" fill="#0F172A">n<tspan baseline-shift="sub" font-size="15">0</tspan> = Z²pq / e²</text>
+  <text x="350" y="115" text-anchor="middle" font-size="22" fill="#0F172A">n = n<tspan baseline-shift="sub" font-size="15">0</tspan> / (1 + (n<tspan baseline-shift="sub" font-size="15">0</tspan> − 1)/N)</text>
+
+  <text x="60" y="155" font-size="11" font-family="Helvetica, Arial, sans-serif" fill="#475569">Keterangan:</text>
+  <text x="60" y="172" font-size="10.5" font-family="Helvetica, Arial, sans-serif" fill="#475569">n<tspan baseline-shift="sub" font-size="8">0</tspan>  = ukuran sampel awal (tanpa koreksi populasi)</text>
+  <text x="60" y="187" font-size="10.5" font-family="Helvetica, Arial, sans-serif" fill="#475569">n   = ukuran sampel akhir (dengan koreksi populasi terbatas)</text>
+  <text x="60" y="202" font-size="10.5" font-family="Helvetica, Arial, sans-serif" fill="#475569">Z   = nilai Z pada tingkat kepercayaan tertentu (1,96 untuk 95%)   p, q = proporsi (0,5 dan 0,5)   e = margin error (0,05)   N = ukuran populasi</text>
+</svg>

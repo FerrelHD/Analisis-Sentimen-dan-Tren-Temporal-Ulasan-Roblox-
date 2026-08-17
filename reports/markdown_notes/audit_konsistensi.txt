@@ -1,0 +1,754 @@
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 3
+Teks:
+Data dari Newzoo (2024) menunjukkan bahwa pendapatan global industri game terus mencatat pertumbuhan yang signifikan. Perkembangan tersebut dapat dilihat pada Tabel 1.1 berikut.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 6
+Teks:
+Berdasarkan Tabel 1.1, lonjakan pertumbuhan terbesar terjadi pada 2021 dengan kenaikan 16,3% yang sebagian besar dipicu oleh efek pandemi. Meskipun sempat terjadi sedikit penurunan pada 2023 seiring kondisi pandemi yang mereda, tren jangka panjang tetap positif dengan pendapatan kembali tumbuh di 2024 dan jumlah pengguna aktif global menembus 3,42 miliar. Data ini sejalan dengan proyeksi Newzoo (2024) bahwa segmen game mobile akan terus menjadi segmen dengan pertumbuhan tertinggi dalam industri game global.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 7
+Teks:
+Di tengah pertumbuhan tersebut, Roblox menjadi salah satu platform yang paling banyak digunakan, terutama di kalangan pengguna muda. Roblox bukan sekadar game biasa, platform ini menerapkan model user-generated content yang memungkinkan pengguna untuk sekaligus menjadi pemain dan pengembang game dalam satu ekosistem yang sama. Menurut laporan resmi Roblox Corporation (2024), platform ini memiliki lebih dari 88 juta pengguna aktif harian secara global, dengan porsi pengguna mobile yang terus bertambah. Popularitas Roblox di Google Play Store juga tercermin dari volume ulasan yang sangat besar, yang merupakan sumber data sentimen yang sangat kaya karena bersifat autentik dan mencerminkan pengalaman pengguna yang sesungguhan (Birjali et al., 2021).
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 8
+Teks:
+Volume ulasan yang sangat besar tersebut justru menimbulkan tantangan tersendiri. Tidak ada cara yang efisien untuk menganalisis puluhan ribu ulasan secara manual dalam waktu singkat. Kondisi ini mendorong kebutuhan akan pendekatan otomatis berbasis Natural Language Processing (NLP) untuk mengklasifikasikan sentimen ulasan secara sistematis. Menurut Liu (2020), analisis sentimen berbasis NLP telah terbukti mampu mengolah data teks dalam skala besar dengan tingkat akurasi yang kompetitif dibandingkan anotasi manual.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 9
+Teks:
+Beberapa penelitian terdahulu sudah menerapkan analisis sentimen pada ulasan aplikasi mobile. Fransiska & Irham Gufroni (2020) menerapkan Support Vector Machine dengan TF-IDF untuk mengklasifikasikan sentimen ulasan aplikasi berbahasa Indonesia di Google Play Store dan memperoleh akurasi 84,2%. Hendriyanto et al. (2022) juga membuktikan bahwa SVM dengan kernel linear secara konsisten menghasilkan performa terbaik dibanding algoritma lain pada dataset ulasan aplikasi berbahasa Indonesia. Namun demikian, hampir semua penelitian tersebut masih mengandalkan rating bintang sebagai sumber label sentimen, sebuah pendekatan yang memiliki kelemahan mendasar karena tidak semua ulasan dengan rating tinggi mengandung sentimen positif, dan kondisi berlawanan pun tidak selalu terbukti benar (Sadiq et al., 2021).
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 10
+Teks:
+Kelemahan pelabelan berbasis rating inilah yang menjadi salah satu motivasi utama penelitian ini. Alih-alih menggunakan rating bintang sebagai label, penelitian ini menerapkan pendekatan auto-labeling berbasis teks dengan arsitektur teacher-student. Model teacher yang digunakan adalah w11wo/indonesian-roberta-base-sentiment-classifier, yaitu model berbasis RoBERTa yang sudah di-fine-tune khusus untuk klasifikasi sentimen bahasa Indonesia dan tersedia secara publik di Hugging Face. Model teacher ini bertugas memberi label otomatis pada seluruh data teks ulasan, yang kemudian digunakan sebagai data training untuk fine-tuning IndoBERT sebagai model student. IndoBERT sendiri adalah model berbasis BERT yang dilatih khusus pada korpus bahasa Indonesia dalam skala besar (Koto et al., 2020). Dengan pendekatan ini, label sentimen ditentukan berdasarkan isi teks ulasan secara otomatis, bukan dari rating bintang yang bersifat subjektif.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 12
+Teks:
+Penelitian ini juga memperhatikan persoalan penanganan kata negasi dalam bahasa Indonesia. Tanpa teknik negation handling yang tepat, frasa seperti 'tidak bagus' berpotensi salah diklasifikasikan karena model hanya membaca kata 'bagus' secara terpisah. Penanganan kata negasi dapat meningkatkan akurasi klasifikasi sentimen pada dataset ulasan berbahasa Indonesia (Rosid et al., 2020).
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 15
+Teks:
+Bagaimana implementasi Support Vector Machine dengan TF-IDF dalam mengklasifikasikan sentimen ulasan pengguna aplikasi Roblox di Google Play Store?
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 17
+Teks:
+Bagaimana perbandingan performa antara SVM sebagai baseline dan IndoBERT fine-tuned dalam mengklasifikasikan sentimen ulasan berbahasa Indonesia?
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 21
+Teks:
+Data yang digunakan adalah ulasan pengguna aplikasi Roblox pada Google Play Store berbahasa Indonesia.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 22
+Teks:
+Periode pengambilan data dibatasi pada Februari hingga April 2026.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 23
+Teks:
+Pengumpulan data dilakukan melalui web scraping menggunakan library google-play-scraper.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 31
+Teks:
+Mengimplementasikan Support Vector Machine dengan TF-IDF sebagai model baseline untuk klasifikasi sentimen ulasan pengguna Roblox.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 32
+Teks:
+Menerapkan auto-labeling berbasis IndoBERT pre-trained untuk menghasilkan label sentimen secara otomatis langsung dari isi teks ulasan.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 33
+Teks:
+Melakukan fine-tuning IndoBERT menggunakan data yang telah diberi label secara otomatis dan membandingkan performa model dengan SVM sebagai baseline.
+
+============================================================
+Bab: Bab 1
+Lokasi: Paragraf 38
+Teks:
+Skripsi ini disusun dalam lima bab. Bab 1 memuat pendahuluan yang menjelaskan latar belakang penelitian yang diperkuat dengan data industri game global, permasalahan pelabelan sentimen berbasis rating, urgensi penggunaan IndoBERT untuk auto-labeling berbasis teks, rumusan masalah, batasan penelitian, dan tujuan yang ingin dicapai. Bab 2 menyajikan tinjauan pustaka yang mencakup teori-teori pendukung, meliputi analisis sentimen, Natural Language Processing (NLP), Support Vector Machine, TF-IDF, BERT dan IndoBERT, transfer learning, teknik preprocessing teks bahasa Indonesia, serta perbandingan dengan penelitian terdahulu. Bab 3 menjelaskan metode penelitian secara rinci, mulai dari pengumpulan data, tahapan preprocessing, proses auto-labeling, pelatihan model SVM dan fine-tuning IndoBERT, hingga perancangan dashboard. Bab 4 menyajikan hasil dan pembahasan, mencakup evaluasi performa kedua model menggunakan metrik akurasi, precision, recall, dan F1-Score, analisis perbandingan SVM vs IndoBERT, serta analisis tren sentimen per bulan. Bab 5 berisi simpulan dari keseluruhan penelitian dan saran untuk pengembangan selanjutnya.
+
+============================================================
+Bab: Bab 1
+Lokasi: Tabel 1
+Teks:
+  Tahun Pendapatan Global (USD) Pertumbuhan YoY (%) Pengguna Aktif (Miliar)        Sumber
+0  2020         ± $155,0 Miliar              +12,0%                    2,69  Newzoo, 2024
+1  2021         ± $180,3 Miliar              +16,3%                    2,81  Newzoo, 2024
+2  2022         ± $184,4 Miliar               +2,3%                    3,03  Newzoo, 2024
+3  2023         ± $183,9 Miliar               -0,3%                    3,22  Newzoo, 2024
+4  2024         ± $189,3 Miliar               +2,9%                    3,42  Newzoo, 2024
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 5
+Teks:
+Dari tabel di atas, terlihat beberapa pola yang menarik. Pertama, SVM secara konsisten menunjukkan performa yang baik sebagai model baseline untuk klasifikasi sentimen teks berbahasa Indonesia, termasuk pada penelitian dengan objek Roblox secara spesifik (Dewi et al., 2025). Kedua, penelitian tentang analisis sentimen ulasan Roblox dengan IndoBERT sudah dilakukan oleh Ansyah & Suryono (2025), yang menerapkan SMOTE untuk menangani ketidakseimbangan kelas dan menunjukkan performa yang lebih baik dibandingkan baseline. Ketiga, hampir semua penelitian terdahulu masih mengandalkan rating bintang atau lexicon sebagai label, yang menurut Sadiq et al. (2021) tidak selalu konsisten dengan isi teks ulasan yang sesungguhnya. Keempat, meskipun sudah ada penelitian yang menerapkan SVM dan IndoBERT pada ulasan Roblox (Dewi et al., 2025; Ansyah & Suryono, 2025), penelitian tersebut belum menggabungkannya dengan analisis tren temporal dan dashboard interaktif. Celah inilah yang menjadi kebaruan dari penelitian ini.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 7
+Teks:
+Analisis sentimen adalah proses mengidentifikasi dan mengklasifikasikan opini subjektif yang terkandung dalam sebuah teks — apakah bersifat positif, negatif, atau netral terhadap suatu objek tertentu. Bidang ini juga sering disebut opinion mining dan merupakan bagian dari text mining yang lebih luas (Liu, 2020). Dalam konteks ulasan aplikasi, objek yang dimaksud bisa berupa fitur aplikasi, performa teknis, kebijakan pengembang, atau pengalaman pengguna secara keseluruhan.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 8
+Teks:
+Analisis sentimen dapat dilakukan pada beberapa tingkatan, yaitu tingkat dokumen, tingkat kalimat, dan tingkat aspek. Penelitian ini bekerja pada tingkat dokumen — setiap ulasan diperlakukan sebagai satu unit dan diklasifikasikan secara keseluruhan. Pendekatan ini dipilih karena ulasan pengguna di Google Play Store cenderung merepresentasikan satu opini yang utuh dalam satu teks pendek.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 9
+Teks:
+Terdapat dua pendekatan utama dalam analisis sentimen. Pendekatan berbasis lexicon mengandalkan kamus kata bersentimen untuk menghitung polaritas teks. Sementara pendekatan berbasis machine learning menggunakan data berlabel untuk melatih model klasifikasi. Penelitian ini menggunakan pendekatan machine learning karena teks ulasan pengguna berbahasa Indonesia cenderung informal, mengandung banyak singkatan dan variasi penulisan yang tidak dapat ditangani dengan baik hanya menggunakan kamus sentimen statis (Birjali et al., 2021).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 12
+Teks:
+Tantangan utama NLP untuk bahasa Indonesia terletak pada variasi penulisan informal yang tinggi — satu kata bisa ditulis dengan berbagai cara berbeda tergantung konteks dan kebiasaan pengguna. Selain itu, penggunaan singkatan, kata serapan, dan ekspresi slang yang umum ditemukan dalam ulasan aplikasi menjadi tantangan tambahan yang harus diatasi melalui pipeline preprocessing yang komprehensif sebelum data dimasukkan ke model.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 14
+Teks:
+Preprocessing teks adalah serangkaian proses pembersihan dan transformasi data teks mentah sebelum digunakan untuk pelatihan model. Kualitas preprocessing sangat berpengaruh terhadap performa model akhir karena model hanya bisa belajar dari data yang diberikan kepadanya. Dalam penelitian ini, preprocessing teks dilakukan dalam lima tahap berurutan.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 18
+Teks:
+Tokenisasi adalah proses memecah teks menjadi unit-unit terkecil yang disebut token. Dalam penelitian ini, tokenisasi dilakukan pada tingkat kata, sehingga setiap kata dari ulasan berdiri sendiri sebagai satu token. Hasil tokenisasi menjadi masukan bagi tahap preprocessing berikutnya, terutama untuk tahap negation handling dan stopword removal.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 22
+Teks:
+Stopword removal adalah proses penghapusan kata-kata yang sering muncul namun tidak membawa informasi sentimen yang signifikan, seperti 'yang', 'di', 'dan', 'ini', 'itu'. Penghapusan stopword bertujuan untuk mengurangi dimensionalitas data dan memfokuskan model pada kata-kata yang benar-benar informatif. Penelitian ini menggunakan daftar stopword bahasa Indonesia dari library NLTK.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 26
+Teks:
+Support Vector Machine (SVM) adalah algoritma machine learning yang bekerja dengan mencari hyperplane optimal yang memisahkan dua kelas data dengan margin terbesar. Konsep margin inilah yang membedakan SVM dari algoritma klasifikasi lain — SVM tidak hanya mencari garis pemisah yang benar, tetapi garis pemisah yang paling jauh dari titik data terdekat di kedua kelas, yang disebut support vector (Montesinos López et al., 2022). Penelitian terapan terbaru menunjukkan kombinasi SVM dengan TF-IDF N-Gram tetap konsisten memberikan performa tinggi pada tugas klasifikasi teks (Arifin et al., 2021).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 27
+Teks:
+Untuk kasus data yang tidak dapat dipisahkan secara linear, SVM menggunakan teknik kernel trick yang memetakan data ke ruang dimensi lebih tinggi di mana pemisahan linear menjadi mungkin. Dalam penelitian ini digunakan kernel linear karena data teks yang sudah direpresentasikan dalam bentuk TF-IDF sudah berada di ruang dimensi tinggi dan cenderung dapat dipisahkan secara linear (Kowsari et al., 2019).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 30
+Teks:
+Tidak memerlukan data berlabel dalam jumlah yang sangat besar untuk menghasilkan model yang baik.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 31
+Teks:
+Secara konsisten mengungguli atau kompetitif terhadap algoritma klasifikasi lain seperti Naive Bayes dan Random Forest pada dataset ulasan berbahasa Indonesia (Hendriyanto et al., 2022; Fitri et al., 2020).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 40
+Teks:
+BERT dilatih dalam dua tahap. Tahap pertama adalah pre-training pada corpus teks yang sangat besar menggunakan dua tugas utama: Masked Language Model (MLM) dan Next Sentence Prediction (NSP). Tahap kedua adalah fine-tuning di mana model yang sudah di-pre-train disesuaikan untuk tugas spesifik seperti klasifikasi teks, menggunakan data berlabel yang jauh lebih kecil. Pendekatan dua tahap ini dikenal sebagai transfer learning (Devlin et al., 2019).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 41
+Teks:
+IndoBERT adalah implementasi BERT yang dilatih khusus pada korpus bahasa Indonesia dalam skala besar, meliputi Wikipedia bahasa Indonesia, berita daring, dan berbagai sumber teks lainnya. Koto et al. (2020) membuktikan bahwa IndoBERT mencapai performa state-of-the-art pada mayoritas task dalam benchmark IndoLEM untuk NLP bahasa Indonesia, dibandingkan model multilingual seperti mBERT yang tidak dilatih secara spesifik untuk bahasa Indonesia. Keunggulan IndoBERT juga telah dibuktikan dalam penelitian analisis sentimen ulasan aplikasi Bahasa Indonesia (Asri et al., 2025).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 44
+Teks:
+Transfer learning adalah teknik dalam machine learning di mana pengetahuan yang diperoleh dari pelatihan pada satu tugas dimanfaatkan untuk meningkatkan performa pada tugas lain yang berkaitan (Zhuang et al., 2020). Dalam konteks NLP berbasis BERT, transfer learning bekerja dengan memanfaatkan model yang sudah di-pre-train pada korpus besar, kemudian melakukan fine-tuning pada dataset yang lebih kecil dan spesifik sesuai tugas yang ingin diselesaikan.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 45
+Teks:
+Keuntungan utama transfer learning adalah tidak memerlukan data berlabel dalam jumlah yang sangat besar untuk menghasilkan model yang berkualitas. Model pre-trained sudah memiliki pemahaman dasar tentang bahasa yang cukup kuat, sehingga fine-tuning dengan beberapa ribu data berlabel sudah cukup untuk menghasilkan performa yang kompetitif (Devlin et al., 2019).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 46
+Teks:
+Sementara itu, auto-labeling — atau dalam literatur disebut juga distant supervision — adalah teknik pemberian label pada data secara otomatis tanpa melibatkan anotasi manual. Dalam penelitian ini, pendekatan ini diimplementasikan melalui arsitektur teacher-student. Model teacher, yaitu w11wo/indonesian-roberta-base-sentiment-classifier, adalah model berbasis RoBERTa yang sudah di-fine-tune untuk klasifikasi sentimen bahasa Indonesia. Model ini memprediksi label sentimen (positif, netral, negatif) dari seluruh teks ulasan yang sudah melewati tahap preprocessing. Hasil prediksi inilah yang kemudian menjadi data training untuk fine-tuning IndoBERT sebagai model student pada data ulasan Roblox secara spesifik. Dengan cara ini, model student dapat belajar memahami pola sentimen dalam teks bahasa Indonesia tanpa satu pun label yang dibuat secara manual.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 47
+Teks:
+Pendekatan ini berbeda dari penelitian Dewi et al. (2025) yang juga menganalisis sentimen ulasan Roblox namun masih menggunakan pelabelan berbasis lexicon InSet, bukan model pre-trained. Pendekatan auto-labeling berbasis IndoBERT dipilih dalam penelitian ini karena mengatasi keterbatasan utama dari pelabelan berbasis rating bintang maupun lexicon statis. Sadiq et al. (2021) menunjukkan bahwa rating bintang pada ulasan Google Play Store tidak selalu konsisten dengan isi teks ulasan — pengguna kadang memberi rating tinggi meski isi ulasan berisi keluhan, atau memberi rating rendah karena alasan di luar kualitas aplikasi. Dengan auto-labeling berbasis teks, label yang dihasilkan lebih mencerminkan isi dan makna ulasan yang sesungguhnya.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 48
+Teks:
+2.9. Google Play Store sebagai Sumber Data
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 49
+Teks:
+Google Play Store adalah platform distribusi aplikasi resmi untuk perangkat Android yang dikembangkan oleh Google LLC. Setiap aplikasi yang terdaftar memiliki halaman ulasan di mana pengguna dapat memberikan penilaian berupa rating bintang (1–5) beserta komentar teks yang menjadi salah satu faktor yang memengaruhi persepsi pengguna lain terhadap kualitas aplikasi tersebut (Mahmood, 2020). Ulasan ini bersifat autentik karena ditulis langsung oleh pengguna nyata berdasarkan pengalaman penggunaan, sehingga menjadikan platform ini sumber data yang kaya untuk penelitian analisis sentimen (Sadiq et al., 2021).
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 50
+Teks:
+Dalam penelitian ini, data ulasan dikumpulkan menggunakan library google-play-scraper berdasarkan ID aplikasi Roblox (com.roblox.client). Setiap entri ulasan yang dikumpulkan menyertakan metadata berupa teks ulasan, rating bintang, tanggal penulisan, dan versi aplikasi yang digunakan. Metadata tanggal inilah yang memungkinkan dilakukan analisis tren sentimen secara temporal per bulan selama periode penelitian.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 51
+Teks:
+Perlu ditegaskan bahwa dalam penelitian ini, rating bintang tidak digunakan sebagai label sentimen. Rating hanya dimanfaatkan sebagai metadata untuk keperluan analisis perbandingan, bukan sebagai dasar pemberian label. Label sentimen ditentukan secara penuh — bukan dari rating — melalui proses auto-labeling berbasis teks menggunakan model IndoBERT pre-trained.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 55
+Teks:
+Python dipilih sebagai bahasa pemrograman utama karena ekosistem library yang sangat lengkap di bidang data science, machine learning, dan deep learning. Hampir semua tools yang dibutuhkan dalam penelitian ini tersedia sebagai library Python dan dapat diintegrasikan dengan mudah dalam satu pipeline yang kohesif.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 61
+Teks:
+Pandas digunakan untuk mengelola dataset dalam bentuk tabel, mulai dari membaca hasil scraping, melakukan pembersihan data, hingga mengagregasi data per bulan untuk keperluan analisis tren temporal. NumPy digunakan untuk operasi numerik dan manipulasi array yang dibutuhkan dalam proses machine learning.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 63
+Teks:
+Streamlit adalah framework Python yang memungkinkan pembuatan aplikasi web interaktif berbasis data tanpa memerlukan pengetahuan HTML atau JavaScript, sebagaimana ditunjukkan pada penerapannya untuk membangun dashboard analisis sentimen interaktif (Patil & Lokesha, 2022). Dalam penelitian ini, Streamlit digunakan untuk membangun dashboard yang menyajikan hasil analisis sentimen, evaluasi model, dan tren temporal secara interaktif.
+
+============================================================
+Bab: Bab 2
+Lokasi: Paragraf 64
+Teks:
+Untuk keperluan visualisasi, digunakan tiga library secara bersamaan: Plotly untuk grafik interaktif yang dapat di-zoom dan di-hover langsung dari dashboard, Matplotlib untuk menghasilkan visualisasi statis seperti confusion matrix dari hasil evaluasi model, serta Seaborn untuk eksplorasi distribusi data yang memerlukan tampilan statistik yang lebih informatif.
+
+============================================================
+Bab: Bab 2
+Lokasi: Tabel 1
+Teks:
+  No                              Peneliti & Tahun                                                                                                              Judul / Topik                                                                      Metode                                                                                                                                                                                                               Hasil Utama
+0  1             Hendriyanto, Ridha, & Enri (2022)                 Analisis Sentimen Ulasan Aplikasi Mola Pada Google Play Store Menggunakan Algoritma Support Vector Machine                                                    SVM (kernel RBF), TF-IDF                                                                                                           Skenario pembagian data 90:10 menghasilkan akurasi 92,31%, precision 96,3%, recall 89,66%, dan F1-score 92,86%.
+1  2              Fransiska & Irham Gufroni (2020)          Sentiment Analysis Provider by.U on Google Play Store Reviews with TF-IDF and Support Vector Machine (SVM) Method                                                                 SVM, TF-IDF                                                                                                                  SVM dengan TF-IDF terbukti efektif mengklasifikasikan sentimen ulasan provider by.U berbahasa Indonesia.
+2  3                Sapitri, Yusra, & Fikry (2023)              Pengklasifikasian Sentimen Ulasan Aplikasi WhatsApp Pada Google Play Store Menggunakan Support Vector Machine                                                                 SVM, TF-IDF  Dari 1.000 ulasan, SVM menghasilkan akurasi 82% (split 90:10) dan 81% (split 80:20), dengan performa jauh lebih baik pada kelas positif (precision 85%, recall 94%) dibanding kelas negatif (precision 58%, recall 35%).
+3  4        Fitri, Yuliani, Rosyida, & Gata (2020)  Analisis Sentimen Terhadap Aplikasi Ruangguru Menggunakan Algoritma Naive Bayes, Random Forest dan Support Vector Machine                                             SVM, Naive Bayes, Random Forest                                    Membandingkan performa tiga algoritma klasifikasi pada ulasan aplikasi Ruangguru; SVM menjadi salah satu algoritma dengan performa kompetitif dibanding Naive Bayes dan Random Forest.
+4  5  Dewi, Sudipa, Sunarya, Dewi, & Kusuma (2025)                                              Sentiment Analysis of Roblox Game Reviews Using Support Vector Machine Method                                    SVM, TF-IDF, auto-labeling Lexicon InSet                                 Dari 8.950 data hasil preprocessing, distribusi sentimen 41,3% positif, 41,8% netral, 16,8% negatif; model SVM mencapai akurasi 87,03%, precision 87,29%, recall 87,03%, F1-score 86,67%.
+5  6                       Ansyah & Suryono (2025)                      Sentiment Classification of Indonesian-Language Roblox Reviews Using IndoBERT with SMOTE Optimization                                                IndoBERT, SMOTE, fine-tuning                                               Menerapkan IndoBERT dengan SMOTE untuk menangani ketidakseimbangan kelas pada ulasan Roblox berbahasa Indonesia; mencapai performa yang lebih baik daripada model baseline.
+6  7           Koto, Rahimi, Lau, & Baldwin (2020)                                IndoLEM and IndoBERT: A Benchmark Dataset and Pre-trained Language Model for Indonesian NLP                                        BERT, transfer learning, fine-tuning                                                                                                                IndoBERT mencapai state-of-the-art pada mayoritas task dalam benchmark IndoLEM untuk NLP bahasa Indonesia.
+7  8                         Penelitian ini (2026)                                 Analisis Sentimen Review Pengguna Roblox di Google Play Store Menggunakan SVM dan IndoBERT  SVM + TF-IDF (baseline), IndoBERT fine-tuned + auto-labeling berbasis teks                                                                                     Membandingkan SVM dan IndoBERT fine-tuned dengan label otomatis dari teks, dilengkapi analisis tren temporal dan dashboard Streamlit.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 3
+Teks:
+Penelitian ini mengikuti alur kerja yang terstruktur dan sistematis, mulai dari tahap pengumpulan data hingga implementasi sistem berbasis web. Keseluruhan alur penelitian dirancang agar setiap tahapan bersifat reproduktibel dan dapat diverifikasi secara ilmiah. Alur penelitian secara umum ditunjukkan pada Gambar 3.1.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 6
+Teks:
+Berdasarkan Gambar 3.1, penelitian ini terdiri atas delapan tahap utama yang dilaksanakan secara berurutan, yaitu: (1) pengambilan data ulasan dari Google Play Store, (2) praproses teks, (3) pembuatan model SVM sebagai baseline, (4) pembangunan model teacher berbasis RoBERTa, (5) pelabelan otomatis menggunakan pendekatan teacher-student, (6) fine-tuning IndoBERT sebagai model utama, (7) evaluasi performa model, dan (8) implementasi dashboard berbasis Streamlit. Setiap tahapan dijelaskan secara rinci pada subbab berikut.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 13
+Teks:
+3.3. Pengumpulan Data
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 14
+Teks:
+Pengumpulan data merupakan tahapan penting dalam penelitian analisis sentimen karena kualitas dan kuantitas data yang diperoleh akan memengaruhi hasil pelatihan serta evaluasi model yang dibangun. Pada penelitian ini, data yang digunakan berupa ulasan pengguna aplikasi Roblox yang diperoleh dari Google Play Store. Platform tersebut dipilih karena menyediakan data ulasan dalam jumlah besar yang dapat merepresentasikan opini pengguna terhadap aplikasi secara langsung. Proses pengumpulan data dilakukan secara otomatis menggunakan teknik web scraping dengan bantuan pustaka Python. Data yang berhasil diperoleh kemudian disimpan dalam bentuk dataset mentah untuk selanjutnya melalui tahapan praproses, pelabelan, dan pelatihan model. Secara umum, tahapan pengumpulan data pada penelitian ini meliputi penentuan sumber data dan proses pengambilan data sebagaimana dijelaskan pada subbab berikut.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 15
+Teks:
+3.3.1. Sumber Data
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 16
+Teks:
+Data yang digunakan dalam penelitian ini berupa ulasan pengguna aplikasi Roblox yang dipublikasikan di Google Play Store. Roblox merupakan platform permainan daring yang memiliki jutaan pengguna aktif di seluruh dunia, termasuk di Indonesia (Roblox Corporation, 2024). Tingginya volume ulasan yang terus bertambah menjadikan platform ini sebagai sumber data yang representatif untuk kajian analisis sentimen dalam konteks aplikasi mobile gaming. Halaman aplikasi Roblox di Google Play Store ditunjukkan pada Gambar 3.2.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 19
+Teks:
+Berdasarkan Gambar 3.2, halaman Roblox di Google Play Store menampilkan nama aplikasi, rating keseluruhan, serta sejumlah ulasan pengguna yang akan menjadi basis data penelitian ini. Ulasan tersebut bersifat publik dan dapat diakses melalui antarmuka pemrograman aplikasi yang tersedia.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 21
+Teks:
+Pengambilan data dilakukan secara otomatis menggunakan pustaka google-play-scraper pada bahasa pemrograman Python. Proses scraping dilakukan terhadap aplikasi Roblox yang tersedia pada Google Play Store dengan parameter bahasa Indonesia (lang='id') dan wilayah Indonesia (country='id'). Selain itu, pengambilan data diurutkan berdasarkan ulasan terbaru (Sort.NEWEST) untuk memudahkan proses penyaringan berdasarkan rentang waktu penelitian. Implementasi proses scraping ditunjukkan pada Gambar 3.3.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 23
+Teks:
+Gambar 3.3 Contoh Scraping Dataset
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 24
+Teks:
+Berdasarkan Gambar 3.3, proses pengambilan data dilakukan menggunakan fungsi reviews() dari pustaka google-play-scraper. Fungsi tersebut digunakan untuk mengambil data ulasan pengguna Roblox secara bertahap (batch) dengan memanfaatkan continuation token sehingga jumlah data yang diperoleh dapat mencapai target yang ditentukan. Pada penelitian ini berhasil dikumpulkan sebanyak 50.000 ulasan pengguna dalam bahasa Indonesia yang berada pada rentang waktu penelitian.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 25
+Teks:
+Setiap data ulasan yang diperoleh memuat beberapa atribut, di antaranya isi ulasan (content), skor penilaian (score), tanggal publikasi ulasan (at), serta informasi pendukung lainnya. Seluruh data hasil scraping kemudian disimpan dalam format CSV sebagai dataset mentah (raw dataset) yang selanjutnya digunakan pada tahap praproses teks sebelum proses pelatihan model dilakukan.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 27
+Teks:
+Praproses teks merupakan tahapan kritis dalam analisis sentimen karena kualitas data yang masuk secara langsung memengaruhi performa model yang dihasilkan (Haddi, Liu & Shi, 2013). Data ulasan yang diperoleh dari Google Play Store umumnya mengandung derau berupa karakter tidak beraturan, penggunaan huruf kapital tidak konsisten, serta kata-kata yang tidak bermakna bagi proses klasifikasi. Oleh karena itu, praproses teks perlu dilakukan secara sistematis. Alur tahapan praproses ditunjukkan pada Gambar 3.4.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 36
+Teks:
+Karakter-karakter yang tidak relevan bagi proses klasifikasi dihapus dari teks, meliputi URL, angka, karakter HTML, tanda baca, dan karakter non-alfanumerik. Tahap ini bertujuan mereduksi derau yang dapat mengganggu proses pembelajaran model. Contoh hasil proses data cleaning dapat dilihat pada Tabel 3.3.
+
+============================================================
+Bab: Bab 3
+Lokasi: Paragraf 53
+Teks:
+Kata-kata yang tidak membawa bobot semantik signifikan dihapus menggunakan daftar stopword bahasa Indonesia dari pustaka Sastrawi yang telah dimodifikasi untuk mengecualikan kata-kata yang berperan dalam konteks ulasan. Contoh hasil penghapusan stopword dapat dilihat pada Tabel 3.6.
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 1
+Teks:
+         Komponen                        Spesifikasi
+0        Prosesor               Intel Core i5-9400f 
+1      Memori RAM                              16 GB
+2             GPU  NVIDIA GeForce RTX 2060 6 GB VRAM
+3     Penyimpanan                    512 GB NVMe SSD
+4  Sistem Operasi              Windows 11 Pro 64-bit
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 2
+Teks:
+                                                   Komentar                                        Hasil Case Folding
+0            Game INI Sangat BAGUS Banget!! Grafisnya Keren            game ini sangat bagus banget!! grafisnya keren
+1  TIDAK Bisa Login Sejak Update Terbaru, Tolong DIPERBAIKI  tidak bisa login sejak update terbaru, tolong diperbaiki
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 3
+Teks:
+                                                   Komentar                                      Hasil Data Cleaning
+0            game ini sangat bagus banget!! grafisnya keren             game ini sangat bagus banget grafisnya keren
+1  tidak bisa login sejak update terbaru, tolong diperbaiki  tidak bisa login sejak update terbaru tolong diperbaiki
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 4
+Teks:
+                                                  Komentar                                                Hasil Tokenisasi
+0             game ini sangat bagus banget grafisnya keren              game, ini, sangat, bagus, banget, grafisnya, keren
+1  tidak bisa login sejak update terbaru tolong diperbaiki  tidak, bisa, login, sejak, update, terbaru, tolong, diperbaiki
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 5
+Teks:
+                                                         Komentar                                      Hasil Penanganan Negasi
+0              game, ini, sangat, bagus, banget, grafisnya, keren           game, ini, sangat, bagus, banget, grafisnya, keren
+1  tidak, bisa, login, sejak, update, terbaru, tolong, diperbaiki  bisa_NEG, login, sejak, update, terbaru, tolong, diperbaiki
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 6
+Teks:
+                                                      Komentar                        Hasil Stopword Removal
+0           game, ini, sangat, bagus, banget, grafisnya, keren         game, bagus, banget, grafisnya, keren
+1  bisa_NEG, login, sejak, update, terbaru, tolong, diperbaiki  bisa_NEG, login, update, terbaru, diperbaiki
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 7
+Teks:
+                                       Komentar                       Hasil Stemming
+0         game, bagus, banget, grafisnya, keren   game, bagus, banget, grafis, keren
+1  bisa_NEG, login, update, terbaru, diperbaiki  bisa_NEG, login, update, baru, baik
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 8
+Teks:
+              Parameter                         Nilai
+0                Kernel                        Linear
+1           Parameter C                           1.0
+2  Strategi Multi-Kelas             One-vs-Rest (OvR)
+3          Jumlah Kelas  3 (positif, netral, negatif)
+4          Random State                            42
+5      Stratified Split                            Ya
+6    Representasi Fitur                        TF-IDF
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 9
+Teks:
+                       Subset Proporsi Jumlah Data
+0          Data Latih (Train)      72%      36.000
+1  Data Validasi (Validation)       8%       4.000
+2             Data Uji (Test)      20%      10.000
+3                       Total     100%      50.000
+
+============================================================
+Bab: Bab 3
+Lokasi: Tabel 10
+Teks:
+                   Parameter                           Nilai
+0            Model Pra-Latih  indobenchmark/indobert-base-p2
+1   Panjang Sekuens Maksimum                       128 token
+2               Ukuran Batch                              32
+3               Jumlah Epoch                               5
+4              Learning Rate                        2 × 10⁻⁵
+5                  Optimizer                           AdamW
+6               Jumlah Kelas    3 (positif, netral, negatif)
+7               Random State                              42
+8           Stratified Split                              Ya
+9                Fungsi Loss              Cross-Entropy Loss
+10       Perangkat Komputasi      GPU NVIDIA RTX 3060 (CUDA)
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 1
+Teks:
+4.1 Hasil Pengumpulan Data
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 2
+Teks:
+Pengumpulan data pada penelitian ini dilakukan melalui teknik web scraping dengan memanfaatkan pustaka google-play-scraper yang dijalankan pada bahasa pemrograman Python. Proses scraping diarahkan untuk menghimpun ulasan pengguna aplikasi Roblox pada platform Google Play Store, dengan menerapkan filter bahasa Indonesia dan wilayah Indonesia serta pengurutan berdasarkan ulasan terbaru, sehingga data yang diperoleh dapat merepresentasikan persepsi pengguna domestik secara aktual.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 3
+Teks:
+Ulasan yang berhasil dihimpun mencakup rentang waktu mulai tanggal 25 Februari 2026 hingga 22 April 2026. Pemilihan rentang waktu tersebut dimaksudkan untuk memperoleh gambaran sentimen pengguna dalam periode yang cukup panjang, sehingga memungkinkan dilakukannya analisis tren temporal pada subbab pembahasan selanjutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 6
+Teks:
+Gambar 4.1 menampilkan halaman aplikasi Roblox pada Google Play Store yang menjadi sumber data penelitian. Halaman tersebut memuat informasi dasar aplikasi, seperti nama aplikasi, peringkat (rating), jumlah unduhan, dan ulasan pengguna yang dapat diakses secara publik.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 8
+Teks:
+Gambar 4.2 Hasil Scraping Dataset Format CSV
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 9
+Teks:
+Gambar 4.2 menunjukkan contoh data hasil scraping dalam format CSV, yang mencakup kolom content (teks ulasan), score (peringkat bintang), dan at (tanggal ulasan). Format tersebut memudahkan proses penyimpanan dan pengolahan data pada tahap selanjutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 10
+Teks:
+Dari target sebanyak 50.000 ulasan yang ditetapkan sebelumnya, penelitian ini berhasil memperoleh sebanyak 49.485 ulasan yang memuat ketiga atribut tersebut. Keseluruhan data hasil scraping kemudian disimpan dalam format CSV sebagai raw dataset yang menjadi dasar bagi tahap praproses teks pada subbab berikutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 12
+Teks:
+Praproses teks dilakukan untuk membersihkan dan menyeragamkan data ulasan sebelum digunakan pada tahap pelatihan model. Tahapan praproses yang diterapkan pada penelitian ini meliputi case folding, cleaning, tokenisasi, penanganan negasi, penghapusan stopword, dan stemming, yang dilaksanakan secara berurutan terhadap seluruh data ulasan.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 13
+Teks:
+Dari 50.000 ulasan target hasil scraping, berhasil diperoleh 49.485 ulasan yang valid (515 data dieliminasi karena tidak lengkap atau tidak relevan). Seluruh 49.485 data tersebut kemudian digunakan untuk tahapan praproses teks dan analisis selanjutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 14
+Teks:
+Hasil dari setiap tahapan praproses dijelaskan secara rinci pada subbab-subbab berikut, disertai dengan contoh transformasi teks yang terjadi pada masing-masing proses guna memberikan gambaran konkret mengenai perubahan data pada setiap tahapan.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 16
+Teks:
+Case folding dilakukan dengan mengubah seluruh karakter teks menjadi huruf kecil untuk mengeliminasi variasi representasi kata yang timbul akibat perbedaan penggunaan huruf kapital pada teks ulasan.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 20
+Teks:
+Berdasarkan Tabel 4.3, seluruh teks ulasan yang sebelumnya ditulis menggunakan huruf kapital berhasil diseragamkan menjadi huruf kecil tanpa mengubah makna maupun struktur kalimat aslinya. Konsistensi representasi huruf ini penting agar variasi penulisan kata yang sebenarnya bermakna sama tidak dihitung sebagai token yang berbeda pada tahap analisis selanjutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 26
+Teks:
+Tujuan dari tahap ini adalah mereduksi derau (noise) pada data teks yang dapat mengganggu proses pembelajaran model apabila tidak dibersihkan terlebih dahulu.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 27
+Teks:
+Tabel 4.4 Hasil Data Cleaning
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 29
+Teks:
+Berdasarkan Tabel 4.4, karakter-karakter yang tidak relevan, seperti tanda baca dan simbol khusus, berhasil dihapus dari teks ulasan tanpa menghilangkan substansi informasi yang dikandungnya. Dengan berkurangnya elemen-elemen non-alfanumerik tersebut, teks ulasan menjadi lebih bersih dan siap dipecah menjadi token-token individual pada tahap tokenisasi.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 36
+Teks:
+Berdasarkan Tabel 4.5, setiap teks ulasan berhasil dipecah menjadi token-token individual yang selanjutnya siap digunakan pada tahap penanganan negasi dan penghapusan stopword. Pemisahan pada tingkat kata ini menjadi unit dasar yang memungkinkan model mengenali pola dan frekuensi kemunculan kata secara lebih terstruktur dibandingkan dengan memperlakukan teks sebagai satu kesatuan kalimat.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 43
+Teks:
+Kata-kata yang tidak membawa bobot semantik signifikan dihapus menggunakan daftar stopword bahasa Indonesia dari pustaka Sastrawi yang telah dimodifikasi. Modifikasi dilakukan dengan mengecualikan sejumlah kata yang secara kontekstual tetap relevan dalam ulasan aplikasi, sehingga informasi penting tidak turut terhapus pada tahap ini.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 45
+Teks:
+Berdasarkan Tabel 4.7, kata-kata yang tidak relevan secara semantik berhasil dihilangkan dari token ulasan, sehingga token yang tersisa lebih merepresentasikan inti dari isi ulasan pengguna. Pengurangan jumlah token pada tahap ini juga membantu mengurangi dimensi fitur yang harus diproses oleh model pada tahap pelatihan, tanpa mengurangi informasi sentimen yang terkandung di dalamnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 49
+Teks:
+Berdasarkan Tabel 4.8, setiap kata berhasil direduksi ke bentuk dasarnya, sehingga variasi imbuhan pada kata dapat disatukan menjadi satu representasi yang konsisten sebelum data digunakan pada tahap pelabelan otomatis. Dengan demikian, seluruh tahapan praproses yang telah dijelaskan pada subbab 4.2.1 hingga 4.2.6 menghasilkan teks ulasan yang bersih, konsisten, dan siap digunakan sebagai masukan bagi proses teacher-student auto labeling pada subbab berikutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 51
+Teks:
+Tahapan teacher-student auto labeling dilakukan untuk menghasilkan label sentimen secara otomatis tanpa memerlukan anotasi manual yang memakan waktu dan biaya. Model RoBERTa berbasis IndoBERT berperan sebagai model teacher yang memprediksi sentimen teks ulasan, sementara label berbasis peringkat bintang digunakan sebagai pembanding untuk mengukur konsistensi pelabelan.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 57
+Teks:
+Tabel 4.9 menunjukkan distribusi pseudo-label yang dihasilkan oleh model teacher. Kelas positif mendominasi dataset dengan 32.225 ulasan (65,12%), diikuti oleh kelas negatif sebanyak 13.990 ulasan (28,27%), dan kelas netral sebanyak 3.270 ulasan (6,61%).
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 58
+Teks:
+Ketidakseimbangan distribusi kelas tersebut mencerminkan kecenderungan pengguna untuk memberikan ulasan yang bersifat positif terhadap aplikasi Roblox, dan menjadi pertimbangan penting dalam proses pelatihan model pada tahap selanjutnya.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 63
+Teks:
+Tingkat kesesuaian antara label berbasis peringkat bintang dan prediksi model teacher diukur menggunakan Agreement Rate. Dari total 49.485 data, sebanyak 41.696 data memiliki label yang sesuai antara peringkat dan prediksi model teacher, sedangkan 7.789 data menunjukkan ketidaksesuaian.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 64
+Teks:
+Nilai Agreement Rate yang diperoleh pada penelitian ini adalah sebesar 84,26%. Nilai tersebut menunjukkan bahwa sebagian besar pengguna aplikasi Roblox memberikan peringkat yang konsisten dengan isi ulasannya secara tekstual.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 65
+Teks:
+Adapun 15,74% data yang tidak sesuai dapat disebabkan oleh adanya inkonsistensi antara peringkat numerik dan ekspresi verbal pengguna, misalnya pengguna yang memberikan peringkat tinggi namun menyertakan keluhan dalam teks ulasannya, atau sebaliknya. Pada kasus-kasus tersebut, pseudo-label dari model teacher lebih mencerminkan sentimen semantik teks dibandingkan label berbasis peringkat, sehingga digunakan sebagai label final untuk proses fine-tuning IndoBERT.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 71
+Teks:
+Subbab ini menjelaskan konfigurasi yang digunakan serta hasil evaluasi model SVM pada data uji.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 74
+Teks:
+Pembagian data menggunakan rasio 80% data latih dan 20% data uji dengan random_state sebesar 42 untuk memastikan reproduktibilitas eksperimen.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Paragraf 79
+Teks:
+Hasil evaluasi model SVM pada data uji ditunjukkan pada Tabel 4.10.
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 1
+Teks:
+  No.               Teks Sebelum Case Folding               Teks Setelah Case Folding
+0   1              TOLONG PERBAIKI UPDATE NYA              tolong perbaiki update nya
+1   2  PERMAINAN YANG BAGUS! SAYA MENYUKAINYA  permainan yang bagus! saya menyukainya
+2   3             BALIKKAN CHAT LAGI ROBLOX!!             balikkan chat lagi roblox!!
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 2
+Teks:
+  No.                                                                  Teks Sebelum Cleaning                                                                  Teks Setelah Cleaning
+0   1                                                 permainan yang bagus! saya menyukainya                                                  permainan yang bagus saya menyukainya
+1   2                         aku suka tapi kadang-kadang ada bug tapi aku kasih bitang 5 ko                           aku suka tapi kadang kadang ada bug tapi aku kasih bitang ko
+2   3  roblox tu sangat seru tapi bikin hp aku panas/ngelek jadi mohon tolong di perbaiki ya  roblox tu sangat seru tapi bikin hp aku panas ngelek jadi mohon tolong di perbaiki ya
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 3
+Teks:
+  No.                                                                Teks Sebelum Tokenisasi                                                                                                                Token Setelah Tokenisasi
+0   1                                                  permainan yang bagus saya menyukainya                                                                                   ["permainan", "yang", "bagus", "saya", "menyukainya"]
+1   2                           aku suka tapi kadang kadang ada bug tapi aku kasih bitang ko                                       ["aku", "suka", "tapi", "kadang", "kadang", "ada", "bug", "tapi", "aku", "kasih", "bitang", "ko"]
+2   3  roblox tu sangat seru tapi bikin hp aku panas ngelek jadi mohon tolong di perbaiki ya  ["roblox", "tu", "sangat", "seru", "tapi", "bikin", "hp", "aku", "panas", "ngelek", "jadi", "mohon", "tolong", "di", "perbaiki", "ya"]
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 4
+Teks:
+  No.                                                                                          Token Sebelum Penanganan Negasi                                                                                    Token Setelah Penanganan Negasi
+0   1            ["padahal", "saya", "suka", "game", "ini", "knp", "saya", "pas", "mau", "login", "hari", "ini", "ga", "bisa"]        ["padahal", "saya", "suka", "game", "ini", "knp", "saya", "pas", "mau", "login", "hari", "ini", "bisa_NEG"]
+1   2                                                              ["gak", "bisa", "ngechat", "mulai", "rusak", "game", "nya"]                                                           ["bisa_NEG", "ngechat", "mulai", "rusak", "game", "nya"]
+2   3  ["roblox", "tolong", "ya", "robux", "nya", "jangan", "pale", "uang", "segala", "bisa", "di", "marahin", "orang", "tua"]  ["roblox", "tolong", "ya", "robux", "nya", "pale_NEG", "uang", "segala", "bisa", "di", "marahin", "orang", "tua"]
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 5
+Teks:
+  No.                                                                                                          Token Sebelum Stopword Removal                                                 Token Setelah Stopword Removal
+0   1                                                                                   ["permainan", "yang", "bagus", "saya", "menyukainya"]                                          ["permainan", "bagus", "menyukainya"]
+1   2                                       ["aku", "suka", "tapi", "kadang", "kadang", "ada", "bug", "tapi", "aku", "kasih", "bitang", "ko"]                         ["suka", "kadang", "kadang", "bug", "kasih", "bitang"]
+2   3  ["roblox", "tu", "sangat", "seru", "tapi", "bikin", "hp", "aku", "panas", "ngelek", "jadi", "mohon", "tolong", "di", "perbaiki", "ya"]  ["roblox", "seru", "bikin", "panas", "ngelek", "mohon", "tolong", "perbaiki"]
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 6
+Teks:
+  No.                                                         Token Sebelum Stemming                                                     Token Setelah Stemming                                       Hasil Akhir
+0   1                                               ["tolong", "perbaiki", "update"]                                               ["tolong", "baik", "update"]                                tolong baik update
+1   2                                          ["permainan", "bagus", "menyukainya"]                                                  ["main", "bagus", "suka"]                                   main bagus suka
+2   3  ["roblox", "seru", "bikin", "panas", "ngelek", "mohon", "tolong", "perbaiki"]  ["roblox", "seru", "bikin", "panas", "ngelek", "mohon", "tolong", "baik"]  roblox seru bikin panas ngelek mohon tolong baik
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 7
+Teks:
+  Kelas Sentimen Jumlah Ulasan Persentase
+0        Negatif        13.990     28,27%
+1         Netral         3.270      6,61%
+2        Positif        32.225     65,12%
+3          Total        49.485    100,00%
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 8
+Teks:
+  Kelas Sentimen Precision  Recall F1-Score Support
+0        negatif    70,03%  75,23%   72,54%   2.798
+1         netral     0,00%   0,00%    0,00%     654
+2        positif    85,12%  91,00%   87,96%   6.445
+3       accuracy                     80,53%   9.897
+4      macro avg    51,72%  55,41%   53,50%   9.897
+5   weighted avg    75,23%  80,53%   77,79%   9.897
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 9
+Teks:
+  Kelas Sentimen Precision  Recall F1-Score Support
+0        negatif    82,00%  87,00%   84,00%   3.283
+1         netral    79,00%  64,00%   71,00%   1.166
+2        positif    92,00%  92,00%   92,00%   5.448
+3       accuracy                     87,22%   9.897
+4      macro avg    84,44%  81,15%   82,50%   9.897
+5   weighted avg    87,00%  87,22%   87,00%   9.897
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 10
+Teks:
+     Metrik Evaluasi SVM Baseline IndoBERT Peningkatan
+0           Accuracy       80,53%   87,22%      +6,69%
+1  Precision (Macro)       51,72%   84,44%     +32,72%
+2     Recall (Macro)       55,41%   81,15%     +25,74%
+3   F1-Score (Macro)       53,50%   82,50%     +29,00%
+4   F1-Score Negatif       72,54%   84,00%     +11,46%
+5    F1-Score Netral        0,00%   71,00%     +71,00%
+6   F1-Score Positif       87,96%   92,00%      +4,04%
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 11
+Teks:
+  Peringkat     Tanggal Jumlah Review
+0         1  2026-04-09         1.800
+1         2  2026-04-21         1.779
+2         3  2026-02-25         1.384
+3         4  2026-03-17         1.373
+4         5  2026-03-10         1.336
+5         6  2026-04-10         1.286
+6         7  2026-02-28         1.213
+7         8  2026-03-01         1.150
+8         9  2026-03-08         1.147
+9        10  2026-03-06         1.138
+
+============================================================
+Bab: Bab 4 (FIXED)
+Lokasi: Tabel 12
+Teks:
+           Bulan Jml. Negatif % Negatif Jml. Netral % Netral Jml. Positif % Positif
+0  Februari 2026        1.490    31,59%         368    7,80%        2.858    60,60%
+1     Maret 2026        8.010    28,73%       1.788    6,41%       18.085    64,86%
+2     April 2026        4.490    26,59%       1.114    6,60%       11.282    66,81%

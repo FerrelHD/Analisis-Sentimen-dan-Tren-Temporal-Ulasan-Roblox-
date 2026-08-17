@@ -1,0 +1,145 @@
+3. METODE PENELITIAN
+
+3.1. Tahapan Penelitian
+Penelitian ini mengikuti alur kerja yang terstruktur dan sistematis, mulai dari tahap pengumpulan data hingga implementasi sistem berbasis web, dengan tujuan akhir menganalisis tren perubahan sentimen pengguna Roblox secara temporal. Keseluruhan alur penelitian dirancang agar setiap tahapan bersifat reproduktibel dan dapat diverifikasi secara ilmiah. Alur penelitian secara umum ditunjukkan pada Gambar 3.1.
+
+Gambar 3.1 Tahapan Penelitian
+Berdasarkan Gambar 3.1, penelitian ini diawali dengan (1) pengambilan data ulasan pengguna aplikasi Roblox dari Google Play Store menggunakan teknik web scraping. Selanjutnya, data ulasan diproses pada tahap (2) praproses teks yang meliputi case folding, cleaning, tokenisasi, negation handling, stopword removal, dan stemming untuk menghasilkan data yang bersih dan siap digunakan pada proses pemodelan. Setelah itu, penelitian menerapkan (3) pendekatan pelabelan berbasis isi teks menggunakan model teacher RoBERTa (3b) yang menghasilkan label sentimen otomatis (pseudo-label). Label sentimen otomatis inilah yang selanjutnya digunakan sebagai target label latih yang sama untuk melatih (4a) model Support Vector Machine (SVM) baru sebagai baseline dan melakukan (4b) fine-tuning model student IndoBERT.
+Setelah kedua model dikembangkan, dilakukan (5a) evaluasi terhadap model SVM baru dan (5b) evaluasi terhadap model IndoBERT menggunakan dataset pengujian yang sama secara apple-to-apple dengan metrik accuracy, precision, recall, F1-score, dan AUC-ROC. Berdasarkan hasil evaluasi tersebut, dilakukan (6) pemilihan model utama yang akan digunakan pada tahap analisis temporal. Pada penelitian ini, model IndoBERT dipilih sebagai model utama karena memiliki performa yang lebih baik dibandingkan model baseline.
+Tahap selanjutnya adalah (7) analisis tren sentimen secara temporal menggunakan hasil klasifikasi model IndoBERT untuk mengidentifikasi perubahan sentimen pengguna Roblox berdasarkan periode waktu. Seluruh hasil analisis kemudian disajikan melalui (8) dashboard interaktif berbasis Streamlit sehingga informasi yang dihasilkan dapat divisualisasikan secara informatif dan mudah dipahami. Setiap tahapan pada alur penelitian saling berkaitan, di mana keluaran dari suatu tahapan menjadi masukan bagi tahapan berikutnya hingga menghasilkan analisis tren sentimen dan dashboard interaktif sebagai luaran akhir penelitian.
+3.2. Perangkat Penelitian
+Penelitian ini memanfaatkan perangkat keras dan perangkat lunak yang mendukung proses komputasi intensif, khususnya pada tahap pelatihan model deep learning. Spesifikasi perangkat keras yang digunakan dirangkum pada Tabel 3.1.
+Tabel 3.1 Spesifikasi Perangkat Keras
+
+Berdasarkan Tabel 3.1, perangkat keras yang digunakan telah memenuhi kebutuhan komputasi penelitian ini. Keberadaan GPU NVIDIA RTX 2060 memungkinkan akselerasi pelatihan model Transformer menggunakan CUDA, sehingga waktu pelatihan dapat dipersingkat secara signifikan dibandingkan dengan menggunakan prosesor semata.
+Perangkat lunak yang digunakan dalam penelitian ini meliputi bahasa pemrograman Python 3.11.9, pustaka transformers (Hugging Face) untuk implementasi IndoBERT, scikit-learn untuk implementasi SVM, serta Streamlit untuk pembangunan dashboard interaktif. Seluruh eksperimen dijalankan di dalam lingkungan virtual conda guna memastikan keterpisahan dependensi antarproses.
+3.3. Pengumpulan Data
+Pengumpulan data merupakan tahapan penting dalam penelitian analisis sentimen karena kualitas dan kuantitas data yang diperoleh akan memengaruhi hasil pelatihan serta evaluasi model yang dibangun. Pada penelitian ini, data yang digunakan berupa ulasan pengguna aplikasi Roblox yang diperoleh dari Google Play Store. Platform tersebut dipilih karena menyediakan data ulasan dalam jumlah besar yang dapat merepresentasikan opini pengguna terhadap aplikasi secara langsung. Proses pengumpulan data dilakukan secara otomatis menggunakan teknik web scraping dengan bantuan pustaka Python. Data yang berhasil diperoleh kemudian disimpan dalam bentuk dataset mentah untuk selanjutnya melalui tahapan praproses, pelabelan, dan pelatihan model. Secara umum, tahapan pengumpulan data pada penelitian ini meliputi penentuan sumber data dan proses pengambilan data sebagaimana dijelaskan pada subbab berikut.
+3.3.1. Sumber Data
+Data yang digunakan dalam penelitian ini berupa ulasan pengguna aplikasi Roblox yang dipublikasikan di Google Play Store. Roblox merupakan platform permainan daring yang memiliki jutaan pengguna aktif di seluruh dunia, termasuk di Indonesia (Roblox Corporation, 2024). Tingginya volume ulasan yang terus bertambah menjadikan platform ini sebagai sumber data yang representatif untuk kajian analisis sentimen dalam konteks aplikasi mobile gaming. Halaman aplikasi Roblox di Google Play Store ditunjukkan pada Gambar 3.2.
+
+Gambar 3.2 Halaman Roblox di Google Play Store
+Berdasarkan Gambar 3.2, halaman Roblox di Google Play Store menampilkan nama aplikasi, rating keseluruhan, serta sejumlah ulasan pengguna yang akan menjadi basis data penelitian ini. Ulasan tersebut bersifat publik dan dapat diakses melalui antarmuka pemrograman aplikasi yang tersedia.
+3.3.2. Proses Scraping
+Pengambilan data dilakukan secara otomatis menggunakan pustaka google-play-scraper pada bahasa pemrograman Python. Proses scraping dilakukan terhadap aplikasi Roblox yang tersedia pada Google Play Store dengan parameter bahasa Indonesia (lang='id') dan wilayah Indonesia (country='id'). Selain itu, pengambilan data diurutkan berdasarkan ulasan terbaru (Sort.NEWEST) untuk memudahkan proses penyaringan berdasarkan rentang waktu penelitian. Implementasi proses scraping ditunjukkan pada Gambar 3.3.
+
+Gambar 3.3 Contoh Scraping Dataset
+Berdasarkan Gambar 3.3, proses pengambilan data dilakukan menggunakan fungsi reviews() dari pustaka google-play-scraper. Fungsi tersebut digunakan untuk mengambil data ulasan pengguna Roblox secara bertahap (batch) dengan memanfaatkan continuation token sehingga jumlah data yang diperoleh dapat mencapai target yang ditentukan. Pada penelitian ini ditetapkan target pengumpulan sebanyak 50.000 ulasan pengguna dalam bahasa Indonesia pada rentang waktu penelitian yang telah ditentukan; jumlah data aktual yang berhasil diperoleh beserta rinciannya disajikan pada Bab IV.
+Setiap data ulasan yang diperoleh memuat beberapa atribut, di antaranya isi ulasan (content), skor penilaian (score), tanggal publikasi ulasan (at), serta informasi pendukung lainnya. Seluruh data hasil scraping kemudian disimpan dalam format CSV sebagai dataset mentah (raw dataset) yang selanjutnya digunakan pada tahap praproses teks sebelum proses pelatihan model dilakukan.
+3.4. Praproses Teks
+Praproses teks merupakan tahapan kritis dalam analisis sentimen karena kualitas data yang masuk secara langsung memengaruhi performa model yang dihasilkan (Haddi, Liu & Shi, 2013). Data ulasan yang diperoleh dari Google Play Store umumnya mengandung derau berupa karakter tidak beraturan, penggunaan huruf kapital tidak konsisten, serta kata-kata yang tidak bermakna bagi proses klasifikasi. Oleh karena itu, praproses teks perlu dilakukan secara sistematis. Alur tahapan praproses ditunjukkan pada Gambar 3.4.
+
+Gambar 3.4 Tahapan Praproses Teks
+Berdasarkan Gambar 3.4, praproses teks terdiri atas enam tahap berurutan yang dijelaskan sebagai berikut.
+Case Folding
+Seluruh karakter teks diubah menjadi huruf kecil (lowercase) untuk memastikan konsistensi representasi kata. Proses ini mengeliminasi perbedaan representasi yang disebabkan oleh variasi penggunaan huruf kapital. Contoh hasil proses case folding dapat dilihat pada Tabel 3.2.
+Tabel 3.2 Hasil Case Folding
+
+Cleaning
+Karakter-karakter yang tidak relevan bagi proses klasifikasi dihapus dari teks, meliputi URL, angka, karakter HTML, tanda baca, dan karakter non-alfanumerik. Tahap ini bertujuan mereduksi derau yang dapat mengganggu proses pembelajaran model. Contoh hasil proses data cleaning dapat dilihat pada Tabel 3.3.
+Tabel 3.3 Hasil Cleaning
+
+Tokenisasi
+Teks yang telah dibersihkan dipecah menjadi satuan-satuan kata (token) yang menjadi unit dasar analisis. Tokenisasi dilakukan menggunakan pustaka NLTK yang mendukung tokenisasi berbasis tanda baca untuk bahasa Indonesia. Contoh hasil proses tokenisasi dapat dilihat pada Tabel 3.4.
+
+
+
+
+Tabel 3.4 Hasil Tokenisasi
+
+Penanganan Negasi
+Kata-kata yang mengindikasikan negasi, seperti "tidak", "bukan", "jangan", dan variannya, ditangani dengan cara menggabungkan kata negasi bersama kata yang mengikutinya menggunakan tanda hubung khusus, misalnya 'tidak bisa' diubah menjadi bisa_NEG. Pendekatan ini mempertahankan makna semantik yang berlawanan agar tidak hilang saat penghapusan stopword. Contoh hasil penanganan negasi dapat dilihat pada Tabel 3.5.
+Tabel 3.5 Hasil Penanganan Negasi
+
+Catatan: Contoh pertama tidak mengandung kata negasi sehingga tidak mengalami perubahan.
+Penghapusan Stopword
+Kata-kata yang tidak membawa bobot semantik signifikan dihapus menggunakan daftar stopword bahasa Indonesia dari pustaka NLTK. Contoh hasil penghapusan stopword dapat dilihat pada Tabel 3.6.
+
+
+
+Tabel 3.6 Hasil Penghapusan Stopword
+
+Stemming
+Setiap kata direduksi ke bentuk dasarnya menggunakan algoritma Nazief-Adriani yang diimplementasikan pada pustaka PySastrawi. Proses ini menyeragamkan variasi morfologis kata dalam bahasa Indonesia. Contoh hasil stemming dapat dilihat pada Tabel 3.7.
+Tabel 3.7 Hasil Stemming
+
+3.5. Ekstraksi Fitur TF-IDF
+Untuk keperluan model SVM, representasi teks dibangun menggunakan metode TF-IDF (Term Frequency-Inverse Document Frequency) yang mengubah teks menjadi vektor numerik berbobot (Salton & Buckley, 1988). TF-IDF memperhitungkan frekuensi kemunculan suatu kata dalam satu dokumen sekaligus mempertimbangkan keumuman kata tersebut di seluruh koleksi dokumen, sehingga kata yang jarang muncul namun informatif memperoleh bobot lebih tinggi. Metode ini hanya diterapkan pada jalur pemodelan SVM, sedangkan model IndoBERT menggunakan mekanisme tokenisasi bawaan Transformer sehingga tidak memerlukan representasi fitur TF-IDF.
+
+Nilai TF untuk kata t pada dokumen d dihitung sebagai berikut:
+
+Gambar 3.5 Persamaan TDF
+Di mana f(t, d) adalah frekuensi kemunculan kata t dalam dokumen d, dan penyebut merupakan jumlah total seluruh kata dalam dokumen d.
+Nilai IDF dihitung sebagai berikut:
+
+Gambar 3.6 Persamaan IDF
+Di mana |D| adalah jumlah total dokumen dalam korpus, dan |{d ∈ D : t ∈ d}| adalah jumlah dokumen yang mengandung kata t.
+Bobot TF-IDF akhir merupakan hasil perkalian kedua komponen:
+
+Gambar 3.7 Persamaan TF-IDF
+Representasi fitur TF-IDF yang dihasilkan selanjutnya digunakan sebagai masukan pada model Support Vector Machine.
+3.6. Model SVM Baseline
+Support Vector Machine (SVM) merupakan algoritma pembelajaran mesin supervised yang bekerja dengan mencari hyperplane pemisah optimal antarkelas dalam ruang fitur berdimensi tinggi (Vapnik, 1995). SVM pada penelitian ini berfungsi sebagai model baseline yang memberikan acuan performa awal sebelum diterapkannya model berbasis Transformer.
+
+Fungsi objektif SVM yang diminimalkan adalah:
+
+
+Gambar 3.8 Persamaan Fungsi Objektif  SVM
+dengan kendala: yᵢ (w · xᵢ + b) ≥ 1 − ξᵢ dan ξᵢ ≥ 0, di mana w adalah vektor bobot, C adalah parameter regulasi, ξᵢ adalah variabel slack, yᵢ adalah label kelas, dan xᵢ adalah vektor fitur sampel ke-i. 
+Model SVM pada penelitian ini dikembangkan sebagai model baseline menggunakan representasi fitur TF-IDF. Untuk menjamin perbandingan performa yang adil (apple-to-apple), model SVM dilatih menggunakan label sentimen yang sama dengan model IndoBERT, yaitu pseudo-label sentimen yang dihasilkan secara otomatis oleh teacher model RoBERTa. Dengan menyamakan target label klasifikasi pada kedua model, evaluasi dapat difokuskan pada perbandingan kemampuan ekstraksi fitur semantik antara metode TF-IDF + SVM dan mekanisme self-attention pada IndoBERT fine-tuned.
+Tabel 3.8 Konfigurasi Model SVM Baseline
+
+Berdasarkan Tabel 3.8, kernel linear dipilih karena data teks berdimensi tinggi umumnya bersifat linearly separable setelah direpresentasikan dengan TF-IDF (Joachims, 1998). Random state ditetapkan sebesar 42 untuk memastikan reproduktibilitas eksperimen. Model SVM yang telah dilatih selanjutnya digunakan sebagai model pembanding (baseline) terhadap model IndoBERT pada tahap evaluasi, sehingga dapat memberikan gambaran mengenai peningkatan performa yang diperoleh melalui pendekatan berbasis Transformer.
+3.7. Auto-Labeling Berbasis Teacher Model
+Pelabelan otomatis berbasis teacher model merupakan pendekatan yang digunakan untuk menghasilkan label sentimen secara otomatis pada dataset yang belum memiliki anotasi manual. Pada pendekatan ini, model teacher digunakan untuk memprediksi label sentimen berdasarkan isi teks, kemudian hasil prediksi tersebut digunakan sebagai label pelatihan (pseudo-label) pada proses fine-tuning model IndoBERT. Pendekatan ini memungkinkan pemanfaatan dataset dalam jumlah besar tanpa memerlukan proses anotasi manual yang memerlukan waktu dan biaya yang tinggi.
+3.7.1. Latar Belakang Pemilihan Metode
+Pelabelan manual tidak digunakan dalam penelitian ini karena jumlah data ulasan yang dikumpulkan mencapai puluhan ribu sehingga memerlukan waktu dan sumber daya yang besar apabila dilakukan secara manual. Oleh karena itu, penelitian ini menerapkan pendekatan auto-labeling menggunakan teacher model untuk menghasilkan label sentimen secara otomatis berdasarkan isi teks ulasan. Pendekatan ini memungkinkan pemanfaatan dataset dalam jumlah besar tanpa memerlukan proses anotasi manual, sekaligus mempertahankan konteks semantik dari setiap ulasan (Tang et al., 2019). Arsitektur proses auto-labeling yang diterapkan pada penelitian ini ditunjukkan pada Gambar 3.9.
+
+Gambar 3.9 Arsitektur Auto-Labeling Berbasis Teacher Model
+Berdasarkan Gambar 3.9, proses dimulai dari dataset ulasan hasil scraping yang belum memiliki label sentimen. Seluruh ulasan terlebih dahulu melalui tahap praproses teks sebelum diproses oleh model teacher RoBERTa yang telah dilatih sebelumnya (pretrained). Model teacher kemudian menghasilkan prediksi sentimen secara otomatis berupa kelas positif, netral, atau negatif yang digunakan sebagai pseudo-label untuk membentuk dataset berlabel. Dataset hasil pelabelan otomatis tersebut selanjutnya digunakan sebagai data pelatihan pada proses fine-tuning model IndoBERT. Setelah proses fine-tuning selesai, model IndoBERT dievaluasi untuk mengukur performa klasifikasi sentimen berdasarkan data pengujian yang telah disiapkan.
+3.7.2. Model Teacher
+Model teacher pada penelitian ini menggunakan model RoBERTa berbahasa Indonesia yang telah dilatih sebelumnya (w11wo/indonesian-roberta-base-sentiment-classifier) pada korpus bahasa Indonesia (Wilie et al., 2020). Model teacher menerima masukan berupa teks ulasan hasil praproses dan menghasilkan prediksi label sentimen dengan tiga kelas: positif, netral, dan negatif. Prediksi model teacher ini selanjutnya disebut sebagai pseudo-label, karena label tersebut bukan merupakan hasil anotasi manual melainkan label otomatis berbasis konteks teks yang diprediksi oleh model bahasa besar. Model ini digunakan sebagai sumber pelabelan otomatis dan tidak mengalami proses pelatihan ulang (fine-tuning) pada penelitian ini.
+3.7.3. Proses Pembentukan Pseudo-Label
+Pembentukan pseudo-label pada penelitian ini dilakukan secara langsung berdasarkan prediksi model teacher terhadap teks ulasan yang telah melalui tahap praproses. Model teacher menerima masukan berupa teks ulasan dan menghasilkan keluaran berupa prediksi kelas sentimen, yaitu positif, netral, atau negatif, berdasarkan representasi semantik teks tersebut. Prediksi model teacher ini langsung digunakan sebagai pseudo-label final untuk seluruh dataset, tanpa melalui proses pembandingan atau rekonsiliasi lebih lanjut dengan sumber label lain.
+Perlu ditegaskan bahwa proses pembentukan pseudo-label ini tidak melibatkan pembandingan dengan label berbasis rating bintang. Untuk menjaga perbandingan yang apple-to-apple dalam penentuan model terbaik, baik model baseline SVM maupun model student IndoBERT dilatih secara eksklusif menggunakan pseudo-label dari model teacher. Label berbasis rating bintang dari pengguna tidak lagi digunakan sebagai target klasifikasi dalam penelitian ini karena terbukti seringkali bias dan tidak selaras dengan opini sesungguhnya (Sadiq et al., 2021). Dengan demikian, pendekatan pelabelan otomatis berbasis isi teks (pseudo-labeling) ini bertujuan mengatasi ketidakkonsistenan skor numerik sekaligus memberikan fondasi evaluasi performa model yang berfokus penuh pada pemahaman semantik teks.
+3.8. Fine-Tuning IndoBERT
+Setelah dataset berlabel otomatis diperoleh melalui proses pelabelan otomatis menggunakan teacher model pada subbab sebelumnya, tahap selanjutnya adalah melatih model klasifikasi sentimen utama melalui proses fine-tuning terhadap model bahasa pra-latih IndoBERT. Proses fine-tuning dilakukan dengan memanfaatkan dataset hasil pseudo-labeling sehingga model mampu mempelajari pola sentimen yang spesifik pada konteks ulasan aplikasi Roblox. Pemilihan IndoBERT sebagai kandidat model utama didasarkan pada kemampuan model tersebut dalam memahami struktur dan konteks bahasa Indonesia secara lebih baik dibandingkan model multibahasa secara umum (Koto et al., 2020; Wilie et al., 2020), sehingga diharapkan dapat menghasilkan performa klasifikasi yang lebih optimal dibandingkan model baseline Support Vector Machine yang telah dibangun pada subbab 3.6. Perbandingan performa kedua model pada subbab 3.9 menjadi dasar penentuan model klasifikasi yang hasil prediksinya digunakan pada tahap analisis tren temporal di Bab IV. Subbab ini menjelaskan secara rinci arsitektur model yang digunakan, skema pembagian dataset, serta konfigurasi parameter yang diterapkan selama proses pelatihan.
+3.8.1. Arsitektur IndoBERT
+IndoBERT merupakan model bahasa pra-latih berbasis arsitektur BERT (Bidirectional Encoder Representations from Transformers) yang dilatih secara khusus menggunakan korpus bahasa Indonesia berskala besar (Koto et al., 2020). Berbeda dengan model BERT standar yang dilatih pada data berbahasa Inggris, IndoBERT mampu menangkap nuansa linguistik bahasa Indonesia dengan lebih baik, termasuk dalam konteks ulasan aplikasi yang kaya akan bahasa informal dan slang. Pada penelitian ini, proses fine-tuning IndoBERT untuk tugas klasifikasi sentimen ditunjukkan pada Gambar 3.10.
+
+Gambar 3.10 Pipeline Fine-Tuning IndoBERT
+Berdasarkan Gambar 3.10, proses klasifikasi sentimen menggunakan model IndoBERT diawali dengan masukan berupa teks ulasan yang telah melalui tahap praproses. Selanjutnya, teks diproses oleh tokenizer IndoBERT berbasis WordPiece untuk menghasilkan input IDs dan attention mask yang digunakan sebagai masukan bagi model. Kedua representasi tersebut kemudian diproses oleh lapisan encoder IndoBERT yang terdiri atas beberapa lapisan Transformer untuk membangun representasi kontekstual dari teks. Representasi kontekstual token [CLS] yang dihasilkan selanjutnya diteruskan ke classification head yang terdiri atas lapisan dropout, linear layer, dan fungsi aktivasi softmax untuk menghasilkan prediksi sentimen ke dalam tiga kelas, yaitu positif, netral, dan negatif.
+3.8.2. Pembagian Dataset
+Pembagian dataset untuk pelatihan IndoBERT dilakukan dalam dua tahap menggunakan stratified split dengan random_state = 42 guna memastikan distribusi kelas yang proporsional pada setiap subset dan reproduktibilitas eksperimen. Tahap pertama membagi keseluruhan dataset menjadi 80% data latih dan 20% data uji. Tahap kedua mengambil 10% dari data latih sebagai data validasi, sehingga proporsi akhir adalah 72% data latih, 8% data validasi, dan 20% data uji. Pembagian ini diterapkan pada keseluruhan data ulasan valid hasil praproses (rincian jumlah data disajikan pada Bab IV). Komposisi pembagian dataset ditunjukkan pada Tabel 3.9.
+Tabel 3.9 Pembagian Dataset IndoBERT
+
+3.8.3. Konfigurasi Fine-Tuning
+Konfigurasi lengkap proses fine-tuning IndoBERT yang digunakan dalam penelitian ini ditunjukkan pada Tabel 3.10.
+Tabel 3.10 Konfigurasi Fine-Tuning IndoBERT
+
+Berdasarkan Tabel 3.10, nilai learning rate sebesar 2 × 10⁻⁵ dipilih mengikuti rekomendasi pada studi asal BERT (Devlin et al., 2019) untuk skenario fine-tuning pada tugas klasifikasi teks. Penggunaan optimizer AdamW bertujuan mengatasi masalah weight decay yang tidak terpisahkan pada implementasi Adam standar (Loshchilov & Hutter, 2019).
+3.9. Evaluasi Model
+Kinerja setiap model dievaluasi menggunakan empat metrik utama yang lazim digunakan dalam klasifikasi teks multi-kelas, yaitu accuracy, precision, recall, dan F1-score (Sokolova & Lapalme, 2009). Evaluasi ini bertujuan untuk membandingkan performa klasifikasi model SVM dan IndoBERT berdasarkan metrik evaluasi yang digunakan. Model dengan performa terbaik selanjutnya digunakan sebagai model utama dalam proses analisis tren sentimen secara temporal.
+
+Accuracy mengukur proporsi prediksi yang benar terhadap keseluruhan data uji:
+
+Gambar 3.11 Persamaan Accuracy
+Precision mengukur proporsi prediksi positif yang benar-benar positif:
+
+Gambar 3.12 Persamaan Precision
+Recall mengukur proporsi sampel positif yang berhasil diidentifikasi:
+
+Gambar 3.13 Persamaan Recall
+F1-Score merupakan rata-rata harmonik antara precision dan recall:
+
+Gambar 3.14 Persamaan F1-Score
+Untuk konteks klasifikasi multi-kelas yang terdiri atas tiga kelas sentimen, yaitu positif, netral, dan negatif, digunakan pendekatan Macro Average untuk menghitung rata-rata nilai metrik evaluasi pada setiap kelas. Pendekatan ini menghitung nilai rata-rata tanpa mempertimbangkan jumlah sampel pada masing-masing kelas sehingga setiap kelas memperoleh bobot yang sama dalam proses evaluasi.
+
+Gambar 3.15 Persamaan Macro Average
+Berdasarkan Persamaan (3.15), nilai Macro Average diperoleh dengan menghitung rata-rata nilai metrik dari seluruh kelas yang tersedia. Pada penelitian ini, pendekatan tersebut digunakan untuk memperoleh nilai Macro Precision, Macro Recall, dan Macro F1-Score yang dihasilkan dari tiga kelas sentimen, yaitu positif, netral, dan negatif. Penggunaan Macro Average dipilih karena mampu memberikan evaluasi yang lebih seimbang terhadap performa model pada setiap kelas, termasuk kelas yang memiliki jumlah data lebih sedikit (minority class).
+3.10. Implementasi Dashboard Streamlit
+Sebagai luaran akhir penelitian, dibangun sebuah dashboard interaktif berbasis Streamlit yang memungkinkan pengguna melakukan analisis sentimen secara real-time dan memvisualisasikan tren ulasan dari waktu ke waktu. Arsitektur sistem dashboard ditunjukkan pada Gambar 3.16.
+
+Gambar 3.16 Arsitektur Dashboard Streamlit
+Berdasarkan Gambar 3.16, dashboard menerima masukan berupa dataset ulasan yang telah melalui proses klasifikasi sentimen menggunakan model IndoBERT hasil fine-tuning. Selanjutnya, hasil klasifikasi tersebut divisualisasikan dalam berbagai bentuk grafik dan statistik interaktif sehingga memudahkan pengguna dalam mengeksplorasi hasil analisis sentimen. Dashboard ini dirancang untuk mendukung pengambilan keputusan berbasis data bagi pengembang maupun pengelola aplikasi.
+Dashboard ini terdiri atas lima halaman utama yang saling melengkapi, yaitu: (1) halaman Overview, yang menyajikan ringkasan hasil analisis sentimen secara keseluruhan; (2) halaman Analisis Sentimen, yang menampilkan distribusi sentimen beserta analisis pada setiap kategori; (3) halaman Tren Temporal, yang memvisualisasikan perubahan sentimen pengguna dari waktu ke waktu; (4) halaman Model dan Evaluasi, yang menyajikan hasil evaluasi dan perbandingan performa model SVM sebagai baseline dengan model IndoBERT; serta (5) halaman Scraping dan Preprocessing, yang menampilkan ringkasan proses pengumpulan dan praproses data. Seluruh komponen dashboard dibangun menggunakan pustaka Streamlit dengan dukungan visualisasi dari Plotly dan Matplotlib.
