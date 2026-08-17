@@ -90,3 +90,8 @@ models/
 
 # archives and outputs
 archive/
+
+# Thesis/skripsi guides and private documents
+panduan belajar/
+reports/documents/Pedoman_Skripsi.pdf
+reports/markdown_notes/PANDUAN_EDIT_DOKUMEN_SKRIPSI.md
